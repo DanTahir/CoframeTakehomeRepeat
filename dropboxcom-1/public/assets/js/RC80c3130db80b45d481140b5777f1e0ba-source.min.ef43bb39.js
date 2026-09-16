@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC80c3130db80b45d481140b5777f1e0ba-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC80c3130db80b45d481140b5777f1e0ba-source.min.js', "setTimeout((function(){gtag(\"event\",\"conversion\",{allow_custom_scripts:!0,send_to:\"DC-10906599/universe/con-d000+standard\"})}),15e3);");

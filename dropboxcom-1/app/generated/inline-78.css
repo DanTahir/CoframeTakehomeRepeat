@@ -1,0 +1,14 @@
+/* Inline <style> block at head position 78 of the original document. */
+._viewWrapper_mckyo_1 {
+    border-radius: 12px;
+    min-height: 500px;
+}
+
+._dropzone_mckyo_6 {
+    border-radius: 12px;
+    border: 2px dashed var(--dig-color__border__base, #bbb5ae);
+}
+
+._dropzone_mckyo_6._dropzoneDragActive_mckyo_11 {
+    border-color: var(--dig-color__selection__base--state-1, #004dc7);
+}

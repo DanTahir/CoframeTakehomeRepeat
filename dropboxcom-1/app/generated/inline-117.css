@@ -1,0 +1,9 @@
+/* Inline <style> block at head position 117 of the original document. */
+._dwg-scrollbar--none_nxr3g_1 {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+._dwg-scrollbar--none_nxr3g_1::-webkit-scrollbar {
+    display: none;
+}

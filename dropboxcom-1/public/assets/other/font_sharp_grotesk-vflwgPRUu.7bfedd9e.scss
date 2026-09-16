@@ -1,0 +1,284 @@
+// new fonts for rebrand:
+// 'SharpGroteskCondensed' (SharpGrotesk13) condensed, no italic style
+// 'SharpGrotesk' (SharpGrotesk20) includes an italic style
+// 'SharpGroteskWide' (SharpGrotesk22) stretched, no italic style
+
+$font_weight_book: 400;
+$font_weight_medium: 500;
+$font_weight_semibold: 600;
+$SharpGrotesk11: 'SharpGroteskSuperCondensed';
+$SharpGrotesk13: 'SharpGroteskCondensed';
+$SharpGrotesk20: 'SharpGrotesk';
+$SharpGrotesk22: 'SharpGroteskWide';
+
+$no-sharp-grotesk: false !default;
+@if $no-sharp-grotesk {
+    /* no-op */
+} @else {
+    /*
+  SharpGrotesk (SuperCondensed)
+  */
+    @font-face {
+        font-family: 'SharpGroteskSuperCondensed';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook11.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook11.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook11.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook11.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook11.ttf')
+                format('truetype');
+        font-weight: $font_weight_book;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGroteskSuperCondensed';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium11.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium11.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium11.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium11.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium11.ttf')
+                format('truetype');
+        font-weight: $font_weight_medium;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGroteskSuperCondensed';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold11.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold11.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold11.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold11.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold11.ttf')
+                format('truetype');
+        font-weight: $font_weight_semibold;
+        font-style: normal;
+    }
+
+    /*
+  SharpGrotesk (Condensed)
+  */
+    @font-face {
+        font-family: 'SharpGroteskCondensed';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook13.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook13.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook13.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook13.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook13.ttf')
+                format('truetype');
+        font-weight: $font_weight_book;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGroteskCondensed';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium13.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium13.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium13.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium13.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium13.ttf')
+                format('truetype');
+        font-weight: $font_weight_medium;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGroteskCondensed';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold13.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold13.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold13.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold13.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold13.ttf')
+                format('truetype');
+        font-weight: $font_weight_semibold;
+        font-style: normal;
+    }
+
+    /*
+  SharpGrotesk (Book)
+  */
+    @font-face {
+        font-family: 'SharpGrotesk';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook20.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook20.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook20.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook20.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook20.ttf')
+                format('truetype');
+        font-weight: $font_weight_book;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGrotesk';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBookItalic20.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBookItalic20.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBookItalic20.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBookItalic20.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBookItalic20.ttf')
+                format('truetype');
+        font-weight: $font_weight_book;
+        font-style: italic;
+    }
+
+    @font-face {
+        font-family: 'SharpGrotesk';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium20.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium20.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium20.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium20.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium20.ttf')
+                format('truetype');
+        font-weight: $font_weight_medium;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGrotesk';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMediumItalic20.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMediumItalic20.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMediumItalic20.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMediumItalic20.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMediumItalic20.ttf')
+                format('truetype');
+        font-weight: $font_weight_medium;
+        font-style: italic;
+    }
+
+    @font-face {
+        font-family: 'SharpGrotesk';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold20.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold20.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold20.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold20.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold20.ttf')
+                format('truetype');
+        font-weight: $font_weight_semibold;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGrotesk';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBoldItalic20.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBoldItalic20.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBoldItalic20.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBoldItalic20.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBoldItalic20.ttf')
+                format('truetype');
+        font-weight: $font_weight_semibold;
+        font-style: italic;
+    }
+
+    /*
+  SharpGrotesk (Wide)
+  */
+    @font-face {
+        font-family: 'SharpGroteskWide';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook22.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook22.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook22.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook22.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBBook22.ttf')
+                format('truetype');
+        font-weight: $font_weight_book;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGroteskWide';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium22.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium22.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium22.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium22.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBMedium22.ttf')
+                format('truetype');
+        font-weight: $font_weight_medium;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SharpGroteskWide';
+        font-display: swap;
+        src: url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold22.eot');
+        src:
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold22.eot')
+                format('embedded-opentype'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold22.woff2')
+                format('woff2'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold22.woff')
+                format('woff'),
+            url('/static/metaserver/static/fonts/sharpgrotesk/SharpGroteskDBSmBold22.ttf')
+                format('truetype');
+        font-weight: $font_weight_semibold;
+        font-style: normal;
+    }
+}

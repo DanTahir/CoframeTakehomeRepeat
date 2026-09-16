@@ -1,0 +1,5 @@
+/* Vendored from https://cfl.dropboxstatic.com/static/metaserver/static/css/abuse/fingerprintjs_component-vflGut5BB.css
+ * url() references rewritten to local /assets paths by scripts/codegen.mjs.
+ * Cascade position 62 of the original <head>. Do not edit — `npm run codegen`.
+ */
+.fingerprintjsComponent{z-index:1000;position:fixed;inset-block-start:0;inset-inline-start:0;inline-size:100%;block-size:100%;visibility:hidden}.fingerprintjsDiv{margin-inline-start:auto;margin-inline-end:auto;visibility:hidden}body #one-tap-fpjs-container~iframe[src='about:blank'][style*='visibility: hidden']{inset-block-start:-100% !important;inset-inline-start:-100% !important}

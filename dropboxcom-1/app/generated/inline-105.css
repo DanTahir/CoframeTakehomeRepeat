@@ -1,0 +1,44 @@
+/* Inline <style> block at head position 105 of the original document. */
+/* stylelint-disable custom-media-pattern */
+
+/*
+Re-defining custom-media for DWG Breakpoints here
+Should have parity with values from typescript/component_libraries/dwg-components/src/tokens/custom-media.css
+Currently CSS Modules does not support @import, so unable to import the custom media into CSS Module
+ */
+/* stylelint-enable custom-media-pattern */
+
+._mainContainer_14u9u_12 {
+    max-width: 1440px;
+}
+
+._mediaFrame_14u9u_16._eyebrowImage_14u9u_16 {
+    max-height: var(--dwg-spacing__unit--4);
+}
+._pill_14u9u_19 {
+    border-radius: var(--dwg-spacing__unit--2);
+}
+
+._eyebrowText_14u9u_23 {
+    color: var(--dwg-theme__color__core__accent);
+}
+
+@media (min-width: 768px) {
+    ._ctaSideBySide_14u9u_28 {
+        flex-wrap: wrap;
+    }
+
+    ._ctaSideBySide_14u9u_28 .dwg-button2 {
+        flex-shrink: 0;
+        max-width: 100%;
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 1440px) {
+    /* a workaround for DWGButton2 not supporting different sizes for different breakpoints */
+    ._primaryCta_14u9u_41 {
+        padding: var(--dwg-spacing__unit--3);
+        border-radius: var(--dwg-spacing__unit--2);
+    }
+}

@@ -1,0 +1,32 @@
+/* Inline <style> block at head position 102 of the original document. */
+._banner_plw31_1 {
+    z-index: calc(var(--dwg-nav__z-index, 120) + 8);
+}
+
+._banner_content_plw31_5 {
+    text-wrap: pretty;
+    text-align: center;
+}
+
+._banner_arrow_plw31_10 {
+    vertical-align: middle;
+    padding-inline-start: var(--dwg-spacing__unit--0_5);
+    transition: transform var(--dwg-duration__micro) var(--dwg-easing__transition);
+}
+
+._banner_leading_icon_plw31_16 {
+    vertical-align: middle;
+    margin-inline-end: var(--dwg-spacing__unit--1);
+}
+
+._banner_content_plw31_5:hover ._banner_arrow_plw31_10,
+._banner_content_plw31_5:focus-visible ._banner_arrow_plw31_10 {
+    transform: translateX(calc(var(--dwg-spacing__unit--0_5) * var(--dwg-direction--inline, 1)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ._banner_content_plw31_5:hover ._banner_arrow_plw31_10,
+    ._banner_content_plw31_5:focus-visible ._banner_arrow_plw31_10 {
+        transform: none;
+    }
+}

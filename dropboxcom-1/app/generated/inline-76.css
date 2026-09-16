@@ -1,0 +1,58 @@
+/* Inline <style> block at head position 76 of the original document. */
+._wrapper-content-container_1txjn_1 {
+    --tour-plank-header: 48px;
+    --tour-plank-iframe-height: 800px;
+
+    min-height: calc(var(--tour-plank-header) + var(--tour-plank-iframe-height));
+}
+
+._tour-plank-iframe_1txjn_8 {
+    width: 100%;
+    height: var(--tour-plank-iframe-height);
+    border: 0;
+}
+
+._tour-plank-iframe-fullscreen_1txjn_14 {
+    height: 100%;
+}
+
+._tour-container_1txjn_18 {
+    max-width: 1800px;
+    width: 100%;
+}
+
+._tour-container-fullscreen_1txjn_23 {
+    max-width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    /* Needs to be above Snapengage chat, which uses 100003 */
+    z-index: 100004;
+}
+
+._tour-plank-fullscreen_1txjn_35 {
+    /* This is required in fullscreen mode otherwise other planks on the page with higher stacking context
+     will appear above the tour plank. */
+    z-index: 100004;
+}
+
+._tour-plank-frame_1txjn_41 {
+    display: none;
+}
+
+@media only screen and (min-width: 1280px) {
+    ._tour-plank-frame_1txjn_41 {
+        display: flex;
+    }
+}
+
+._tour-plank-iframe-loading_1txjn_51 {
+    display: none;
+}
+
+._loading-container_1txjn_55 {
+    height: var(--tour-plank-iframe-height);
+}

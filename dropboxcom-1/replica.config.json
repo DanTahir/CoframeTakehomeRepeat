@@ -1,0 +1,109 @@
+{
+  "_comment": [
+    "Replica of the dropbox.com homepage. Site-specific knowledge lives ONLY in",
+    "this file and app/ClientRuntime.tsx; scripts/** stay URL-agnostic.",
+    "Every key below is justified by THIS run's own capture — see the",
+    "underscore-prefixed notes for the evidence that was actually checked."
+  ],
+
+  "targetUrl": "https://dropbox.com",
+  "slug": "dropboxcom",
+  "port": 3306,
+
+  "_captureMode": [
+    "'rendered', decided on a DOM-level probe of this run's capture rather than",
+    "left on 'auto': scrape/raw/index.static.html (the pre-JS response) contains",
+    "0 <video> elements while the rendered DOM contains 5. The hero + 3 product",
+    "videos are injected client-side, so 'static' would ship them as empty boxes.",
+    "Element counts alone would NOT have revealed this (static 593KB / rendered",
+    "710KB, img 78 vs 77) — assets must be judged as their own category."
+  ],
+  "captureMode": "rendered",
+
+  "settleMs": 3500,
+  "scrollSettleMs": 90,
+  "links": "absolute",
+
+  "codegen": {
+    "keepClasses": [],
+    "stripClasses": null,
+    "stripInlineStyleProps": null,
+
+    "_dropSelectors": [
+      "NOTE: this list REPLACES the defaults in scripts/lib/config.mjs, so the",
+      "defaults are repeated verbatim here and the 4 site-specific entries are",
+      "appended at the end. Each site-specific entry and why:",
+      "  #ccpa-iframe ................ Dropbox's CCPA/consent banner iframe. Not",
+      "      part of the design; leaving it in bakes a consent bar into the page.",
+      "      Expect it as permanent residue in `compare` (live still shows it).",
+      "  iframe[src*=marketing...] ... hidden marketing tracker iframe",
+      "      (hidden + style display:none upstream).",
+      "  iframe[src=about:blank] ..... empty runtime iframe with visibility:hidden.",
+      "  source[type*=quicktime] ..... the 4 <source> siblings offering the same",
+      "      videos as .mov (video/quicktime; codecs=hvc1). Every browser the",
+      "      harness runs picks the .webm, and the hero .mov alone is 141MB, so",
+      "      referencing them would force a 141MB file into public/ for an asset",
+      "      that is never requested. The .webm siblings are kept."
+    ],
+    "dropSelectors": [
+      "script", "noscript",
+      "iframe[src*=\"googletagmanager\"]", "iframe[src*=\"doubleclick\"]",
+      "iframe[src*=\"facebook\"]", "iframe[src*=\"hubspot\"]",
+      "#onetrust-consent-sdk", "#CybotCookiebotDialog", "#cookiescript_injected",
+      ".ot-sdk-container", "#usercentrics-root", "#hs-web-interactives-top-anchor",
+      "#intercom-frame", ".intercom-lightweight-app", "#drift-frame-controller",
+      "#crisp-chatbox", "#tawkchat-container", ".grecaptcha-badge",
+      "next-route-announcer",
+      "[data-replica-drop]",
+
+      "#ccpa-iframe",
+      "iframe[src*=\"marketing.dropbox.com\"]",
+      "iframe[src=\"about:blank\"]",
+      "source[type*=\"quicktime\"]"
+    ],
+
+    "splitMinChildren": 5,
+    "splitMinSections": 3,
+
+    "_skipStylesheets": [
+      "font_sharp_grotesk-vflwgPRUu.scss is an UNCOMPILED SCSS SOURCE that",
+      "Dropbox links directly from <head>: it begins with '// new fonts for",
+      "rebrand:' and declares '$font_weight_book: 400;'. Browsers CSS-error-recover",
+      "past it and render fine; webpack's postcss parses eagerly and hard-fails",
+      "the build ('Unknown word').",
+      "PROVEN REDUNDANT before skipping (both conditions required):",
+      "  (a) unparseable as CSS — '//' comments + '$' variables, confirmed;",
+      "  (b) a later valid sheet redefines the same rules — the compiled twin",
+      "      font_sharp_grotesk-vflRd2mZl.css is byte-for-byte equivalent in",
+      "      coverage: 15 @font-face vs 15, 75 url() refs vs 75, and the same 4",
+      "      families (SharpGrotesk / Condensed / SuperCondensed / Wide) with real",
+      "      numeric weights instead of $variables.",
+      "The skipped sheet is still recorded in manifest.json as status 'SKIPPED'."
+    ],
+    "skipStylesheets": ["font_sharp_grotesk-vflwgPRUu.scss"]
+  },
+
+  "viewports": null,
+
+  "_extraAssets": [
+    "One entry: the favicon. This CORRECTS an earlier conclusion in this file.",
+    "https://dropbox.com/favicon.ico really is a 404 (curl, both www and the",
+    "apex redirect), which made it look like the site has no icon at all. It",
+    "does -- <head> of scrape/raw/index.html line 80 declares:",
+    "  <link rel=\"shortcut icon\" href=\"https://cfl.dropboxstatic.com/static/",
+    "  metaserver/static/images/favicon.ico\">",
+    "which serves 200, image/vnd.microsoft.icon, 4286 bytes.",
+    "A <head> link is not a DOM asset reference the scraper walks, so it never",
+    "entered scrape/asset-map.json; codegen's icon handling then dropped it for",
+    "having no local copy (see droppedIcons in scripts/codegen.mjs), leaving",
+    "generated/metadata.ts with no `icons` key. With no declared icon the",
+    "browser falls back to probing the origin root, which 404s and trips the",
+    "`console-errors` gate at iphone-se -- and unlike overflow/hiddenContent,",
+    "console errors have NO baseline path in scripts/viewport-check.mjs.",
+    "Listing the real URL here self-hosts it and lets codegen point metadata at",
+    "the local /assets copy: faithful to upstream AND no 404."
+  ],
+  "extraAssets": [
+    "https://cfl.dropboxstatic.com/static/metaserver/static/images/favicon.ico"
+  ]
+}

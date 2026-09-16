@@ -1,0 +1,80 @@
+/* Inline <style> block at head position 94 of the original document. */
+:root {
+    /* Initialize DWG CSS Variables for transitions */
+    /* Positioning/Dimensions */
+    --dwg-transition__lightbox__source-top: 0;
+    --dwg-transition__lightbox__source-left: 0;
+    --dwg-transition__lightbox__source-width: 0;
+    --dwg-transition__lightbox__source-height: 0;
+    /* Timing/Duration */
+    --dwg-transition__lightbox__transition-duration: 700ms;
+    --dwg-transition__lightbox__fade_duration: 300ms;
+    /* Functions */
+    --dwg-transition__lightbox__easing-function: cubic-bezier(0.66, 0, 0, 1);
+}
+
+._lightbox_11ael_15 {
+    transition: var(--dwg-transition__lightbox__transition-duration)
+        var(--dwg-transition__lightbox__easing-function);
+    position: absolute;
+}
+
+._overlay_11ael_21 {
+    background-color: transparent;
+}
+
+._mainContent_11ael_25 {
+    max-width: 960px;
+    min-height: 100%;
+    transition: opacity var(--dwg-transition__lightbox__fade_duration)
+        var(--dwg-transition__lightbox__easing-function);
+    opacity: 0;
+}
+
+._contentWrapper_11ael_33 {
+    overflow: hidden;
+    height: 100%;
+    opacity: 1;
+}
+
+._contentWrapper_11ael_33:not(._afterOpen_11ael_39) {
+    opacity: 0.5;
+    border-radius: 16px;
+}
+
+._closeLightboxButton_11ael_44 {
+    top: var(--dwg-spacing__unit--3);
+    right: var(--dwg-spacing__unit--3);
+    transition: opacity var(--dwg-transition__lightbox__fade_duration)
+        var(--dwg-transition__lightbox__easing-function);
+    opacity: 0;
+}
+
+._lightbox_11ael_15:not(._afterOpen_11ael_39) {
+    overflow: hidden;
+    bottom: unset;
+    right: unset;
+}
+
+._lightbox_11ael_15:not(._afterOpen_11ael_39),
+._lightbox_11ael_15._beforeClose_11ael_59 {
+    inset: unset;
+    top: var(--dwg-transition__lightbox__source-top);
+    left: var(--dwg-transition__lightbox__source-left);
+    width: var(--dwg-transition__lightbox__source-width);
+    height: var(--dwg-transition__lightbox__source-height);
+}
+
+._lightbox_11ael_15:not(._afterOpen_11ael_39) {
+    transform: unset;
+}
+
+._lightbox_11ael_15:not(._afterOpen_11ael_39) {
+    min-width: var(--dwg-transition__lightbox__source-width);
+    min-height: var(--dwg-transition__lightbox__source-height);
+}
+
+._mainContent_11ael_25._afterOpenTransition_11ael_76,
+._closeLightboxButton_11ael_44._afterOpenTransition_11ael_76 {
+    opacity: 1;
+}

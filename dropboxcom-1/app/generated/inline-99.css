@@ -1,0 +1,52 @@
+/* Inline <style> block at head position 99 of the original document. */
+/* stylelint-disable custom-media-pattern */
+/*
+Re-defining custom-media for DWG Breakpoints here
+Should have parity with values from typescript/component_libraries/dwg-components/src/tokens/custom-media.css
+Currently CSS Modules does not support @import, so unable to import the custom media into CSS Module
+ */
+/* stylelint-enable custom-media-pattern */
+
+._sectionWrapperBackground_4izxk_10 {
+    z-index: -1;
+
+    /* BG linear gradiant colors are for experiment and not tokenized in DWG design system */
+    background-image: linear-gradient(to bottom, #292c31, #000);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+@media (min-width: 1024px) {
+    ._sectionWrapperBackground_4izxk_10 {
+        border-radius: 20px;
+    }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    ._sectionWrapperBackground_4izxk_10 {
+        /* animate between 0 and 0.8 of --section-progress */
+        --animation-progress: min(max(0, calc(var(--element-scroll-progress, 1) / 0.8)), 1);
+
+        /* cubic-bezier(0.66, 0, 0, 1) */
+        --p0: 0;
+        --p1: 0;
+        --p2: 0.66;
+        --p3: 1;
+        --animation-progress-ease: calc(
+            var(--p0) * (1 - var(--animation-progress)) * (1 - var(--animation-progress)) *
+                (1 - var(--animation-progress)) + var(--p1) * 3 * var(--animation-progress) *
+                (1 - var(--animation-progress)) * (1 - var(--animation-progress)) + var(--p2) * 3 *
+                var(--animation-progress) * var(--animation-progress) *
+                (1 - var(--animation-progress)) + var(--p3) * var(--animation-progress) *
+                var(--animation-progress) * var(--animation-progress)
+        );
+        --horizontal-offset: calc(0.8 * (1 - var(--animation-progress-ease)));
+        --vertical-offset: calc(0.9 * (1 - var(--animation-progress-ease)));
+        transform: scale(
+            calc(var(--horizontal-offset) + var(--animation-progress-ease)),
+            calc(var(--vertical-offset) + var(--animation-progress-ease))
+        );
+    }
+}

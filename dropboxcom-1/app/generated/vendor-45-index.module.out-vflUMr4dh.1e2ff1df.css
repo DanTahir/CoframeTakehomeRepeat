@@ -1,0 +1,6 @@
+/* Vendored from https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-banner-plank/index.module.out-vflUMr4dh.css
+ * url() references rewritten to local /assets paths by scripts/codegen.mjs.
+ * Cascade position 45 of the original <head>. Do not edit — `npm run codegen`.
+ */
+._banner_plw31_1{z-index:calc(var(--dwg-nav__z-index, 120) + 8)}._banner_content_plw31_5{text-wrap:pretty;text-align:center}._banner_arrow_plw31_10{padding-inline-start:var(--dwg-spacing__unit--0_5);transition:transform var(--dwg-duration__micro) var(--dwg-easing__transition);vertical-align:middle}._banner_leading_icon_plw31_16{margin-inline-end:var(--dwg-spacing__unit--1);vertical-align:middle}._banner_content_plw31_5:focus-visible ._banner_arrow_plw31_10,._banner_content_plw31_5:hover ._banner_arrow_plw31_10{transform:translateX(calc(var(--dwg-spacing__unit--0_5)*var(--dwg-direction--inline, 1)))}@media (prefers-reduced-motion:reduce){._banner_content_plw31_5:focus-visible ._banner_arrow_plw31_10,._banner_content_plw31_5:hover ._banner_arrow_plw31_10{transform:none}}
+/*# sourceMappingURL=index.module.out.css.map */

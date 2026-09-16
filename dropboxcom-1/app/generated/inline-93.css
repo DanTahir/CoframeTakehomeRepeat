@@ -1,0 +1,28 @@
+/* Inline <style> block at head position 93 of the original document. */
+:root {
+    --dwg-hscroll--perc-progress: 0;
+}
+
+._scrollArea_bb0ya_5 {
+    overflow-x: scroll;
+    scrollbar-width: none;
+    /* When scrollable, need to disable content from being highlighted/selected during drag scroll.
+     * This should be applied even when scroll is not needed for consistent behavior on window resize.
+     */
+    user-select: none;
+    /* Disable browser swipe back/forward gesture when reaching end of the scroll area */
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    overscroll-behavior-x: none;
+}
+
+._grabbable_bb0ya_17:hover {
+    cursor: grab;
+}
+
+._grabbing_bb0ya_21,
+._grabbing_bb0ya_21 * {
+    /* Need to set cursor when grabbing, which should be prioritized over
+     * children cursor appearances (hence the !important)
+     */
+    cursor: grabbing !important;
+}

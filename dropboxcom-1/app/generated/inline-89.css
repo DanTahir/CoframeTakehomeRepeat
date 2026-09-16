@@ -1,0 +1,65 @@
+/* Inline <style> block at head position 89 of the original document. */
+._dwg-recommendation-pill_ud8z3_1 {
+    border-radius: 999px;
+    justify-self: flex-end;
+    padding-block-start: 2px;
+    padding-block-end: 2px;
+    position: relative;
+    overflow: hidden;
+
+    --sparkle-animation-delay: 1.5s;
+}
+
+._dwg-recommendation-pill__star_ud8z3_12 {
+    position: absolute;
+    inset-block-start: -6px;
+    inset-inline-end: -6px;
+    animation: _sparkle_ud8z3_1 1.5s calc(var(--sparkle-animation-delay) + 0.3s) linear both;
+}
+
+@keyframes _sparkle_ud8z3_1 {
+    0% {
+        opacity: 0;
+        transform: scale(0.1) rotate(180deg);
+        animation-timing-function: ease-out;
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        animation-timing-function: ease-in;
+    }
+    100% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+}
+
+._dwg-recommendation-pill_ud8z3_1:after {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    inline-size: 300%;
+    block-size: 100%;
+    border-radius: 999px;
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 60%
+    );
+    animation: _slide_ud8z3_1 1s var(--sparkle-animation-delay) linear both;
+}
+
+@keyframes _slide_ud8z3_1 {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(100% * var(--dwg-direction--inline, 1)));
+    }
+}

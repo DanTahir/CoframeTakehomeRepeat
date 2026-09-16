@@ -1,0 +1,16 @@
+/* Inline <style> block at head position 83 of the original document. */
+._animated-text-wrapper_rc5pg_1 > span {
+    --step-progress: min(1, max(0, calc((var(--animation-progress, 0) - 0.25) / 0.4)));
+    color: color-mix(
+        in srgb,
+        var(--dwg-theme__color__disabled__text) calc(100% - var(--step-progress) * 100%),
+        var(--dwg-theme__color__standard__text) calc(var(--step-progress) * 100%)
+    );
+    will-change: color;
+}
+
+@media (prefers-reduced-motion) {
+    ._animated-text-wrapper_rc5pg_1 > span {
+        --animation-progress: 1;
+    }
+}

@@ -1,0 +1,206 @@
+/* Inline <style> block at head position 68 of the original document. */
+._card-container_i3etx_1 {
+    display: flex;
+    flex-direction: column;
+    width: 296px;
+    min-height: 339px;
+    box-sizing: border-box;
+    border: 1px solid var(--dig-color__border__base);
+    background-color: var(--dig-color__background__base);
+    padding: 24px;
+}
+
+._card-container-modal_i3etx_12 {
+    /* Keep width consistent with comparisonCardModalWidth in comparison-card-style-modal.tsx */
+    width: 375px;
+}
+
+._card-container-basic_i3etx_17 {
+    width: 200px;
+    border: 1px solid var(--dig-color__background__subtle);
+}
+
+._card-container-subtle-background_i3etx_22 {
+    background-color: var(--dig-color__background__subtle);
+}
+
+._card-container-no-border_i3etx_26 {
+    border: none;
+}
+
+._card-container-recommended_i3etx_30 {
+    border: 1px solid var(--dig-color__secondary__base);
+}
+
+._card-header_i3etx_34 {
+    display: flex;
+    flex-direction: column;
+}
+
+._card-footer_i3etx_39 {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing__unit--2);
+    margin-top: var(--spacing__unit--2);
+}
+
+._card-footer-modal_i3etx_46 {
+    padding-top: var(--spacing__unit--2);
+    margin-top: auto;
+}
+
+._card-preheading-content_i3etx_51 {
+    display: flex;
+    justify-content: space-between;
+}
+
+._card-heading_i3etx_56 {
+    margin-bottom: var(--spacing__unit--1_5);
+    display: flex;
+    align-items: center;
+}
+
+._separator_i3etx_62 {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-end;
+}
+
+._strikethrough-price_i3etx_68 {
+    text-decoration: line-through;
+    margin-right: var(--spacing__unit--0_5);
+}
+
+._strikethrough-annual-billing_i3etx_73 {
+    text-decoration: line-through;
+}
+
+._modal-separator_i3etx_77 {
+    margin-top: var(--spacing__unit--0_5);
+    margin-bottom: var(--spacing__unit--1);
+}
+
+._new-badge_i3etx_82 {
+    margin-left: 5px;
+    padding: 6px var(--spacing__unit--1);
+    background-color: var(--dig-color__primary__surface);
+    color: var(--dig-color__primary__base);
+    position: relative;
+    top: -1px;
+}
+
+._header-info-ul_i3etx_91 {
+    list-style-type: none;
+    padding-inline-start: 0;
+    margin: 0;
+}
+
+._header-info-li_i3etx_97 {
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: var(--spacing__unit--0_5);
+
+    & svg {
+        margin-right: var(--spacing__unit--1);
+    }
+}
+
+._divider_i3etx_107 {
+    width: 40px;
+    margin: var(--spacing__unit--1) 0;
+    height: 0;
+    border: 0.5px solid var(--dig-color__border__base);
+}
+
+._features-ul_i3etx_114 {
+    list-style-type: none;
+    padding-inline-start: 0;
+    margin: 0;
+}
+
+._features-li_i3etx_120 {
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: var(--spacing__unit--0_5);
+}
+
+._features-li-icon_i3etx_126 {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--dig-color__primary__base);
+    margin-right: var(--spacing__unit--1);
+}
+
+._features-li-icon-subtle_i3etx_134 {
+    color: var(--dig-color__text__subtle);
+}
+
+._addon_i3etx_138 {
+    display: flex;
+    align-items: flex-start;
+    margin-top: var(--spacing__unit--0_5);
+}
+
+._tooltip-icon_i3etx_144 {
+    display: block;
+    /* Need negative margin to properly align icon with adjacent text */
+    margin-top: -1px;
+    margin-left: var(--spacing__unit--0_5);
+}
+
+._addon-checkbox_i3etx_151 {
+    margin-right: var(--spacing__unit--1);
+}
+
+._tooltip-list_i3etx_155 {
+    margin: 0;
+    padding-left: var(--spacing__unit--3);
+}
+
+._skip-link_i3etx_160 {
+    /* Hard-coded to the height of the CTA button + spacing */
+    margin-top: 56px;
+}
+
+._skip-link-small_i3etx_165 {
+    /* Hard-coded to the height of the CTA button + spacing */
+    margin-top: 44px;
+}
+
+._pricing-section_i3etx_170 {
+    padding-bottom: var(--spacing__unit--1_5);
+}
+
+._annual-billing_i3etx_174 {
+    height: 20px;
+}
+
+._preheading-spacer_i3etx_178 {
+    height: 20px;
+}
+
+._upsell-cta_i3etx_182 {
+    --dig-color__primary-cta__base: var(--dig-color__primary__base);
+    --dig-color__primary-cta__base--state-1: var(--dig-color__primary__base--state-1);
+    --dig-color__primary-cta__base--state-2: var(--dig-color__primary__base--state-2);
+}
+
+._card-container-sharing-upsell_i3etx_188 {
+    width: 375px;
+    border-radius: var(--dig-radius__medium);
+    min-height: 0;
+}
+
+._card-container-sharing-upsell_i3etx_188 ._separator_i3etx_62 {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+._card-container-sharing-upsell_i3etx_188 ._card-heading_i3etx_56 {
+    margin-bottom: 6px;
+}
+
+._card-container-sharing-upsell_i3etx_188 ._pricing-section_i3etx_170 {
+    padding-bottom: var(--spacing__unit--2);
+}

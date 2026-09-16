@@ -1,0 +1,263 @@
+/* Inline <style> block at head position 84 of the original document. */
+/* stylelint-disable custom-media-pattern */
+
+/*
+Re-defining custom-media for DWG Breakpoints here
+Should have parity with values from typescript/component_libraries/dwg-components/src/tokens/custom-media.css
+Currently CSS Modules does not support @import, so unable to import the custom media into CSS Module
+*/
+/* stylelint-enable custom-media-pattern */
+
+._dwg-card__media-frame--is-icon_1qxpt_12 {
+    max-height: var(--dwg-spacing__unit--6);
+}
+
+._dwg-card__media-frame--is-icon-large_1qxpt_16 {
+    max-height: var(--dwg-spacing__unit--15);
+}
+
+._dwg-card__media-frame--is-horizontal_1qxpt_20 {
+    display: none;
+}
+
+._dwg-card--hover-play_1qxpt_24 {
+    cursor: pointer;
+
+    --dwg-card__visual-fade-ease: ease-out;
+    --dwg-card__visual-fade-duration: 300ms;
+    --dwg-card__visual-fade-in-delay: 150ms;
+    --dwg-card__visual-hide-duration: 150ms;
+}
+
+._dwg-card--hover-play_1qxpt_24:focus-visible {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}
+
+.js-focus-visible ._dwg-card--hover-play_1qxpt_24.focus-visible {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}
+
+/*
+ * The video sits at z-index 1 inside .dwg-media-video-wrapper, which paints it
+ * above the absolutely-positioned link overlay (`.dwg-card__cta-button::after`)
+ * that makes the whole card clickable. Without this, clicks/taps over the
+ * media area land on the <video> element and never reach the link.
+ * Hover state is tracked on the inner stack (blog/visual variants) or on the
+ * media-area wrapper (default variant) via mouseenter/pointerenter, so
+ * disabling pointer events on the video does not break the play-on-hover UX.
+ */
+._dwg-card--hover-play_1qxpt_24 .dwg-media-video-wrapper__video,
+._dwg-card__media-hover-target_1qxpt_53 .dwg-media-video-wrapper__video {
+    pointer-events: none;
+}
+
+/*
+ * Default ("standard") variant scopes the play-on-hover affordance to the
+ * media area only: the cursor stays at its default over the rest of the
+ * card, and only the media wrapper shows the focus ring when keyboard-
+ * focused (when there is no CTA button to receive focus directly).
+ */
+._dwg-card__media-hover-target_1qxpt_53:focus-visible {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}
+
+.js-focus-visible ._dwg-card__media-hover-target_1qxpt_53.focus-visible {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}
+
+._dwg-card__cta-button_1qxpt_45::after {
+    position: absolute;
+    inset: 0 12px;
+    content: '';
+}
+
+/* Scope the whole-card click overlay to this card's stack, not a distant ancestor. */
+._dwg-card__clickable-stack_1qxpt_80 {
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    ._dwg-card__media-frame--is-horizontal_1qxpt_20 {
+        display: block;
+        width: 186px;
+        height: 100%;
+    }
+}
+
+/*
+ * Visual variant styles: stack sizing, full-bleed overlays, and hover-play cross-fades.
+ */
+._dwg-card__visual_1qxpt_95 {
+    min-height: 405px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+@media (min-width: 480px) {
+    ._dwg-card__visual_1qxpt_95 {
+        min-height: 540px;
+    }
+}
+
+/* DWGStackVertical grid rows are max-content by default; stretch the single child. */
+._dwg-card__visual_1qxpt_95.dwg-stack--grid-flow-row {
+    grid-template-rows: minmax(0, 1fr);
+}
+
+._dwg-card__visual_1qxpt_95.dwg-stack--grid-flow-column {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+._dwg-card__visual-decorative-background_1qxpt_117,
+._dwg-card__visual-background-media_1qxpt_118 {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+._dwg-card__visual-decorative-background_1qxpt_117 {
+    background-image:
+        linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.55) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35) 25.48%, rgba(0, 0, 0, 0) 67.79%),
+        var(--dwg-card__visual-decorative-background-image);
+    background-size: cover;
+    background-position:
+        0 0,
+        0 0,
+        50% 50%;
+    background-repeat: no-repeat;
+}
+
+/* override the default body text color in the visual card for a11y when using a visual background */
+._dwg-card__visual-decorative-background_1qxpt_117 ~ ._dwg-card__visual-content_1qxpt_139 p.dwg-text {
+    color: #bbb5ae;
+}
+
+._dwg-card__visual-background-media_1qxpt_118 {
+    opacity: 0;
+    transition: opacity var(--dwg-card__visual-fade-duration) var(--dwg-card__visual-fade-ease);
+}
+
+._dwg-card--hover-play_1qxpt_24:is(:hover, :focus-within) ._dwg-card__visual-background-media_1qxpt_118 {
+    opacity: 1;
+    transition-delay: var(--dwg-card__visual-fade-in-delay);
+}
+
+._dwg-card__visual-inline-media_1qxpt_153 {
+    transition: opacity var(--dwg-card__visual-fade-duration) var(--dwg-card__visual-fade-ease);
+}
+
+._dwg-card--hover-play_1qxpt_24:is(:hover, :focus-within) ._dwg-card__visual-inline-media_1qxpt_153 {
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: var(--dwg-card__visual-hide-duration);
+}
+
+._dwg-card--hover-play_1qxpt_24:not(:hover):not(:focus-within)
+    ._dwg-card__visual-background-media_1qxpt_118
+    .dwg-media-video-wrapper__picture {
+    opacity: 0;
+    visibility: hidden;
+}
+
+._dwg-card--hover-play_1qxpt_24:not(:hover):not(:focus-within)
+    ._dwg-card__visual-background-media_1qxpt_118
+    .dwg-media-video-wrapper--video-paused .dwg-media-video-wrapper__picture {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Visual variant: hover animations (inline media scale + 3D perspective tilt) */
+._dwg-card--visual-card-hover-animate_1qxpt_178 {
+    --dwg-card__visual-card-hover-duration: 100ms;
+    --dwg-card__visual-card-hover-ease: ease-out;
+    --x-rotation: 0deg;
+    --y-rotation: 0deg;
+}
+
+._dwg-card__visual_1qxpt_95._dwg-card--visual-card-hover-animate_1qxpt_178 {
+    cursor: pointer;
+    overflow: visible;
+    perspective: 700px;
+    perspective-origin: center center;
+}
+
+._dwg-card__visual-tilt-layer_1qxpt_192 {
+    width: 100%;
+    min-height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+._dwg-card__visual-tilt-layer--theme-background_1qxpt_199 {
+    /* marker class for theme-backed visual cards */
+}
+
+._dwg-card--visual-card-hover-animate_1qxpt_178 ._dwg-card__visual-tilt-layer_1qxpt_192 {
+    pointer-events: none;
+    transform-style: preserve-3d;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    transition-property: transform;
+    transition-duration: 150ms;
+}
+
+._dwg-card--visual-card-hover-animate_1qxpt_178 ._dwg-card__visual-tilt-layer_1qxpt_192 ._dwg-card__visual-content_1qxpt_139,
+._dwg-card--visual-card-hover-animate_1qxpt_178 ._dwg-card__visual-tilt-layer_1qxpt_192 a,
+._dwg-card--visual-card-hover-animate_1qxpt_178 ._dwg-card__visual-tilt-layer_1qxpt_192 button {
+    pointer-events: auto;
+}
+
+._dwg-card__visual_1qxpt_95._dwg-card--visual-card-hover-animate_1qxpt_178:hover ._dwg-card__visual-tilt-layer_1qxpt_192 {
+    transform: rotateX(var(--x-rotation)) rotateY(var(--y-rotation));
+}
+
+._dwg-card--visual-card-hover-animate_1qxpt_178 ._dwg-card__media-frame--is-visual_1qxpt_221 {
+    overflow: hidden;
+}
+
+._dwg-card--visual-card-hover-animate_1qxpt_178 ._dwg-card__media-frame--is-visual_1qxpt_221 .dwg-media-image {
+    transform: scale(0.96);
+    transform-origin: center center;
+    transition: transform var(--dwg-card__visual-card-hover-duration)
+        var(--dwg-card__visual-card-hover-ease);
+}
+
+._dwg-card--visual-card-hover-animate_1qxpt_178:is(:hover, :focus-within)
+    ._dwg-card__media-frame--is-visual_1qxpt_221
+    .dwg-media-image {
+    transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ._dwg-card--hover-play_1qxpt_24 {
+        --dwg-card__visual-fade-ease: linear;
+        --dwg-card__visual-fade-duration: 1ms;
+        --dwg-card__visual-fade-in-delay: 0ms;
+        --dwg-card__visual-hide-duration: 1ms;
+    }
+
+    ._dwg-card--visual-card-hover-animate_1qxpt_178 {
+        --dwg-card__visual-card-hover-duration: 1ms;
+    }
+
+    ._dwg-card__visual_1qxpt_95._dwg-card--visual-card-hover-animate_1qxpt_178:hover ._dwg-card__visual-tilt-layer_1qxpt_192 {
+        transform: none;
+        transition: none;
+    }
+
+    ._dwg-card--visual-card-hover-animate_1qxpt_178
+        ._dwg-card__media-frame--is-visual_1qxpt_221
+        .dwg-media-image,
+    ._dwg-card--visual-card-hover-animate_1qxpt_178:is(:hover, :focus-within)
+        ._dwg-card__media-frame--is-visual_1qxpt_221
+        .dwg-media-image {
+        transform: none;
+        transition: none;
+    }
+}

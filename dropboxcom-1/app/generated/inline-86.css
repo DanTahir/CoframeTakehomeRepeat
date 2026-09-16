@@ -1,0 +1,8 @@
+/* Inline <style> block at head position 86 of the original document. */
+._ctaSelect_ud7hw_1 {
+    /* Override DWG Select height in context of CTA Select to align with button height in no-wrap scenario */
+    --dwg-select__height: 55px;
+
+    flex-wrap: wrap;
+    row-gap: var(--dwg-spacing__unit--1_5);
+}

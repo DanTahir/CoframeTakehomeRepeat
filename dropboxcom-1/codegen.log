@@ -1,0 +1,162 @@
+
+> dropboxcom-1@0.1.0 codegen
+> node scripts/codegen.mjs
+
+
+markup source      : scrape/raw/index.html (rendered, pre-scroll)
+  captureMode                  : rendered
+  static/rendered elements     : 1519/1673 (ratio 0.91, auto threshold 0.7)
+  static/rendered asset nodes  : 98/104 (ratio 0.94, auto threshold 0.9)
+  - stylesheet skipped by config (font_sharp_grotesk-vflwgPRUu.scss): https://cfl.dropboxstatic.com/static/metaserver/static/css/font_sharp_grotesk-vflwgPRUu.scss
+
+note: dropped 1 icon link(s) with no self-hosted copy
+      (keeping them would leak a remote request on every page load):
+  - https://cfl.dropboxstatic.com/static/metaserver/static/images/favicon.ico
+sections emitted   : 5
+  RootSection                   1450 els  div#root
+  OneTapFpjsContainerSection       2 els  div#one-tap-fpjs-container
+  DwgModalPortalSection            1 els  div.dwg-modal__portal
+  DwgModalPortalSection2           1 els  div.dwg-modal__portal
+  DwgModalPortalSection3           1 els  div.dwg-modal__portal
+
+stylesheets        : 123 (in original cascade order)
+  [00] link        vendor-00-accessibility-vfliGZNRm.25247550.css 512b
+  [01] link        vendor-01-tokens-vfllDOk8-.9d0d8191.css        56805b
+  [02] link        vendor-02-index.metaserver-vflDxH9Tk.f0f32b74.css 5506b
+  [03] link        vendor-03-sharp_grotesk_23.metaserver-vflPUtg1U.71.css 2577b
+  [04] link        SKIPPED                                        0b
+  [05] link        vendor-05-notify-vfl1v0oiv.c4afb6bc.css        843b
+  [06] link        vendor-06-skip_to_main_content-vflss8Czk.bdeeee17.css 786b
+  [07] link        vendor-07-index.web-vflQ_7qG7.75689235.css     432822b
+  [08] link        vendor-08-accessibility-vfliGZNRm.25247550.css 512b
+  [09] link        vendor-09-index.metaserver-vflDxH9Tk.f0f32b74.css 5506b
+  [10] link        vendor-10-sharp_grotesk_23.metaserver-vflPUtg1U.71.css 2577b
+  [11] link        vendor-11-tokens-vfllDOk8-.9d0d8191.css        56805b
+  [12] link        vendor-12-index.web-vflQ_7qG7.75689235.css     432822b
+  [13] link        vendor-13-skip_to_main_content-vflss8Czk.bdeeee17.css 786b
+  [14] link        vendor-14-font_paper_atlas_grotesk-vflDoDLsu.31f0d.css 4075b
+  [15] link        vendor-15-font_sharp_grotesk-vflRd2mZl.3019a4c4.css 7832b
+  [16] link        vendor-16-skip_to_main_content-vflss8Czk.bdeeee17.css 786b
+  [17] link        vendor-17-flip-icon-in-rtl.module.out-vfl2XiPX4.df.css 305b
+  [18] link        vendor-18-index.module.out-vflTQwisN.3a488a7c.css 116b
+  [19] link        vendor-19-navattic.module.out-vflxR5Weo.ac86854e.css 829b
+  [20] link        vendor-20-index.module.out-vfl-8BdRi.952b82cb.css 271b
+  [21] link        vendor-21-index.module.out-vflsd7bHw.10fb22fc.css 314b
+  [22] link        vendor-22-styles.module.out-vflUOujg-.7453841e.css 766b
+  [23] link        vendor-23-warp_context.module.out-vflfpzy2P.eddb8b.css 839b
+  [24] link        vendor-24-anchor-target.module.out-vfl5062-n.e54f9.css 193b
+  [25] link        vendor-25-index.module.out-vflIjQqwz.fe2f998a.css 534b
+  [26] link        vendor-26-index.module.out-vflU2b9UF.ef1a9c18.css 451b
+  [27] link        vendor-27-index.module.out-vfl_R2k_R.a57adafe.css 5812b
+  [28] link        vendor-28-index.module.out-vflYWM5Av.96b8bfa5.css 395b
+  [29] link        vendor-29-index.module.out-vfl819U8-.0b569766.css 148b
+  [30] link        vendor-30-index.module.out-vflida7Ix.01c79a68.css 322b
+  [31] link        vendor-31-index.module.out-vflCPdZap.40d45dac.css 4456b
+  [32] link        vendor-32-index.module.out-vflQPowvS.45e9e9a4.css 1159b
+  [33] link        vendor-33-index.module.out-vflN9-yU7.45e6d41b.css 271b
+  [34] link        vendor-34-index.module.out-vflbfYWhp.7470fa71.css 584b
+  [35] link        vendor-35-index.module.out-vflFnJgUs.906a1c8e.css 590b
+  [36] link        vendor-36-horizontal-scroll.module.out-vflTMZ-.8dc.css 334b
+  [37] link        vendor-37-lightbox.module.out-vflLL9t7N.2ba588d3.css 1837b
+  [38] link        vendor-38-index.module.out-vfle48VS7.684de82a.css 902b
+  [39] link        vendor-39-list-ticker.module.out-vfldAgzJk.7a70e0d.css 86b
+  [40] link        vendor-40-logos-ticker.module.out-vflPxNVcp.31efe7.css 83b
+  [41] link        vendor-41-loop-ticker.module.out-vflODv4n8.f02e506.css 891b
+  [42] link        vendor-42-index.module.out-vflEc78vQ.7abfd8f3.css 1183b
+  [43] link        vendor-43-index.module.out-vfl5XO-vE.d1ed408d.css 2741b
+  [44] link        vendor-44-index.module.out-vflLY2ckr.153f55e4.css 1069b
+  [45] link        vendor-45-index.module.out-vflUMr4dh.1e2ff1df.css 828b
+  [46] link        vendor-46-index.module.out-vflrmfYdJ.290e4e7a.css 4391b
+  [47] link        vendor-47-index.module.out-vflL1H6-m.658a27bc.css 312b
+  [48] link        vendor-48-index.module.out-vfl94KYc_.82e784f8.css 579b
+  [49] link        vendor-49-index.module.out-vflY2AtLS.2addfba5.css 226b
+  [50] link        vendor-50-index.module.out-vflKv7C7p.084ea94b.css 163b
+  [51] link        vendor-51-index.module.out-vfliNlL3_.ce07fae6.css 5351b
+  [52] link        vendor-52-index.module.out-vfl5hFePp.479375b0.css 1007b
+  [53] link        vendor-53-index.module.out-vflJ7ev82.0525553a.css 695b
+  [54] link        vendor-54-index.module.out-vfl5ZfBNs.f3b58ff6.css 158b
+  [55] link        vendor-55-index.module.out-vfljPEVxV.05189520.css 170b
+  [56] link        vendor-56-index.module.out-vflsFxOJ9.872075b1.css 846b
+  [57] link        vendor-57-index.module.out-vfl5f-5aZ.7ddccd3c.css 1025b
+  [58] link        vendor-58-index.module.out-vfl4j_Qca.5dae0c48.css 4144b
+  [59] link        vendor-59-flip-icon-in-rtl.module.out-vflC1Eepl.01.css 305b
+  [60] link        vendor-60-scrollbar.module.out-vflADTmP_.a7e73137.css 190b
+  [61] link        vendor-61-google_one_tap-vflG7mDtj.eca6a442.css 8651b
+  [62] link        vendor-62-fingerprintjs_component-vflGut5BB.115bd2.css 384b
+  [63] link        vendor-63-index.web-vfl0PW_Eo.2f42fbdd.css     794b
+  [64] style       inline-64.css                                  484b
+  [65] style       inline-65.css                                  674b
+  [66] style       inline-66.css                                  2958b
+  [67] style       inline-67.css                                  150b
+  [68] style       inline-68.css                                  4522b
+  [69] style       inline-69.css                                  8061b
+  [70] style       inline-70.css                                  295b
+  [71] style       inline-71.css                                  95b
+  [72] style       inline-72.css                                  1980b
+  [73] style       inline-73.css                                  1252b
+  [74] style       inline-74.css                                  58b
+  [75] style       inline-75.css                                  1682b
+  [76] style       inline-76.css                                  1187b
+  [77] style       inline-77.css                                  409b
+  [78] style       inline-78.css                                  311b
+  [79] style       inline-79.css                                  855b
+  [80] style       inline-80.css                                  1050b
+  [81] style       inline-81.css                                  259b
+  [82] style       inline-82.css                                  579b
+  [83] style       inline-83.css                                  494b
+  [84] style       inline-84.css                                  8450b
+  [85] style       inline-85.css                                  447b
+  [86] style       inline-86.css                                  232b
+  [87] style       inline-87.css                                  323b
+  [88] style       inline-88.css                                  5817b
+  [89] style       inline-89.css                                  1514b
+  [90] style       inline-90.css                                  313b
+  [91] style       inline-91.css                                  889b
+  [92] style       inline-92.css                                  770b
+  [93] style       inline-93.css                                  829b
+  [94] style       inline-94.css                                  2264b
+  [95] style       inline-95.css                                  1400b
+  [96] style       inline-96.css                                  41b
+  [97] style       inline-97.css                                  37b
+  [98] style       inline-98.css                                  1056b
+  [99] style       inline-99.css                                  2045b
+  [100] style       inline-100.css                                 4229b
+  [101] style       inline-101.css                                 1192b
+  [102] style       inline-102.css                                 892b
+  [103] style       inline-103.css                                 6526b
+  [104] style       inline-104.css                                 303b
+  [105] style       inline-105.css                                 1133b
+  [106] style       inline-106.css                                 204b
+  [107] style       inline-107.css                                 189b
+  [108] style       inline-108.css                                 6591b
+  [109] style       inline-109.css                                 1560b
+  [110] style       inline-110.css                                 1070b
+  [111] style       inline-111.css                                 504b
+  [112] style       inline-112.css                                 142b
+  [113] style       inline-113.css                                 984b
+  [114] style       inline-114.css                                 2117b
+  [115] style       inline-115.css                                 4699b
+  [116] style       inline-116.css                                 295b
+  [117] style       inline-117.css                                 164b
+  [118] style       inline-118.css                                 9892b
+  [119] link        vendor-119-style.91b9ee16.css                  696b
+  [120] style       inline-120.css                                 109b
+  [121] style       inline-121.css                                 150b
+  [122] style       inline-122.css                                 1059b
+
+sanitization       :
+  runtime classes stripped     : 0
+  inline anim props stripped   : 0
+  third-party nodes dropped    : 7
+  <script>/<style> dropped     : 3/0
+
+rewrites           :
+  asset urls localised : 118
+  hrefs normalised     : 139
+  css url() localised  : 218
+
+content            : {"images":77,"links":139,"svgs":39,"videos":4,"canvases":0,"riveTargets":0,"forms":0,"iframes":0,"fadeIn":0,"swiperRoots":0,"swiperSlides":0,"tabPanes":0,"dropdowns":6}
+
+WARNING: 1 stylesheet(s) could not be localised. The page
+will render unstyled or partially styled until these are resolved —
+check scrape/asset-map.json errors and re-run `npm run scrape -- --force`.

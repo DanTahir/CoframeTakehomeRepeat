@@ -1,0 +1,44 @@
+
+> dropboxcom-1@0.1.0 analyze
+> node scripts/analyze.mjs
+
+total elements    : 1488
+head entries      : 167
+inline <style>    : 58
+inline <script>   : 32
+body top-level    : 8
+
+  iframe#ccpa-iframe._ccpa-iframe_163y6_1._banner-visible_163y6_       1 els
+  div#root                                                          1454 els
+  div#one-tap-fpjs-container                                           2 els
+  iframe                                                               1 els
+  div.dwg-modal__portal                                                1 els
+  div.dwg-modal__portal                                                1 els
+  div.dwg-modal__portal                                                1 els
+  iframe                                                               1 els
+
+--- scroll-reveal classes (added by the page's own JS while scrolling) ---
+  _cardShow_1b963_8                                           3 carrier(s)   *** GATES VISIBILITY ***
+      hidden base: ._card_1b963_1._cardEntryAnimation_1b963_1{opacity: 0;
+    transform: scale(0.8);
+    filter: blur(20px);
+    transition: all 500ms calc(150ms + var(--dwg-iteration-index, 0) * 50ms) ease-in-out;}
+  _dig-icon-rtl-mirror_1bi6h_1                                1 carrier(s)
+  _mediaContainerVisible_thadj_62                             1 carrier(s)   *** GATES VISIBILITY ***
+      hidden base: ._shareUiMedia_thadj_42{width: 595px;
+    max-width: 100%;
+    transform: translateY(300px);}
+      hidden base: ._shareUiMedia_thadj_42{max-width:100%;transform:translateY(300px);width:595px}
+  dwg-font-size--inherit                                      1 carrier(s)
+  dwg-multi-block-card-entry-animation--is-visible            9 carrier(s)   *** GATES VISIBILITY ***
+      hidden base: .dwg-multi-block-card-entry-animation{filter:blur(20px);opacity:0;transform:scale(.8);transition:all .5s calc(.15s + var(--dwg-iteration-index, 0)*50ms) ease-in-out}
+
+  3 of these GATE VISIBILITY: their base rule hides the element
+  (opacity:0 / visibility:hidden / blur / scale). Each one MUST be
+  re-applied by an effect in app/ClientRuntime.tsx — normally an
+  IntersectionObserver that adds the class when the block scrolls in.
+  Skip one and that content ships PERMANENTLY INVISIBLE: present in the
+  DOM, correctly sized, no error anywhere, section looks empty.
+  `npm run viewports` fails with `hidden-content` if you miss one.
+
+wrote C:\all\projects\CoframeTakehomeRepeat\dropboxcom-1\scrape\analysis

@@ -1,0 +1,31 @@
+/* Inline <style> block at head position 65 of the original document. */
+._feature-list_lq4mm_1 {
+    padding: unset;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+._feature-list-item_lq4mm_7 {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin-bottom: var(--spacing__unit--1);
+}
+
+._feature-list-text_lq4mm_14 {
+    margin-left: var(--spacing__unit--0_5);
+}
+
+._feature-list-item-icon_lq4mm_18 {
+    min-width: var(--spacing__unit--3);
+    color: var(--dig-color__primary__base);
+    margin-top: calc(-1 * var(--spacing__unit--0_5));
+    margin-bottom: calc(-1 * var(--spacing__unit--0_5));
+    align-self: center;
+}
+
+._feature-list-item-icon-div_lq4mm_26 {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+}

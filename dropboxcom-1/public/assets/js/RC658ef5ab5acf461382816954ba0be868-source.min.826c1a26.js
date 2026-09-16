@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC658ef5ab5acf461382816954ba0be868-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC658ef5ab5acf461382816954ba0be868-source.min.js', "twq(\"init\",\"nvx41\"),twq(\"track\",\"PageView\");");

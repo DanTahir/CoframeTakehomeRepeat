@@ -1,0 +1,15 @@
+/* Inline <style> block at head position 87 of the original document. */
+._dwg-label_14axb_1:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+._dwg-label_14axb_1:focus-visible {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}
+
+._js-focus-visible_14axb_11 ._dwg-label_14axb_1._focus-visible_14axb_11 {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}

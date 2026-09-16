@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC03456e1f187e4fef9e79cdeeb165cb12-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC03456e1f187e4fef9e79cdeeb165cb12-source.min.js', "console.debug(\"this rule does nothing\");");

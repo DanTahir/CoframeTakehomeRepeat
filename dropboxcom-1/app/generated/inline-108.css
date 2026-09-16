@@ -1,0 +1,223 @@
+/* Inline <style> block at head position 108 of the original document. */
+._dwg-plan-card-v2_j27m8_1 {
+    scroll-margin-top: var(--dwg-scroll-margin-top, 0);
+}
+
+._dwg-plan-card-v2_j27m8_1,
+._dwg-plan-card-v2__section_j27m8_6 {
+    border-radius: 12px;
+}
+
+._dwg-plan-card-v2__section--top-banner_j27m8_10 {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+._dwg-plan-cards-v2__grid_j27m8_15 {
+    padding-left: var(--dwg-spacing__unit--3);
+    padding-right: var(--dwg-spacing__unit--3);
+    gap: 24px;
+}
+
+._dwg-plan-card-v2__section_j27m8_6._dwg-plan-card-v2--dropbox-blue-100_j27m8_21 {
+    background-color: var(--dig-color__primary__surface);
+}
+
+._dwg-plan-card-v2__plan-type-label_j27m8_25 {
+    font-size: 27px;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__plan-name_j27m8_29 {
+    row-gap: var(--dwg-spacing__unit--2);
+    flex-wrap: wrap;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__plan-type-label--lime_j27m8_34 {
+    color: var(--dig-color__accent__green);
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__plan-type-label--orchid_j27m8_38 {
+    color: var(--dig-color__accent__purple);
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__plan-type-label--navy_j27m8_42 {
+    color: var(--dig-color__accent__blue);
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__plan-type-label--zen_j27m8_46 {
+    color: var(--dig-color__accent__cyan);
+}
+
+._dwg-plan-cards-v2__radio-group_j27m8_50 {
+    flex-wrap: wrap;
+    border: 0;
+    margin: 0;
+
+    /* hack to remove margin from last row/column in a wrap-able container */
+    margin-bottom: calc(0px - var(--dwg-spacing__unit--2));
+}
+
+._dwg-plan-card-v2__icon_j27m8_59 {
+    margin-top: -1px;
+}
+/**
+Max content width, taking into account of in single-column layout of the plank
+(either when in mobile widths or only 1 card)
+ */
+._dwg-plan-cards-v2_j27m8_15._dwg-plan-cards-v2--single-card_j27m8_66 {
+    max-width: 648px; /* 600px max card width + 24px padding on both sides */
+}
+
+@media (--dwg-breakpoint--tablet) {
+    ._dwg-plan-cards-v2_j27m8_15._dwg-plan-cards-v2--single-card_j27m8_66 {
+        max-width: 696px; /* 600px max card width + 48px padding on both sides */
+    }
+}
+
+/**
+ * Temporary work-arounds for height alignment
+ */
+@media (--dwg-breakpoint--tablet-lg) {
+    ._dwg-plan-card-v2__secondary-button-container_j27m8_80 {
+        min-height: 24px;
+    }
+}
+
+/* Container is only rendered when reserving space is actually needed, no breakpoint needed here */
+._dwg-plan-cards-v2_j27m8_15 ._dwg-plan-card-v2__secondary-button-container_j27m8_80 {
+    min-height: 24px;
+}
+
+._dwg-plan-cards-v2-alignable-container__placeholder_j27m8_90 {
+    visibility: hidden;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__feature-tooltip-label_j27m8_94 {
+    cursor: pointer;
+    border-bottom: 1px dashed;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__feature-row-text_j27m8_99 {
+    display: inline-flex;
+    gap: var(--dwg-spacing__unit--1);
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__feature-inline-logos_j27m8_106 {
+    display: inline-flex;
+    gap: 0;
+    align-items: center;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__feature-inline-logo_j27m8_106 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--dig-spacing__dimension__24);
+    height: var(--dig-spacing__dimension__24);
+    background: var(--dig-color__background__base);
+    border: 1px solid var(--dig-color__border__subtle);
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__feature-inline-logo-image_j27m8_124 {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__feature-inline-logo_j27m8_106 + ._dwg-plan-card-v2__feature-inline-logo_j27m8_106 {
+    margin-left: -2px;
+}
+
+._dwg-plan-card-v2_j27m8_1 ._dwg-plan-card-v2__feature-list_j27m8_134 {
+    flex: 1;
+}
+
+._dwg-plan-card-v2__dash-preview-banner_j27m8_138 {
+    list-style: none;
+    width: 100%;
+    padding: var(--dwg-spacing__unit--2) var(--dwg-spacing__unit--3);
+    background-color: var(--dig-color__primary__on-base);
+    border-top: 1px solid var(--dig-color__primary__surface);
+    border-bottom: 1px solid var(--dig-color__primary__surface);
+}
+
+._dwg-plan-card-v2__dash-preview-banner-redesigned_j27m8_147 {
+    --dig-color__icon__accent: var(--dig-color__primary__base);
+
+    box-sizing: border-box;
+    width: calc(100% + var(--dig-spacing__micro__medium) + var(--dig-spacing__micro__medium));
+    margin-inline: calc(-1 * var(--dig-spacing__micro__medium));
+    padding: var(--dig-spacing__micro__medium);
+    background-color: var(--dig-color__selection__surface);
+    border: 1px solid var(--dig-color__primary__surface--state-2);
+    border-radius: var(--dig-radius__large);
+}
+
+._dwg-plan-card-v2__dash-preview-banner-header_j27m8_159 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--dwg-spacing__unit--1);
+}
+
+._dwg-plan-card-v2__dash-preview-banner-heading_j27m8_166 {
+    margin: 0;
+    font-weight: 500;
+}
+
+._dwg-plan-card-v2__dash-preview-banner-redesigned_j27m8_147 ._dwg-plan-card-v2__dash-preview-banner-heading_j27m8_166 {
+    color: var(--dig-color__primary__base);
+    font-size: var(--dig-type__size__text__medium);
+    line-height: var(--dig-type__lineheight__label__medium);
+}
+
+._dwg-plan-card-v2__dash-preview-banner-disclosure-group_j27m8_177 {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+}
+
+._dwg-plan-card-v2__dash-preview-banner-disclosure_j27m8_177 {
+    color: var(--dig-color__text__subtle);
+    font-size: var(--dig-type__size__text__xsmall);
+    line-height: var(--dig-type__lineheight__label__xsmall);
+}
+
+._dwg-plan-card-v2__dash-preview-banner-disclosure-icon_j27m8_190 {
+    --dig-color__icon__accent: var(--dig-color__text__subtle);
+
+    color: var(--dig-color__text__subtle);
+}
+
+._dwg-plan-card-v2__dash-preview-banner-bullet_j27m8_196 {
+    font-size: var(--dig-type__size__text__medium);
+    line-height: var(--dig-type__lineheight__text__medium);
+}
+
+._dwg-plan-card-v2__dash-preview-banner-bullet-text--underlined_j27m8_201 {
+    cursor: pointer;
+    border-bottom: 1px dashed;
+}
+
+._dwg-plan-card-v2__dash-preview-banner_j27m8_138 ul {
+    margin: 0;
+    padding: 0;
+}
+
+._dwg-plan-card-v2__top-banner_j27m8_211 {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 32px;
+    padding-inline-start: var(--dwg-spacing__unit--3);
+}
+
+._dwg-plan-card-v2__top-banner-no-icon_j27m8_218 {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 32px;
+}

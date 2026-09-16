@@ -1,0 +1,12 @@
+/* Inline <style> block at head position 116 of the original document. */
+[dir='rtl'] svg._dwg-icon-rtl-mirror_1v08m_1,
+[dir='rtl'] ._dwg-icon-rtl-mirror_1v08m_1 > svg {
+    transform: scaleX(-1);
+}
+
+@supports selector(:dir(rtl)) {
+    svg._dwg-icon-rtl-mirror_1v08m_1:dir(rtl),
+    ._dwg-icon-rtl-mirror_1v08m_1:dir(rtl) > svg {
+        transform: scaleX(-1);
+    }
+}

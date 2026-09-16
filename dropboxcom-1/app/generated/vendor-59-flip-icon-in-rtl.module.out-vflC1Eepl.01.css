@@ -1,0 +1,6 @@
+/* Vendored from https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/utilities/flip-icon-in-rtl.module.out-vflC1Eepl.css
+ * url() references rewritten to local /assets paths by scripts/codegen.mjs.
+ * Cascade position 59 of the original <head>. Do not edit — `npm run codegen`.
+ */
+[dir=rtl] ._dwg-icon-rtl-mirror_1v08m_1>svg,[dir=rtl] svg._dwg-icon-rtl-mirror_1v08m_1{transform:scaleX(-1)}@supports selector(:dir(rtl)){._dwg-icon-rtl-mirror_1v08m_1:dir(rtl)>svg,svg._dwg-icon-rtl-mirror_1v08m_1:dir(rtl){transform:scaleX(-1)}}
+/*# sourceMappingURL=flip-icon-in-rtl.module.out.css.map */

@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC5525b83175274244aaf6aafb2edbd4a7-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC5525b83175274244aaf6aafb2edbd4a7-source.min.js', "(event&&event.details&&event.details.business_marketing_uid||digitalData&&digitalData.business_marketing_uid)&&(digitalData.marketing_uid=event.details.business_marketing_uid);");

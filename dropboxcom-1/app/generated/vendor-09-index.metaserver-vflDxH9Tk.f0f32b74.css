@@ -1,0 +1,162 @@
+/* Vendored from https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-fonts/index.metaserver-vflDxH9Tk.css
+ * url() references rewritten to local /assets paths by scripts/codegen.mjs.
+ * Cascade position 9 of the original <head>. Do not edit — `npm run codegen`.
+ */
+/** @generated -- This file is automatically synced from @dropbox/dig-fonts@3.0.0. DO NOT MODIFY! **/
+
+/**
+  This file should not be imported into your CSS or SASS files - the CSS variables will be available on the page for you to use.
+  (SEE #design-systems ON SLACK if you have questions)
+**/
+
+/**
+* This file is needed to comply with metaserver's CSP:
+* https://dropbox.sourcegraphcloud.com/github.com/dropbox-internal/server/-/blob/configs/security/csp/metaserver.yaml?L276#L202
+* if a way around this can be found, then this can be removed and migrated to the index.css file.
+*/
+
+/**
+ * Font: Atlas Grotesk Grotesk
+ */
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url('/assets/fonts/AtlasGrotesk-Regular-Web-vflk7bxjs.c190755f.woff2')
+      format('woff2'),
+    url('/assets/fonts/AtlasGrotesk-Regular-Web-vflyEJFZg.a40a0497.woff')
+      format('woff'),
+    url('/assets/fonts/AtlasGrotesk-Regular-Web-vflJ3txfq.cad1f201.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url('/assets/fonts/AtlasGrotesk-Regular-Italic-Web-vflOIRvCj.9e42e01e.woff2')
+      format('woff2'),
+    url('/assets/fonts/AtlasGrotesk-Regular-Italic-Web-vflDo8Kta.db2c8f2f.woff')
+      format('woff'),
+    url('/assets/fonts/AtlasGrotesk-Regular-Italic-Web-vfllxpplt.b3d637a1.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url('/assets/fonts/AtlasGrotesk-Medium-Web-vfl38XiTL.495f47e0.woff2')
+      format('woff2'),
+    url('/assets/fonts/AtlasGrotesk-Medium-Web-vflyja8tN.a6d7836e.woff')
+      format('woff'),
+    url('/assets/fonts/AtlasGrotesk-Medium-Web-vflbI0jjP.ea8a0cd9.ttf')
+      format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url('/assets/fonts/AtlasGrotesk-Medium-Italic-Web-vfliTEIPs.3c5ea8c5.woff2')
+      format('woff2'),
+    url('/assets/fonts/AtlasGrotesk-Medium-Italic-Web-vflSOoqcm.0a7d53f5.woff')
+      format('woff'),
+    url('/assets/fonts/AtlasGrotesk-Medium-Italic-Web-vflp44bwY.51f5d7a2.ttf')
+      format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+/**
+   * Font: Sharp Grotesk (Cyrillic supported)
+   */
+@font-face {
+  font-family: 'Sharp Grotesk';
+  src: url('/assets/fonts/SharpGroteskDBCyrBook20-vfl6-4ZSp.5abfcbef.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBCyrBook20-vflay0Vof.f7f6f146.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBCyrBook20-vflBru9m9.ff1404d7.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Sharp Grotesk';
+  src: url('/assets/fonts/SharpGroteskDBCyrBookItalic20-vflwCQ830.5d97b691.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBCyrBookItalic20-vflYS2fRH.b5693a1f.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBCyrBookItalic20-vflAAS2f2.22cfb0fd.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Sharp Grotesk';
+  src: url('/assets/fonts/SharpGroteskDBCyrMedium20-vflI3qtaE.a05979de.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBCyrMedium20-vflXS-0WC.bb2ff50f.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBCyrMedium20-vfls8l7-a.fb6358d8.ttf')
+      format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Sharp Grotesk';
+  src: url('/assets/fonts/SharpGroteskDBCyrMediumItalic20-vfltFffZa.3cf3f3fa.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBCyrMediumItalic20-vflYvafQB.91448c29.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBCyrMediumItalic20-vflbICI7o.544b0580.ttf')
+      format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Korean Support - Does not support italics */
+@font-face {
+  font-family: 'Sharp Grotesk KR';
+  src: url('/assets/fonts/SharpGroteskDBKO-Book20-vfl9wW8_g.46eaed14.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBKO-Book20-vfltMRUQR.ae960a21.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBKO-Book20-vflobyC-1.4360b43d.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Sharp Grotesk KR';
+  src: url('/assets/fonts/SharpGroteskDBKO-Medium20-vflHQZNTE.7c5d19cf.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBKO-Medium20-vflVZ2WV-.26e6b3a1.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBKO-Medium20-vfliXzeWX.ae302723.ttf')
+      format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+/**
+    * Thai language support
+    */
+@font-face {
+  font-family: 'Sharp Grotesk Thai';
+  src: url('/assets/fonts/SharpGroteskDBThaiBook-20-vflP_GuC6.cb7caf45.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBThaiBook-20-vflvm5YIY.27c6bb25.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBThaiBook-20-vfluZAIYj.ddf7667d.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Sharp Grotesk Thai';
+  src: url('/assets/fonts/SharpGroteskDBThaiMedium-20-vflFc-HqT.be4ae680.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBThaiMedium-20-vfl21-x5L.3c22ace2.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBThaiMedium-20-vflGNZ9CT.7d3fb796.ttf')
+      format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}

@@ -1,0 +1,38 @@
+/* Inline <style> block at head position 79 of the original document. */
+._tagRow_1b3sp_1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+._tag_1b3sp_1 {
+    display: flex;
+    align-items: center;
+    gap: var(--dig-spacing__dimension__2, 2px);
+    padding: var(--dig-spacing__dimension__4, 4px) var(--dig-spacing__dimension__6, 6px);
+    border-radius: var(--dig-spacing__dimension__4, 4px);
+}
+
+._filterRow_1b3sp_15 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+._contentColumn_1b3sp_23 {
+    max-width: 590px;
+}
+
+._releaseSection_1b3sp_27 {
+    margin-bottom: var(--dig-spacing__dimension__64, 64px);
+}
+
+._releaseSectionContent_1b3sp_31 {
+    padding-bottom: var(--dig-spacing__dimension__16, 16px);
+}
+
+._releaseSection_1b3sp_27:not(:last-child) ._releaseSectionContent_1b3sp_31 {
+    border-bottom: 1px solid var(--dig-color__border__subtle);
+}

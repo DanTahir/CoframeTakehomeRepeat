@@ -1,0 +1,17 @@
+
+> dropboxcom-1@0.1.0 capture
+> node scripts/capture.mjs
+
+capture: https://dropbox.com/
+
+--- capture summary ---
+rendered DOM      : 710351 bytes (pre-scroll, codegen source)
+scrolled DOM      : 713260 bytes
+static HTML       : 593132 bytes
+elements          : 1487
+network requests  : 344 (8 blocked)
+head stylesheets  : 65
+inline <style>    : 58 head + 0 body
+libraries detected: React
+fonts in use      : Times New Roman, Atlas Grotesk Web, Arial, Sharp Grotesk, Sharp Grotesk 23
+console errors    : 13

@@ -1,0 +1,16 @@
+/* Inline <style> block at head position 111 of the original document. */
+/* stylelint-disable custom-media-pattern */
+
+/*
+Re-defining custom-media for DWG Breakpoints here
+Should have parity with values from typescript/component_libraries/dwg-components/src/tokens/custom-media.css
+Currently CSS Modules does not support @import, so unable to import the custom media into CSS Module
+*/
+/* stylelint-enable custom-media-pattern */
+
+@media (min-width: 768px) {
+    ._dwg-rive-plank__rive-container_9c2mt_12 {
+        max-width: min(75vw, 1344px);
+        margin: 0 auto;
+    }
+}

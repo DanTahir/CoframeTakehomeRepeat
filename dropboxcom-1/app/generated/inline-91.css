@@ -1,0 +1,26 @@
+/* Inline <style> block at head position 91 of the original document. */
+._dwg-strikethrough-text_eudlz_1 {
+    appearance: none;
+    text-decoration-thickness: 2px;
+}
+._dwg-strikethrough-text_eudlz_1._dwg-strikethrough-text--has-tooltip_eudlz_5 {
+    cursor: pointer;
+    border-bottom: 1.5px dashed var(--dwg-theme__color__standard__text);
+}
+._dwg-strikethrough-text_eudlz_1:focus {
+    outline: none;
+}
+/*
+Focus Visible:
+TODO: remove this js-focus-visible polyfill code once all DBX supported browser have :focus-visible
+Do not mix :focus-visible & .focus-visible as it'll break on the older browsers
+See: https://caniuse.pp.dropbox.com/#feat=mdn-api_CSS-selectors--focus-visible
+*/
+._dwg-strikethrough-text_eudlz_1:focus-visible {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}
+._js-focus-visible_eudlz_22 ._dwg-strikethrough-text_eudlz_1._focus-visible_eudlz_15 {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}

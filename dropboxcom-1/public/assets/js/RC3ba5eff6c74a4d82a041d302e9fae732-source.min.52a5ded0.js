@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC3ba5eff6c74a4d82a041d302e9fae732-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC3ba5eff6c74a4d82a041d302e9fae732-source.min.js', "var ktag=document.createElement(\"script\");ktag.src=\"https://www.knotch-cdn.com/ktag/latest/ktag.min.js?accountId=4a897efb-0052-440f-82be-86256c8450d2\",ktag.async=!0,document.head.appendChild(ktag);");
