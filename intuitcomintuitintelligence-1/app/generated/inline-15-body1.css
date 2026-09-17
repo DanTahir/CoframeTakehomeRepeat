@@ -1,0 +1,33 @@
+/* Inline <style> block 1 from <body>; cascades after all head styles. */
+
+[class*="MSignInLinks-m-sign-in-links"][class*="MSignInLinks-is-desktop"] [class*="MSignInLinks-button"] {
+    min-width: 184px;
+    max-width: 100%;
+}
+
+[class*="S01MegaNav-main-navigation"] [class*="S01MegaNav-main-navigation-inner"] [class*="S01MegaNav-home-link"] [class*="S01MegaNav-label"][class*="S01MegaNav-theme-light"] {
+    color: #3c4348;
+}
+
+[class*="MNavigationLinkGroup-m-navigation-link-group"][class*="MNavigationLinkGroup-is-desktop"] {
+    padding-top: 0px;
+}
+
+
+@media only screen and (min-width: 1120px) {
+[class*="MGlobalNavigationBrands-top-navigation"], [class*="S01MegaNav-main-navigation"] {
+        --padding-x: 40px;
+    }
+}
+
+/*#main-navigation > div > div[class*='S01MegaNav-overlay-navigation'] > div > div[class*='S01MegaNav-overlay-navigation-wrapper'] > div[class*='S01MegaNav-mobile-submenu-section'] > div > h2 {
+display: none;
+}*/
+
+[class*="S01MegaNav-main-navigation"][class*="S01MegaNav-is-desktop"] [class*="S01MegaNav-main-navigation-inner"] [class*="S01MegaNav-home-link"] {
+    margin-right: 0px;
+}
+
+/* [class*="S01MegaNav-overlay-navigation"] [class*="S01MegaNav-brand-buttons-wrapper"] {
+    display: none;
+}*/

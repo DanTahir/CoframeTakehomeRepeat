@@ -1,0 +1,1604 @@
+#!/usr/bin/env node
+/**
+ * Stage 4 — HTML -> TSX codegen.
+ *
+ * Reads the captured rendered DOM and emits, deterministically:
+ *
+ *   app/generated/<Name>.tsx              one component per top-level block
+ *   app/generated/PageBody.tsx            composition in exact document order
+ *   app/generated/index.ts                barrel
+ *   app/generated/manifest.json           facts the test suite asserts against
+ *   app/generated/metadata.ts             <head> metadata for layout.tsx
+ *   app/generated/vendor-NN-*.css         each linked stylesheet, url()s localised
+ *   app/generated/inline-NN.css           each inline <style>, in document order
+ *   app/generated/index.css               @imports the above in EXACT head order
+ *
+ * Design notes
+ * ------------
+ * - Text nodes are emitted as string-literal expressions ({"..."}) because JSX
+ *   collapses/trims literal whitespace around newlines, which silently changes
+ *   inline layout. String literals keep U+00A0 and friends byte-exact.
+ * - SANITIZATION (this is the big difference from a static-HTML scrape): the
+ *   source is a *rendered* DOM, so it carries state the page's own JS added at
+ *   runtime — `faded-in`/`aos-animate` classes, inline `opacity: 0`, carousel
+ *   `transform`s, `swiper-initialized`. Shipping those verbatim would freeze
+ *   every entrance animation at its end state (or at invisible). They are
+ *   stripped here so the ported runtime can drive the animations from scratch,
+ *   exactly like the original page does on a fresh load.
+ * - <script> is dropped (behaviour is re-implemented in app/lib), <style> is
+ *   extracted in document order, and third-party widget containers (consent
+ *   banners, chat bubbles) are dropped by selector.
+ * - The stylesheet cascade is rebuilt from head.json rather than guessed, so
+ *   linked sheets and inline blocks interleave in true document order.
+ */
+import { mkdir, readFile, writeFile, readdir, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { parse } from 'parse5';
+import { loadConfig, paths } from './lib/config.mjs';
+
+// ---------------------------------------------------------------------------
+// parse5 helpers
+// ---------------------------------------------------------------------------
+const isEl = (n) => Boolean(n.tagName);
+const isText = (n) => n.nodeName === '#text';
+const kids = (n) => (n.childNodes ?? []).filter(isEl);
+const attrOf = (n, name) => n.attrs?.find((a) => a.name === name)?.value;
+const classesOf = (n) => (attrOf(n, 'class') ?? '').trim().split(/\s+/).filter(Boolean);
+
+function findAll(node, pred, acc = []) {
+  if (isEl(node) && pred(node)) acc.push(node);
+  for (const c of node.childNodes ?? []) findAll(c, pred, acc);
+  return acc;
+}
+
+const countElements = (node) => findAll(node, () => true).length;
+
+// Tags that carry a visual asset reference.
+const ASSET_NODE_TAGS = new Set(['img', 'source', 'video', 'picture']);
+const ASSET_NODE_ATTRS = ['src', 'srcset', 'data-src', 'data-srcset', 'poster'];
+
+/**
+ * Count nodes that actually reference a visual asset. Used to detect a static
+ * (pre-JS) response that is missing images a client component injects after
+ * hydration -- see the AUTO_STATIC_MIN_ASSET_RATIO rationale in main().
+ */
+const countAssetNodes = (node) =>
+  findAll(
+    node,
+    (n) =>
+      ASSET_NODE_TAGS.has(n.tagName) &&
+      (n.attrs ?? []).some(
+        (a) => ASSET_NODE_ATTRS.includes(a.name) && String(a.value ?? '').trim() !== '',
+      ),
+  ).length;
+
+// ---------------------------------------------------------------------------
+// Minimal CSS-selector matcher (parse5 has no querySelector)
+// Supports: tag, #id, .class, [attr], [attr=v], [attr*=v], [attr^=v], [attr$=v]
+// and any concatenation of those, e.g. `iframe[src*="hubspot"]`.
+// ---------------------------------------------------------------------------
+function parseSelector(sel) {
+  const parts = { tag: null, id: null, classes: [], attrs: [] };
+  const re = /([a-zA-Z][\w-]*)|#([\w-]+)|\.([\w-]+)|\[([\w-]+)(?:([*^$~|]?=)["']?([^"'\]]*)["']?)?\]/g;
+  let m;
+  let matchedAny = false;
+  while ((m = re.exec(sel))) {
+    matchedAny = true;
+    if (m[1]) parts.tag = m[1].toLowerCase();
+    else if (m[2]) parts.id = m[2];
+    else if (m[3]) parts.classes.push(m[3]);
+    else if (m[4]) parts.attrs.push({ name: m[4], op: m[5] ?? null, value: m[6] ?? null });
+  }
+  return matchedAny ? parts : null;
+}
+
+function matchesSelector(node, parsed) {
+  if (!parsed) return false;
+  if (parsed.tag && node.tagName !== parsed.tag) return false;
+  if (parsed.id && attrOf(node, 'id') !== parsed.id) return false;
+  if (parsed.classes.length) {
+    const cls = classesOf(node);
+    if (!parsed.classes.every((c) => cls.includes(c))) return false;
+  }
+  for (const a of parsed.attrs) {
+    const val = attrOf(node, a.name);
+    if (val === undefined) return false;
+    if (!a.op) continue;
+    switch (a.op) {
+      case '=': if (val !== a.value) return false; break;
+      case '*=': if (!val.includes(a.value)) return false; break;
+      case '^=': if (!val.startsWith(a.value)) return false; break;
+      case '$=': if (!val.endsWith(a.value)) return false; break;
+      case '~=': if (!val.split(/\s+/).includes(a.value)) return false; break;
+      case '|=': if (val !== a.value && !val.startsWith(`${a.value}-`)) return false; break;
+      default: break;
+    }
+  }
+  return true;
+}
+
+// ---------------------------------------------------------------------------
+// URL rewriting
+// ---------------------------------------------------------------------------
+let assetMap = {};
+let assetEntries = [];
+let cfg;
+
+/**
+ * Exact-match rewrite of a scraped asset URL to its local public path.
+ * `base` is the URL the ref should be resolved against — for refs found inside
+ * a stylesheet that MUST be the stylesheet's own URL, since `url(../x.woff2)`
+ * in a sheet at /static/css/a.css means /static/x.woff2, not /../x.woff2.
+ */
+function localAsset(url, base) {
+  if (!url) return null;
+  const direct = assetMap[url];
+  if (direct) return direct;
+  // Sites routinely mix apex and www hosts between markup and the requests the
+  // browser actually made (rust-lang.org declares <link rel=icon> on the apex
+  // host while serving the page from www.), so a same-origin asset must not be
+  // missed over a host alias — that silently drops a file already on disk.
+  const hostAliases = (u) => {
+    const out = [u];
+    try {
+      const parsed = new URL(u);
+      const alt = new URL(u);
+      alt.hostname = parsed.hostname.startsWith('www.')
+        ? parsed.hostname.slice(4)
+        : `www.${parsed.hostname}`;
+      out.push(alt.href);
+    } catch { /* relative ref — nothing to alias */ }
+    return out;
+  };
+
+  const candidates = [
+    url.replace(/^http:/, 'https:'),
+    url.replace(/^https:/, 'http:'),
+    url.startsWith('//') ? `https:${url}` : null,
+    url.split('#')[0],
+  ]
+    .filter(Boolean)
+    .flatMap(hostAliases);
+  for (const alt of candidates) if (assetMap[alt]) return assetMap[alt];
+
+  // Absolutise a relative ref against the given base (default: the page) and retry.
+  try {
+    const abs = new URL(url, base ?? cfg.targetUrl).href;
+    for (const alt of [...hostAliases(abs), ...hostAliases(abs.split('#')[0])]) {
+      if (assetMap[alt]) return assetMap[alt];
+    }
+  } catch { /* not a URL */ }
+  return null;
+}
+
+/** Rewrite every known asset URL appearing anywhere inside a text blob. */
+function rewriteUrlsInText(text) {
+  let out = text;
+  for (const [remote, local] of assetEntries) {
+    if (out.includes(remote)) out = out.split(remote).join(local);
+  }
+  return out;
+}
+
+let cssUrlsRewritten = 0;
+const cssUrlMisses = [];
+
+/**
+ * Rewrite `url(...)` and `@import '...'` targets inside a stylesheet.
+ *
+ * This exists because rewriteUrlsInText() can only match FULL absolute URLs,
+ * but real stylesheets overwhelmingly reference assets root-relatively
+ * (`url(/static/fonts/x.woff2)`) or sheet-relatively (`url(../fonts/x.woff2)`).
+ * Those never match an absolute asset-map key, so without this pass every
+ * webfont and CSS background silently 404s against localhost while the files
+ * sit correctly downloaded in public/assets. Resolution is done against the
+ * sheet's own URL so relative refs land where the browser would put them.
+ */
+function rewriteCssUrls(text, baseUrl) {
+  const rewriteRef = (ref) => {
+    const trimmed = ref.trim();
+    // data:/about:/blob: are self-contained; bare #fragments are SVG-local refs.
+    if (!trimmed || /^(data:|about:|blob:|#)/i.test(trimmed)) return null;
+    const local = localAsset(trimmed, baseUrl);
+    if (local) {
+      cssUrlsRewritten += 1;
+      return local;
+    }
+    // Only flag refs that were actually meant to be fetched over the network.
+    if (/^(https?:)?\/\//i.test(trimmed) || trimmed.startsWith('/') || /\.\.?\//.test(trimmed)) {
+      cssUrlMisses.push(trimmed);
+    }
+    return null;
+  };
+
+  let out = text.replace(
+    /url\(\s*(['"]?)([^'")]+)\1\s*\)/gi,
+    (match, quote, ref) => {
+      const local = rewriteRef(ref);
+      return local ? `url(${quote}${local}${quote})` : match;
+    },
+  );
+
+  out = out.replace(
+    /@import\s+(['"])([^'"]+)\1/gi,
+    (match, quote, ref) => {
+      const local = rewriteRef(ref);
+      return local ? `@import ${quote}${local}${quote}` : match;
+    },
+  );
+
+  return out;
+}
+
+const ASSETY_ATTRS = new Set([
+  'src', 'poster', 'data-src', 'data-rive-url', 'data-poster', 'data-bg',
+  'data-background', 'data-video', 'data-lottie', 'data-animation-url', 'content',
+]);
+
+/**
+ * Normalise a link target so every navigation leaves the replica and lands on
+ * the real site (per the brief: one page is replicated, not the whole site).
+ * Same-page #anchors stay local so in-page scrolling still works.
+ */
+function rewriteHref(value) {
+  const v = (value ?? '').trim();
+  const site = cfg.origin;
+  if (cfg.links === 'preserve') return v;
+  if (!v) return `${site}/`;
+  if (v.startsWith('#')) return v;
+  if (/^(mailto:|tel:|sms:|javascript:|data:)/i.test(v)) return v;
+  if (v.startsWith('//')) return `https:${v}`;
+  if (/^https?:\/\//i.test(v)) return v;
+  if (v.startsWith('/')) return site + v;
+  return `${site}/${v}`;
+}
+
+// ---------------------------------------------------------------------------
+// HTML attribute name -> React prop name
+// ---------------------------------------------------------------------------
+const ATTR_RENAME = {
+  class: 'className',
+  for: 'htmlFor',
+  srcset: 'srcSet',
+  tabindex: 'tabIndex',
+  readonly: 'readOnly',
+  maxlength: 'maxLength',
+  // HTML spells it all-lowercase; React's prop is camelCase. Without this the
+  // attribute survives as `fetchpriority` and fails with TS2322 ("Property
+  // 'fetchpriority' does not exist"). React renders `fetchPriority` back out as
+  // the lowercase DOM attribute, so the emitted HTML is unchanged.
+  fetchpriority: 'fetchPriority',
+  minlength: 'minLength',
+  autocomplete: 'autoComplete',
+  autocapitalize: 'autoCapitalize',
+  autocorrect: 'autoCorrect',
+  autofocus: 'autoFocus',
+  autoplay: 'autoPlay',
+  playsinline: 'playsInline',
+  crossorigin: 'crossOrigin',
+  colspan: 'colSpan',
+  rowspan: 'rowSpan',
+  cellpadding: 'cellPadding',
+  cellspacing: 'cellSpacing',
+  usemap: 'useMap',
+  frameborder: 'frameBorder',
+  allowfullscreen: 'allowFullScreen',
+  contenteditable: 'contentEditable',
+  spellcheck: 'spellCheck',
+  novalidate: 'noValidate',
+  enctype: 'encType',
+  acceptcharset: 'acceptCharset',
+  datetime: 'dateTime',
+  hreflang: 'hrefLang',
+  referrerpolicy: 'referrerPolicy',
+  inputmode: 'inputMode',
+  itemprop: 'itemProp',
+  itemscope: 'itemScope',
+  itemtype: 'itemType',
+  srcdoc: 'srcDoc',
+  formaction: 'formAction',
+  formnovalidate: 'formNoValidate',
+  marginwidth: 'marginWidth',
+  marginheight: 'marginHeight',
+  // SVG
+  viewbox: 'viewBox',
+  preserveaspectratio: 'preserveAspectRatio',
+  'stroke-width': 'strokeWidth',
+  'stroke-linecap': 'strokeLinecap',
+  'stroke-linejoin': 'strokeLinejoin',
+  'stroke-dasharray': 'strokeDasharray',
+  'stroke-dashoffset': 'strokeDashoffset',
+  'stroke-opacity': 'strokeOpacity',
+  'stroke-miterlimit': 'strokeMiterlimit',
+  'fill-rule': 'fillRule',
+  'fill-opacity': 'fillOpacity',
+  'clip-rule': 'clipRule',
+  'clip-path': 'clipPath',
+  'stop-color': 'stopColor',
+  'stop-opacity': 'stopOpacity',
+  gradientunits: 'gradientUnits',
+  gradienttransform: 'gradientTransform',
+  patternunits: 'patternUnits',
+  patterncontentunits: 'patternContentUnits',
+  patterntransform: 'patternTransform',
+  maskunits: 'maskUnits',
+  maskcontentunits: 'maskContentUnits',
+  markerwidth: 'markerWidth',
+  markerheight: 'markerHeight',
+  markerstart: 'markerStart',
+  markerend: 'markerEnd',
+  markermid: 'markerMid',
+  'text-anchor': 'textAnchor',
+  'dominant-baseline': 'dominantBaseline',
+  'alignment-baseline': 'alignmentBaseline',
+  'font-family': 'fontFamily',
+  'font-size': 'fontSize',
+  'font-weight': 'fontWeight',
+  'font-style': 'fontStyle',
+  'letter-spacing': 'letterSpacing',
+  'paint-order': 'paintOrder',
+  'color-interpolation-filters': 'colorInterpolationFilters',
+  'shape-rendering': 'shapeRendering',
+  'text-rendering': 'textRendering',
+  'vector-effect': 'vectorEffect',
+  'xlink:href': 'xlinkHref',
+  'xlink:title': 'xlinkTitle',
+  'xml:space': 'xmlSpace',
+  'xml:lang': 'xmlLang',
+  'xmlns:xlink': 'xmlnsXlink',
+  baseprofile: 'baseProfile',
+  clippathunits: 'clipPathUnits',
+  filterunits: 'filterUnits',
+  primitiveunits: 'primitiveUnits',
+  spreadmethod: 'spreadMethod',
+  stddeviation: 'stdDeviation',
+  numoctaves: 'numOctaves',
+  basefrequency: 'baseFrequency',
+  tablevalues: 'tableValues',
+  startoffset: 'startOffset',
+  keytimes: 'keyTimes',
+  keysplines: 'keySplines',
+  repeatcount: 'repeatCount',
+  repeatdur: 'repeatDur',
+  calcmode: 'calcMode',
+  attributename: 'attributeName',
+  attributetype: 'attributeType',
+};
+
+/** Attributes React treats as booleans when present. */
+const BOOLEAN_ATTRS = new Set([
+  'disabled', 'checked', 'readOnly', 'required', 'multiple', 'selected',
+  'autoFocus', 'autoPlay', 'controls', 'loop', 'muted', 'playsInline',
+  'noValidate', 'allowFullScreen', 'default', 'reversed', 'async', 'defer',
+  'hidden', 'open', 'itemScope', 'formNoValidate', 'inert',
+]);
+
+/**
+ * Props React's TS definitions type as `number`, not `string`. HTML carries
+ * them as strings, so they must be emitted as `{256}` or `tsc --noEmit` fails
+ * with TS2322. Only coerced when the value really is numeric, so SVG
+ * `width="100%"` stays a string.
+ */
+const NUMERIC_ATTRS = new Set([
+  'maxLength', 'minLength', 'tabIndex', 'colSpan', 'rowSpan', 'size', 'span',
+  'start', 'cols', 'rows',
+  // The numeric ARIA attributes. React's types declare these as `number` even
+  // though ARIA serialises them as strings, so a captured `aria-posinset="1"`
+  // fails with TS2322 ("Type 'string' is not assignable to type 'number'")
+  // unless it is emitted as `aria-posinset={1}`. These reach this check under
+  // their original dashed names, which is why they are listed dashed here.
+  'aria-posinset', 'aria-setsize', 'aria-level',
+  'aria-colcount', 'aria-colindex', 'aria-colspan',
+  'aria-rowcount', 'aria-rowindex', 'aria-rowspan',
+  'aria-valuemax', 'aria-valuemin', 'aria-valuenow',
+]);
+
+const VOID_ELEMENTS = new Set([
+  'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link',
+  'meta', 'param', 'source', 'track', 'wbr',
+]);
+
+/** Elements whose `value`/`checked` must become default* to stay uncontrolled. */
+const FORM_VALUE_TAGS = new Set(['input', 'textarea', 'select']);
+
+/**
+ * Attributes React rejects outright on DOM elements.
+ *
+ * `pricingcontext` / `ssrcontext` are server-side-rendering hints emitted by the
+ * vendor's own nav component. They are dashless and non-standard, so they are not
+ * covered by the `data-`/`aria-` passthrough and React's element prop types reject
+ * them (TS2322: "Property 'pricingcontext' does not exist on type
+ * 'DetailedHTMLProps<AnchorHTMLAttributes<...>>'"). Nothing in a static replica
+ * consumes them -- no CSS selector and no ported script reads either one -- so
+ * dropping them changes no pixel, exactly as with the lowercase `on*` handlers.
+ *
+ * `externaldata` / `urlparamsprops` are the same story, but they are junk on the live site
+ * too: the vendor stringifies an object into each one, so they arrive in the captured HTML
+ * as the literal, useless text "[object Object]". No CSS attribute selector reads any of
+ * these four names (verified against the captured stylesheets), so all four are
+ * pixel-neutral drops.
+ */
+const DROP_ATTRS = new Set([
+  'xmlns:svgjs',
+  'pricingcontext', 'ssrcontext', 'externaldata', 'urlparamsprops',
+]);
+
+/**
+ * Attributes dropped only on a specific element, where the same attribute is legitimate
+ * elsewhere and so must NOT go in the global set above.
+ *
+ * `<picture width height>`: the live markup carries them, but they are not valid HTML on
+ * `<picture>` (the sizing belongs on the inner `<img>`, which carries its own copy) and
+ * React types the element as plain `HTMLAttributes<HTMLElement>`, so they fail with TS2322
+ * ("Property 'width' does not exist"). Browsers ignore them there, and the captured CSS has
+ * no `[width]`/`[height]` selector, so dropping them is pixel-neutral -- whereas dropping
+ * `width`/`height` globally would break every real `<img>`/`<video>`/SVG that needs them.
+ */
+const DROP_ATTRS_BY_TAG = {
+  picture: new Set(['width', 'height']),
+};
+
+function cssPropToCamel(prop) {
+  const p = prop.trim();
+  // CSS custom property: keep verbatim. React hands unknown `--*` keys to
+  // `style.setProperty`, so this is correct at runtime — but csstype's
+  // `Properties` has no index signature, so the emitted object literal needs
+  // the module augmentation in `types/css-custom-properties.d.ts` to satisfy
+  // `tsc` (otherwise: TS2353 "'--foo' does not exist in type 'Properties'").
+  if (p.startsWith('--')) return p;
+  if (p.startsWith('-')) {
+    const parts = p.slice(1).split('-');
+    return (
+      parts[0].charAt(0).toUpperCase() +
+      parts[0].slice(1) +
+      parts.slice(1).map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join('')
+    );
+  }
+  return p.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+}
+
+/** Split a declaration list on ';' that is not inside url(...)/rgba(...). */
+function splitDeclarations(value) {
+  const out = [];
+  let depth = 0;
+  let current = '';
+  for (const ch of value) {
+    if (ch === '(') depth += 1;
+    if (ch === ')') depth -= 1;
+    if (ch === ';' && depth === 0) {
+      out.push(current);
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  out.push(current);
+  return out;
+}
+
+let strippedInlineStyleProps = 0;
+
+/**
+ * "color:red;top:0" -> `{{ color: "red", top: "0" }}` source text.
+ * Runtime-animation properties are dropped here (see sanitize rationale).
+ */
+function styleAttrToObject(value) {
+  const stripProps = new Set(cfg.codegen.stripInlineStyleProps.map((p) => p.toLowerCase()));
+  const pairs = [];
+  for (const raw of splitDeclarations(value)) {
+    const decl = raw.trim();
+    if (!decl) continue;
+    const idx = decl.indexOf(':');
+    if (idx <= 0) continue;
+    const prop = decl.slice(0, idx).trim();
+    if (stripProps.has(prop.toLowerCase())) {
+      strippedInlineStyleProps += 1;
+      continue;
+    }
+    const val = rewriteUrlsInText(decl.slice(idx + 1).trim()).replace(/\s*!important\s*$/i, '');
+    const key = cssPropToCamel(prop);
+    const keySrc = /^[A-Za-z][A-Za-z0-9]*$/.test(key) ? key : JSON.stringify(key);
+    pairs.push(`${keySrc}: ${JSON.stringify(val)}`);
+  }
+  return pairs.length ? `{{ ${pairs.join(', ')} }}` : null;
+}
+
+function rewriteSrcset(value) {
+  return value
+    .split(',')
+    .map((part) => {
+      const trimmed = part.trim();
+      if (!trimmed) return null;
+      const [url, ...rest] = trimmed.split(/\s+/);
+      const local = localAsset(url) ?? url;
+      return [local, ...rest].join(' ');
+    })
+    .filter(Boolean)
+    .join(', ');
+}
+
+// ---------------------------------------------------------------------------
+// Stats
+// ---------------------------------------------------------------------------
+const stats = {
+  dropped: { script: 0, style: 0, comment: 0, noscript: 0, thirdParty: 0 },
+  rewritten: { asset: 0, href: 0 },
+  strippedClasses: 0,
+  strippedInlineStyleProps: 0,
+  emptiedRuntimeHosts: 0,
+  emptiedRuntimeNodes: 0,
+  unwrappedRuntimeWrappers: 0,
+  fadeIn: 0,
+  swiperRoots: 0,
+  swiperSlides: 0,
+  tabPanes: 0,
+  dropdowns: 0,
+  canvases: 0,
+  riveTargets: 0,
+  videos: 0,
+  iframes: 0,
+  forms: 0,
+  images: 0,
+  links: 0,
+  svgs: 0,
+};
+
+// ---------------------------------------------------------------------------
+// Sanitization of the rendered DOM
+// ---------------------------------------------------------------------------
+/**
+ * Removes runtime state the page's own JS added after load. Without this the
+ * replica ships with entrance animations already "played" (or stuck at
+ * opacity:0) and carousels frozen mid-transform.
+ */
+function sanitizeTree(root) {
+  const dropParsed = cfg.codegen.dropSelectors.map(parseSelector).filter(Boolean);
+  const emptyParsed = cfg.codegen.emptySelectors.map(parseSelector).filter(Boolean);
+  const unwrapParsed = cfg.codegen.unwrapSelectors.map(parseSelector).filter(Boolean);
+  const stripClasses = new Set(cfg.codegen.stripClasses);
+  const keepClasses = new Set(cfg.codegen.keepClasses);
+
+  /** Strip runtime-added classes from one element, dropping an emptied attr. */
+  const stripClassesOn = (el) => {
+    const clsAttr = el.attrs?.find((a) => a.name === 'class');
+    if (!clsAttr) return;
+    const before = clsAttr.value.trim().split(/\s+/).filter(Boolean);
+    const after = before.filter((c) => keepClasses.has(c) || !stripClasses.has(c));
+    if (after.length !== before.length) stats.strippedClasses += before.length - after.length;
+    if (after.length) clsAttr.value = after.join(' ');
+    else el.attrs = el.attrs.filter((a) => a.name !== 'class');
+  };
+
+  const walk = (node) => {
+    const children = [...(node.childNodes ?? [])];
+    for (const child of children) {
+      if (!isEl(child)) continue;
+
+      // Third-party widget/consent containers: remove entirely.
+      if (dropParsed.some((p) => matchesSelector(child, p))) {
+        if (child.tagName !== 'script' && child.tagName !== 'noscript') {
+          stats.dropped.thirdParty += 1;
+          node.childNodes = node.childNodes.filter((c) => c !== child);
+          continue;
+        }
+      }
+
+      // Runtime clone HOST: ship it empty. The capture caught whatever clones
+      // the page's JS happened to have appended; keeping them means the replica
+      // renders a frozen copy of a transient animation node forever, on top of
+      // the ones its own runtime creates.
+      if (emptyParsed.some((p) => matchesSelector(child, p))) {
+        if (child.childNodes?.length) {
+          stats.emptiedRuntimeHosts += 1;
+          // countElements includes `child` itself; descendants is that minus one.
+          stats.emptiedRuntimeNodes += Math.max(0, countElements(child) - 1);
+          child.childNodes = [];
+        }
+        // Inline geometry/positioning on a pure runtime host is runtime state.
+        if (child.attrs?.some((a) => a.name === 'style')) {
+          child.attrs = child.attrs.filter((a) => a.name !== 'style');
+        }
+        stripClassesOn(child);
+        continue; // nothing left to recurse into
+      }
+
+      // Runtime-generated WRAPPER: replace it with its own children, so the
+      // authored text/markup underneath is restored to its pristine shape and
+      // the site's own JS can re-split it at runtime.
+      if (unwrapParsed.some((p) => matchesSelector(child, p))) {
+        const idx = node.childNodes.indexOf(child);
+        const kids = child.childNodes ?? [];
+        for (const k of kids) k.parentNode = node;
+        node.childNodes.splice(idx, 1, ...kids);
+        stats.unwrappedRuntimeWrappers += 1;
+        // The promoted children were not in this loop's snapshot, so walk them
+        // explicitly (a wrapper may itself contain wrappers).
+        for (const k of kids) if (isEl(k)) walk(k);
+        continue;
+      }
+
+      stripClassesOn(child);
+
+      // Webflow/GSAP leave inline `style` residue; the style serializer strips
+      // the animation props, and an emptied style attr is dropped there too.
+      walk(child);
+    }
+  };
+
+  walk(root);
+}
+
+// ---------------------------------------------------------------------------
+// JSX serialisation
+// ---------------------------------------------------------------------------
+function serializeAttrs(node) {
+  const out = [];
+  for (const attr of node.attrs ?? []) {
+    const { value } = attr;
+
+    // parse5 splits namespaced attributes on foreign content (SVG/MathML) into
+    // `prefix` + `name`, so `xmlns:xlink="..."` arrives as
+    // `{ prefix: 'xmlns', name: 'xlink' }`. Looking up only `name` therefore
+    // missed every namespaced entry in ATTR_RENAME / DROP_ATTRS, and the bare
+    // `xlink`/`space` names fell through as invalid React props (TS2322:
+    // "Property 'xlink' does not exist on type 'SVGProps<SVGSVGElement>'").
+    // Reconstruct the qualified name so those table entries are reachable.
+    const name = attr.prefix ? `${attr.prefix}:${attr.name}` : attr.name;
+
+    if (DROP_ATTRS.has(name)) continue;
+
+    if (DROP_ATTRS_BY_TAG[node.tagName]?.has(name)) {
+      stats.dropped.tagScopedAttr = (stats.dropped.tagScopedAttr ?? 0) + 1;
+      continue;
+    }
+
+    // Inline event-handler content attributes (onclick, onloadeddata, ...).
+    // HTML spells these all-lowercase, while React's equivalents are camelCase
+    // props (onClick / onLoadedData) -- so a lowercase `on*` attribute can
+    // never be a valid React prop. Emitting one breaks the build (TS2322:
+    // "Property 'onloadeddata' does not exist on type ...") or, when TS does
+    // tolerate it, makes React DEV log "Unknown event handler property" via
+    // console.error, which viewport-check's console-errors gate has no
+    // baseline path for. The handler is dead weight in a React render anyway
+    // (its script never runs), so dropping it changes no pixel. Requires at
+    // least one letter after `on`, leaving AMP-style bare `on="tap:..."` alone.
+    if (/^on[a-z]+$/.test(name)) {
+      stats.dropped.eventHandlerAttr = (stats.dropped.eventHandlerAttr ?? 0) + 1;
+      continue;
+    }
+
+    if (name === 'style') {
+      const obj = styleAttrToObject(value);
+      if (obj) out.push(`style=${obj}`);
+      continue;
+    }
+
+    // parse5 applies the HTML spec's "adjust SVG attributes" table, so foreign
+    // content arrives ALREADY camelCased (`viewBox`, `preserveAspectRatio`,
+    // `gradientTransform`, ...). A case-SENSITIVE lookup misses those (the map
+    // is keyed lowercase), and the guard further down would then lowercase them
+    // back into invalid React props -- emitting `viewbox` and breaking every
+    // inline SVG. Look the name up case-insensitively so both spellings hit.
+    const renamed = ATTR_RENAME[name] ?? ATTR_RENAME[name.toLowerCase()];
+    let propName = renamed ?? name;
+    let propValue = value;
+
+    if (name === 'srcset' || name === 'imagesrcset') {
+      propValue = rewriteSrcset(value);
+      stats.rewritten.asset += 1;
+    } else if (name === 'href') {
+      const local = localAsset(value);
+      if (local) {
+        propValue = local;
+        stats.rewritten.asset += 1;
+      } else {
+        propValue = rewriteHref(value);
+        stats.rewritten.href += 1;
+      }
+    } else if (ASSETY_ATTRS.has(name)) {
+      const local = localAsset(value);
+      if (local) {
+        propValue = local;
+        stats.rewritten.asset += 1;
+      }
+    }
+
+    if (FORM_VALUE_TAGS.has(node.tagName)) {
+      if (propName === 'value') propName = 'defaultValue';
+      if (propName === 'checked') propName = 'defaultChecked';
+    }
+
+    // React refuses unknown camelCase-ish attrs; data-*/aria-* are always fine.
+    if (!/^(data-|aria-)/.test(propName) && /[A-Z]/.test(propName) && !renamed && name === propName) {
+      propName = propName.toLowerCase();
+    }
+
+    if (BOOLEAN_ATTRS.has(propName)) {
+      out.push(propValue === 'false' ? `${propName}={false}` : `${propName}`);
+      continue;
+    }
+
+    if (NUMERIC_ATTRS.has(propName) && /^-?\d+(\.\d+)?$/.test(propValue.trim())) {
+      out.push(`${propName}={${propValue.trim()}}`);
+      continue;
+    }
+
+    // A JSX double-quoted attribute value is HTML-like, NOT a JS string literal:
+    // backslash escapes are not honoured inside it. So JSON.stringify's output for a
+    // value containing quotes (e.g. the JSON in `data-brand-tracking`) is a syntax
+    // error -- TS1127 "Invalid character" on the backslash, then the following `"`
+    // terminates the value early and the remainder of the tag (`}`, `>`, and all of
+    // the element's children) cascades into bogus tokens, taking out the enclosing
+    // element with TS17002 "Expected corresponding JSX closing tag".
+    // Emitting such values as a JSX expression container fixes it, because there the
+    // very same JSON.stringify output *is* a valid JS string literal.
+    if (/["\\]/.test(propValue)) {
+      out.push(`${propName}={${JSON.stringify(propValue)}}`);
+      continue;
+    }
+
+    out.push(`${propName}=${JSON.stringify(propValue)}`);
+  }
+  return out;
+}
+
+function collectStats(node) {
+  const cls = classesOf(node);
+  if (cls.includes('fade-in') || attrOf(node, 'data-aos') || attrOf(node, 'data-animate')) stats.fadeIn += 1;
+  if (cls.includes('swiper') || cls.some((c) => c.startsWith('swiper-container'))) stats.swiperRoots += 1;
+  if (cls.includes('swiper-slide')) stats.swiperSlides += 1;
+  if (cls.includes('w-tab-pane') || attrOf(node, 'role') === 'tabpanel') stats.tabPanes += 1;
+  if (cls.includes('w-dropdown') || attrOf(node, 'aria-haspopup')) stats.dropdowns += 1;
+  if (node.tagName === 'canvas') stats.canvases += 1;
+  if (attrOf(node, 'data-rive-url') || attrOf(node, 'data-animation-type') === 'rive') stats.riveTargets += 1;
+  if (node.tagName === 'video') stats.videos += 1;
+  if (node.tagName === 'iframe') stats.iframes += 1;
+  if (node.tagName === 'form') stats.forms += 1;
+  if (node.tagName === 'img') stats.images += 1;
+  if (node.tagName === 'a') stats.links += 1;
+  if (node.tagName === 'svg') stats.svgs += 1;
+}
+
+const inlineStylesFromBody = [];
+
+/**
+ * Hrefs (pre-rewrite) of stylesheets linked from <body>. Sites routinely link a
+ * page-specific sheet just before their scripts instead of in <head>. Those
+ * sheets belong to the cascade emitStyles rebuilds, so the <link> tag itself is
+ * dropped from the JSX and the sheet is vendored with its url() refs rewritten
+ * to local /assets paths. Keeping the tag loaded the captured file verbatim,
+ * which is how a replica ends up re-fetching the origin CDN's webfonts.
+ */
+const bodyLinksFromMarkup = [];
+
+/** Serialise a parse5 node subtree to JSX source lines. */
+function toJsx(node, depth, lines) {
+  const pad = '  '.repeat(depth);
+
+  if (isText(node)) {
+    const text = node.value ?? '';
+    if (text === '') return;
+    lines.push(`${pad}{${JSON.stringify(text)}}`);
+    return;
+  }
+
+  if (node.nodeName === '#comment') {
+    stats.dropped.comment += 1;
+    return;
+  }
+
+  if (!isEl(node)) return;
+
+  const tag = node.tagName;
+
+  if (tag === 'script') {
+    stats.dropped.script += 1;
+    return;
+  }
+  if (tag === 'style') {
+    inlineStylesFromBody.push((node.childNodes ?? []).filter(isText).map((t) => t.value).join(''));
+    stats.dropped.style += 1;
+    return;
+  }
+  if (tag === 'noscript') {
+    stats.dropped.noscript += 1;
+    return;
+  }
+  if (tag === 'link') {
+    const rel = (attrOf(node, 'rel') ?? '').toLowerCase().split(/\s+/);
+    const as = (attrOf(node, 'as') ?? '').toLowerCase();
+    // Body-linked stylesheets are emitted into the rebuilt cascade instead
+    // (see bodyLinksFromMarkup), and a preload for a sheet that is now
+    // @imported -- or for a script that was dropped -- is a pure wasted fetch.
+    if (rel.includes('stylesheet')) {
+      const href = attrOf(node, 'href');
+      if (href) bodyLinksFromMarkup.push(href);
+      stats.dropped.stylesheetLink = (stats.dropped.stylesheetLink ?? 0) + 1;
+      return;
+    }
+    if (as === 'style' || as === 'script') {
+      stats.dropped.stylesheetLink = (stats.dropped.stylesheetLink ?? 0) + 1;
+      return;
+    }
+  }
+  if (tag === 'template') {
+    // parse5 puts template contents in `.content`; React can't render them.
+    return;
+  }
+
+  collectStats(node);
+
+  const attrs = serializeAttrs(node);
+  const children = (node.childNodes ?? []).filter(
+    (c) => isEl(c) || (isText(c) && (c.value ?? '') !== ''),
+  );
+
+  const attrsInline = attrs.length ? ' ' + attrs.join(' ') : '';
+  const isVoid = VOID_ELEMENTS.has(tag);
+
+  if (isVoid || children.length === 0) {
+    if (attrsInline.length > 100) {
+      lines.push(`${pad}<${tag}`);
+      for (const a of attrs) lines.push(`${pad}  ${a}`);
+      lines.push(`${pad}/>`);
+    } else {
+      lines.push(`${pad}<${tag}${attrsInline} />`);
+    }
+    return;
+  }
+
+  if (attrsInline.length > 100) {
+    lines.push(`${pad}<${tag}`);
+    for (const a of attrs) lines.push(`${pad}  ${a}`);
+    lines.push(`${pad}>`);
+  } else {
+    lines.push(`${pad}<${tag}${attrsInline}>`);
+  }
+  for (const c of children) toJsx(c, depth + 1, lines);
+  lines.push(`${pad}</${tag}>`);
+}
+
+// ---------------------------------------------------------------------------
+// Component naming
+// ---------------------------------------------------------------------------
+function pascal(input) {
+  const cleaned = (input ?? '').replace(/[^A-Za-z0-9]+/g, ' ').trim();
+  if (!cleaned) return '';
+  return cleaned
+    .split(/\s+/)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join('')
+    .slice(0, 40);
+}
+
+function componentName(node, usedNames) {
+  const ignored = new Set(cfg.codegen.ignoredNameClasses);
+  let base = pascal(attrOf(node, 'id'));
+
+  if (!base) {
+    const cls = classesOf(node).filter((c) => !ignored.has(c) && !/^(cc|w)-/.test(c));
+    if (cls.length) base = pascal(cls[0]);
+  }
+  if (!base) {
+    const aria = attrOf(node, 'aria-label') ?? attrOf(node, 'data-section');
+    if (aria) base = pascal(aria);
+  }
+  if (!base) base = pascal(node.tagName);
+  if (!base) base = 'Block';
+  if (/^\d/.test(base)) base = `S${base}`;
+  if (!/Section$/.test(base)) base += 'Section';
+
+  let name = base;
+  let n = 2;
+  while (usedNames.has(name)) {
+    name = `${base}${n}`;
+    n += 1;
+  }
+  usedNames.add(name);
+  return name;
+}
+
+// ---------------------------------------------------------------------------
+// Stylesheet cascade reconstruction
+// ---------------------------------------------------------------------------
+/**
+ * Rebuilds the exact cascade from head.json: linked stylesheets and inline
+ * <style> blocks interleaved in document order. Guessing this order (or
+ * hardcoding filenames) is how a replica ends up with subtly wrong specificity.
+ */
+/**
+ * Removes `@import` rules from a vendored sheet, which would otherwise be
+ * resolved at BUILD time by webpack/postcss rather than at runtime by a
+ * browser -- a difference that turns a harmless no-op into a hard build
+ * failure ("Can't resolve '../../packages/design-tokens/dist/css/_variables.css'").
+ *
+ * Dropping them matches what the browser actually did with the original sheet:
+ *   - A target that was never captured could not be fetched by the browser
+ *     either (it 404s on the live site), so it contributed no styles.
+ *   - Per the CSS spec an `@import` must precede all style rules; real sites
+ *     ship them stranded mid-sheet (this one sits after 46 rule blocks), where
+ *     every browser ignores the statement outright.
+ *
+ * The rebuilt cascade is assembled explicitly from the captured document order
+ * instead, so nothing that genuinely applied is lost. Nested imports are NOT
+ * vendored recursively -- if a target ever does resolve, the warning below
+ * makes that visible rather than letting it fail silently.
+ */
+function stripNestedImports(css, sourceLabel) {
+  return css.replace(
+    /@import\s+(?:url\(\s*)?['"]?([^'")\s;]+)['"]?\s*\)?[^;]*;/g,
+    (_full, target) => {
+      const captured = localAsset(target);
+      console.log(
+        `  - dropped nested @import ${target} from ${sourceLabel}` +
+          (captured
+            ? ' (target WAS captured — vendoring nested imports is not implemented)'
+            : ' (never captured; the browser could not load it either)'),
+      );
+      return `/* nested @import ${target} dropped by scripts/codegen.mjs */`;
+    },
+  );
+}
+
+async function emitStyles(headInfo) {
+  await mkdir(paths.appStyles, { recursive: true });
+
+  // Clear previously generated stylesheets so removed ones do not linger.
+  try {
+    for (const f of await readdir(paths.appStyles)) {
+      if (/^(vendor-|inline-)\d+.*\.css$/.test(f) || f === 'index.css') {
+        await rm(path.join(paths.appStyles, f));
+      }
+    }
+  } catch { /* first run */ }
+
+  const imports = [];
+  const emitted = [];
+  let idx = 0;
+
+  /**
+   * Emits one linked stylesheet at the next cascade position. Shared by the
+   * <head> and <body> passes: a sheet linked from <body> is part of the very
+   * same cascade and must be vendored (and url()-rewritten) identically.
+   */
+  const emitLinkEntry = async (entry, where) => {
+    // Sheets the browser could not parse either (see skipStylesheets docs).
+    // Recorded in the manifest with no `file`, so it stays an honest account
+    // of the original cascade while dropping out of the @import list.
+    const skip = (cfg.codegen.skipStylesheets ?? []).find((s) => entry.href.includes(s));
+    if (skip) {
+      emitted.push({ order: idx, kind: 'link', where, href: entry.href, status: 'SKIPPED', skipRule: skip });
+      console.log(`  - stylesheet skipped by config (${skip}): ${entry.href}`);
+      idx += 1;
+      return;
+    }
+    const local = localAsset(entry.href);
+    if (!local) {
+      emitted.push({ order: idx, kind: 'link', where, href: entry.href, status: 'MISSING' });
+      console.log(`  ! stylesheet not in asset map: ${entry.href}`);
+      idx += 1;
+      return;
+    }
+    const rawPath = path.join(paths.root, 'public', local.replace(/^\//, ''));
+    let css;
+    try {
+      css = await readFile(rawPath, 'utf8');
+    } catch {
+      emitted.push({ order: idx, kind: 'link', where, href: entry.href, status: 'UNREADABLE' });
+      idx += 1;
+      return;
+    }
+    // Resolve against the sheet's own href, not the page URL.
+    const rewritten = stripNestedImports(
+      rewriteCssUrls(rewriteUrlsInText(css), entry.href),
+      entry.href,
+    );
+    const stem = path.basename(local).replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9._-]/g, '-').slice(0, 40);
+    const name = `vendor-${String(idx).padStart(2, '0')}-${stem}.css`;
+    const header =
+      `/* Vendored from ${entry.href}\n` +
+      ` * url() references rewritten to local /assets paths by scripts/codegen.mjs.\n` +
+      ` * Cascade position ${idx}, linked from <${where}> in the original document.\n` +
+      ` * Do not edit — \`npm run codegen\`.\n */\n`;
+    await writeFile(path.join(paths.appStyles, name), header + rewritten);
+    imports.push({ file: name, media: entry.media });
+    emitted.push({
+      order: idx,
+      kind: 'link',
+      where,
+      href: entry.href,
+      file: name,
+      bytes: rewritten.length,
+      remainingRemote: (rewritten.match(/https?:\/\//g) ?? []).length,
+    });
+    idx += 1;
+  };
+
+  for (const entry of headInfo.entries ?? []) {
+    if (entry.kind === 'link' && /stylesheet/i.test(entry.rel ?? '')) {
+      await emitLinkEntry(entry, 'head');
+    } else if (entry.kind === 'style') {
+      const css = stripNestedImports(
+        rewriteCssUrls(rewriteUrlsInText(entry.css ?? ''), cfg.targetUrl),
+        `inline <style> at head position ${idx}`,
+      );
+      if (!css.trim()) continue;
+      const name = `inline-${String(idx).padStart(2, '0')}.css`;
+      const header = `/* Inline <style> block at head position ${idx} of the original document. */\n`;
+      await writeFile(path.join(paths.appStyles, name), header + css);
+      imports.push({ file: name });
+      emitted.push({ order: idx, kind: 'style', file: name, bytes: css.length });
+      idx += 1;
+    }
+  }
+
+  // Body-level stylesheets and <style> blocks cascade after everything in
+  // <head>. Capture records both kinds in document order (headInfo.bodyEntries);
+  // captures predating that field only recorded <style> text, so fall back.
+  //
+  // Two independent passes observe the same <style> nodes: capture records them
+  // (via document.body.querySelectorAll) and the JSX walker collects every one
+  // it drops (inlineStylesFromBody). Blindly concatenating both emitted each
+  // body stylesheet twice — invisible in the rendered result, since duplicate
+  // identical rules cascade to the same outcome, but it doubled the sheet
+  // count, inflated the manifest, and made the @import list disagree with the
+  // real document. Union them instead, deduped by exact CSS text (capture's
+  // order wins); linked body sheets get the same treatment, deduped by href.
+  const bodyEntries =
+    headInfo.bodyEntries ?? (headInfo.bodyStyles ?? []).map((css) => ({ kind: 'style', css }));
+
+  const seenBodyStyles = new Set();
+  let bodyStyleNo = 0;
+  const emitBodyStyle = async (raw) => {
+    const key = (raw ?? '').trim();
+    if (!key || seenBodyStyles.has(key)) return;
+    seenBodyStyles.add(key);
+    const css = stripNestedImports(
+      rewriteCssUrls(rewriteUrlsInText(raw ?? ''), cfg.targetUrl),
+      'inline <style> in <body>',
+    );
+    if (!css.trim()) return;
+    const i = bodyStyleNo;
+    bodyStyleNo += 1;
+    const name = `inline-${String(idx).padStart(2, '0')}-body${i}.css`;
+    await writeFile(
+      path.join(paths.appStyles, name),
+      `/* Inline <style> block ${i} from <body>; cascades after all head styles. */\n${css}`,
+    );
+    imports.push({ file: name });
+    emitted.push({ order: idx, kind: 'body-style', file: name, bytes: css.length });
+    idx += 1;
+  };
+
+  const seenBodyHrefs = new Set();
+  for (const entry of bodyEntries) {
+    if (entry.kind === 'link') {
+      if (!entry.href || seenBodyHrefs.has(entry.href)) continue;
+      seenBodyHrefs.add(entry.href);
+      await emitLinkEntry(entry, 'body');
+    } else {
+      await emitBodyStyle(entry.css);
+    }
+  }
+
+  // Safety net, symmetric with inlineStylesFromBody: sheets the JSX walker saw
+  // linked in the captured markup but capture's DOM pass never recorded (e.g. a
+  // static capture whose markup differs from the rendered DOM). Without this the
+  // <link> is dropped from the JSX and the sheet is never emitted — precisely
+  // the silent styles-vanish failure this pass exists to prevent.
+  for (const href of bodyLinksFromMarkup) {
+    if (!href || seenBodyHrefs.has(href)) continue;
+    seenBodyHrefs.add(href);
+    console.log(`  + body stylesheet present in markup but not in capture: ${href}`);
+    await emitLinkEntry({ kind: 'link', rel: 'stylesheet', href, media: null }, 'body');
+  }
+
+  for (const raw of inlineStylesFromBody) await emitBodyStyle(raw);
+
+  const indexCss =
+    `/*\n` +
+    ` * GENERATED — do not edit by hand (\`npm run codegen\`).\n` +
+    ` *\n` +
+    ` * Imports every captured stylesheet in the EXACT order the original\n` +
+    ` * document declared them, so the cascade (and therefore specificity\n` +
+    ` * resolution) matches the source page rather than approximating it.\n` +
+    ` */\n\n` +
+    imports
+      .map((i) =>
+        i.media && i.media !== 'all'
+          ? `@import './${i.file}' ${i.media};`
+          : `@import './${i.file}';`,
+      )
+      .join('\n') +
+    '\n';
+  await writeFile(path.join(paths.appStyles, 'index.css'), indexCss);
+
+  return emitted;
+}
+
+// ---------------------------------------------------------------------------
+// <head> metadata -> Next Metadata object
+// ---------------------------------------------------------------------------
+async function emitMetadata(headInfo) {
+  const metas = (headInfo.entries ?? []).filter((e) => e.kind === 'meta');
+  const get = (pred) => metas.find(pred)?.content ?? null;
+
+  const description = get((m) => m.name === 'description');
+  const ogTitle = get((m) => m.property === 'og:title');
+  const ogDesc = get((m) => m.property === 'og:description');
+  const ogImageRaw = get((m) => m.property === 'og:image');
+  const twImageRaw = get((m) => m.name === 'twitter:image' || m.property === 'twitter:image');
+  const twCard = get((m) => m.name === 'twitter:card' || m.property === 'twitter:card');
+
+  const icons = (headInfo.entries ?? []).filter(
+    (e) => e.kind === 'link' && /icon/i.test(e.rel ?? ''),
+  );
+
+  const localOr = (url) => (url ? localAsset(url) ?? url : null);
+
+  // Icons are REAL subresource fetches the browser makes on every page load,
+  // so unlike og:/twitter: images (crawler-only metadata) they must never keep
+  // a remote URL: that both breaks the offline guarantee and makes Chromium
+  // fall back to requesting /favicon.ico, which 404s. Scrape only downloads
+  // what the browser actually requested, so icon variants for other DPRs/
+  // platforms are routinely absent from the asset map — drop those outright.
+  const localOnly = (url) => (url ? localAsset(url) : null);
+  const droppedIcons = [];
+  const pickIcons = (pred) =>
+    icons
+      .filter(pred)
+      .map((i) => {
+        const local = localOnly(i.href);
+        if (!local && i.href) droppedIcons.push(i.href);
+        return local;
+      })
+      .filter(Boolean);
+
+  const shortcut = pickIcons((i) => !/apple/i.test(i.rel ?? ''));
+  const apple = pickIcons((i) => /apple/i.test(i.rel ?? ''));
+  if (droppedIcons.length) {
+    console.log(
+      `\nnote: dropped ${droppedIcons.length} icon link(s) with no self-hosted copy\n` +
+        '      (keeping them would leak a remote request on every page load):',
+    );
+    for (const href of [...new Set(droppedIcons)].slice(0, 6)) console.log(`  - ${href}`);
+  }
+
+  const metadata = {
+    title: headInfo.title ?? undefined,
+    description: description ?? undefined,
+    openGraph:
+      ogTitle || ogDesc || ogImageRaw
+        ? {
+            type: 'website',
+            title: ogTitle ?? headInfo.title ?? undefined,
+            description: ogDesc ?? description ?? undefined,
+            images: localOr(ogImageRaw) ? [localOr(ogImageRaw)] : undefined,
+          }
+        : undefined,
+    twitter:
+      twCard || twImageRaw
+        ? {
+            card: twCard ?? 'summary_large_image',
+            title: ogTitle ?? headInfo.title ?? undefined,
+            description: ogDesc ?? description ?? undefined,
+            images: localOr(twImageRaw) ? [localOr(twImageRaw)] : undefined,
+          }
+        : undefined,
+    icons:
+      shortcut.length || apple.length
+        ? {
+            shortcut: shortcut.length ? shortcut : undefined,
+            apple: apple.length ? apple : undefined,
+          }
+        : undefined,
+  };
+
+  const prune = (o) =>
+    JSON.parse(
+      JSON.stringify(o, (_k, v) => (v === undefined || v === null ? undefined : v)),
+    );
+
+  const outDir = paths.appGenerated;
+  await mkdir(outDir, { recursive: true });
+  const src =
+    `// GENERATED FILE — do not edit by hand (\`npm run codegen\`).\n` +
+    `// Transcribed from the captured <head> of ${cfg.targetUrl}\n` +
+    `// with OG/icon images pointed at their self-hosted copies under /assets.\n\n` +
+    `import type { Metadata, Viewport } from 'next';\n\n` +
+    `export const htmlLang = ${JSON.stringify(headInfo.lang ?? 'en')};\n\n` +
+    `/** Classes the original <html> element carried (runtime-only ones stripped). */\n` +
+    `export const htmlClassName = ${JSON.stringify(
+      (headInfo.htmlClass ?? '')
+        .split(/\s+/)
+        .filter((c) => c && !cfg.codegen.stripClasses.includes(c))
+        .join(' '),
+    )};\n\n` +
+    `/** Classes the original <body> element carried. */\n` +
+    `export const bodyClassName = ${JSON.stringify(
+      (headInfo.bodyClass ?? '')
+        .split(/\s+/)
+        .filter((c) => c && !cfg.codegen.stripClasses.includes(c))
+        .join(' '),
+    )};\n\n` +
+    `export const metadata: Metadata = ${JSON.stringify(prune(metadata), null, 2)};\n\n` +
+    `export const viewport: Viewport = {\n` +
+    `  width: 'device-width',\n` +
+    `  initialScale: 1,\n` +
+    `};\n`;
+  await writeFile(path.join(outDir, 'metadata.ts'), src);
+
+  return metadata;
+}
+
+// ---------------------------------------------------------------------------
+// main
+// ---------------------------------------------------------------------------
+async function main() {
+  cfg = await loadConfig();
+
+  const assetDoc = JSON.parse(await readFile(paths.assetMap, 'utf8'));
+  assetMap = assetDoc.map ?? {};
+
+  // Add an HTML-entity-DECODED alias for every key that needs one.
+  //
+  // `refsFromHtml` now decodes entities before downloading, so a fresh scrape
+  // should not produce encoded keys. This stays as a compatibility shim for
+  // asset maps scraped before that fix (re-running codegen alone must not
+  // silently regress) and for any ref harvested from a text blob.
+  //
+  // The bug it guards against: a `srcset="...?id=x&amp;width=1280"` lands in
+  // the asset map with the literal `&amp;` in the key, while codegen reads
+  // attributes back from the parse5 tree, where entities are already decoded
+  // to `&`. The two forms never string-match, so `localAsset()` reports a miss
+  // for a file sitting on disk and the generated markup keeps pointing at the
+  // CDN — silently, since nothing 404s. On dropbox.com that was 154 of 167
+  // leftover remote refs (every multi-candidate srcset image), which fails the
+  // viewport audit's "fully self-hosted" gate at all 7 viewports.
+  //
+  // Both spellings are kept: text blobs (inline CSS/HTML) can contain either.
+  let decodedAliases = 0;
+  for (const [remote, local] of Object.entries(assetMap)) {
+    if (!remote.includes('&amp;')) continue;
+    const decoded = remote.replace(/&amp;/g, '&');
+    if (!assetMap[decoded]) {
+      assetMap[decoded] = local;
+      decodedAliases += 1;
+    }
+  }
+  if (decodedAliases) {
+    console.log(`  entity-decoded asset aliases added: ${decodedAliases}`);
+  }
+
+  // Longest-first so a URL that is a prefix of another cannot shadow it.
+  assetEntries = Object.entries(assetMap).sort((a, b) => b[0].length - a[0].length);
+
+  const headInfo = JSON.parse(await readFile(paths.head, 'utf8'));
+  let features = {};
+  try {
+    features = JSON.parse(await readFile(paths.features, 'utf8'));
+  } catch { /* optional */ }
+
+  // Which markup to build from. A RENDERED capture contains whatever the
+  // page's own JS had already done: clone nodes appended, headings split into
+  // per-word spans, absolutely-positioned overlay clones left mid-animation.
+  // Stripping runtime classes/styles does not remove those -- they ship as
+  // permanent copies AND get regenerated at runtime, so the replica renders
+  // every animated element twice.
+  //
+  // The pre-JS server response has none of that, but on a client-rendered SPA
+  // it is an empty shell. So: 'static' forces it, 'rendered' forces the old
+  // behaviour, and 'auto' (default) uses static only when it is substantially
+  // complete relative to the rendered DOM.
+  const AUTO_STATIC_MIN_RATIO = 0.7;
+  // Asset parity is judged separately, and far more strictly, than element
+  // count. A static response can match the rendered DOM almost exactly by
+  // element count while still missing every <img> that a client-side component
+  // injects after hydration: on cash.app/bank, 20 missing images among ~700
+  // nodes still scored a 0.97 element ratio, comfortably over the 0.7 bar, so
+  // codegen picked the static markup and shipped five promo cards as empty
+  // black boxes. Element count simply cannot see a defect like that, because
+  // images are a rounding error in the total. Requiring near-parity on
+  // asset-bearing nodes catches it and falls back to the rendered DOM.
+  const AUTO_STATIC_MIN_ASSET_RATIO = 0.9;
+
+  const renderedHtml = await readFile(paths.rawHtml, 'utf8');
+  const renderedDoc = parse(renderedHtml);
+  const renderedCount = countElements(renderedDoc);
+  const renderedAssetCount = countAssetNodes(renderedDoc);
+
+  let staticHtml = null;
+  let staticDoc = null;
+  let staticCount = 0;
+  let staticAssetCount = 0;
+  try {
+    staticHtml = await readFile(paths.rawHtmlStatic, 'utf8');
+    staticDoc = parse(staticHtml);
+    staticCount = countElements(staticDoc);
+    staticAssetCount = countAssetNodes(staticDoc);
+  } catch {
+    /* index.static.html is optional (older captures) */
+  }
+
+  const staticRatio = renderedCount > 0 ? staticCount / renderedCount : 0;
+  // A page with no assets at all satisfies parity trivially (ratio 1), so a
+  // purely textual page is never pushed onto the rendered path by this check.
+  const staticAssetRatio = renderedAssetCount > 0 ? staticAssetCount / renderedAssetCount : 1;
+  const staticUsable = Boolean(staticDoc) && staticCount > 0;
+
+  let markupSource;
+  if (cfg.captureMode === 'static') {
+    if (!staticUsable) {
+      throw new Error(
+        'captureMode "static" requires scrape/raw/index.static.html — re-run `npm run capture`.',
+      );
+    }
+    markupSource = 'static';
+  } else if (cfg.captureMode === 'rendered') {
+    markupSource = 'rendered';
+  } else {
+    markupSource =
+      staticUsable &&
+      staticRatio >= AUTO_STATIC_MIN_RATIO &&
+      staticAssetRatio >= AUTO_STATIC_MIN_ASSET_RATIO
+        ? 'static'
+        : 'rendered';
+  }
+
+  const html = markupSource === 'static' ? staticHtml : renderedHtml;
+  const doc = markupSource === 'static' ? staticDoc : renderedDoc;
+  const sourceFile =
+    markupSource === 'static'
+      ? 'scrape/raw/index.static.html (pre-JS server response)'
+      : 'scrape/raw/index.html (rendered, pre-scroll)';
+
+  console.log(
+    `\nmarkup source      : ${sourceFile}\n` +
+      `  captureMode                  : ${cfg.captureMode}\n` +
+      `  static/rendered elements     : ${staticCount}/${renderedCount}` +
+      ` (ratio ${staticRatio.toFixed(2)}, auto threshold ${AUTO_STATIC_MIN_RATIO})\n` +
+      `  static/rendered asset nodes  : ${staticAssetCount}/${renderedAssetCount}` +
+      ` (ratio ${staticAssetRatio.toFixed(2)}, auto threshold ${AUTO_STATIC_MIN_ASSET_RATIO})`,
+  );
+  if (markupSource === 'rendered' && staticUsable && cfg.captureMode === 'auto') {
+    const reason =
+      staticRatio < AUTO_STATIC_MIN_RATIO
+        ? 'too few elements (likely client-rendered)'
+        : `too few asset nodes -- ${renderedAssetCount - staticAssetCount} image/video ` +
+          'node(s) are injected after hydration';
+    console.log(
+      `  NOTE: static markup looked incomplete: ${reason},\n` +
+        '        so the rendered DOM was used. Runtime-generated nodes may be baked\n' +
+        '        in -- check codegen.emptySelectors / codegen.unwrapSelectors.',
+    );
+  }
+
+  await mkdir(paths.appGenerated, { recursive: true });
+
+  const body = findAll(doc, (n) => n.tagName === 'body')[0];
+  if (!body) throw new Error('No <body> in scrape/raw/index.html — re-run `npm run capture`.');
+
+  // Remove stale generated sections from a previous run.
+  try {
+    for (const f of await readdir(paths.appGenerated)) {
+      if (/\.tsx$/.test(f) || f === 'index.ts' || f === 'manifest.json') {
+        await rm(path.join(paths.appGenerated, f));
+      }
+    }
+  } catch { /* first run */ }
+
+  sanitizeTree(body);
+
+  const topNodes = kids(body).filter(
+    (n) => !['script', 'noscript', 'style', 'template', 'link'].includes(n.tagName),
+  );
+  if (!topNodes.length) throw new Error('Body has no renderable top-level elements.');
+
+  const shouldSplit = (n) =>
+    kids(n).length >= cfg.codegen.splitMinChildren &&
+    kids(n).filter((c) => c.tagName === 'section' || c.tagName === 'header' || c.tagName === 'footer')
+      .length >= cfg.codegen.splitMinSections;
+
+  const usedNames = new Set();
+  const components = [];
+  const composition = [];
+
+  for (const node of topNodes) {
+    if (shouldSplit(node)) {
+      const childNames = [];
+      for (const child of kids(node)) {
+        const name = componentName(child, usedNames);
+        components.push({ name, node: child });
+        childNames.push(name);
+      }
+      composition.push({ kind: 'wrapper', node, childNames });
+    } else {
+      const name = componentName(node, usedNames);
+      components.push({ name, node });
+      composition.push({ kind: 'component', name });
+    }
+  }
+
+  // --- emit section components ------------------------------------------
+  const manifestSections = [];
+  for (const { name, node } of components) {
+    const lines = [];
+    toJsx(node, 3, lines);
+    const cls = classesOf(node);
+    const id = attrOf(node, 'id');
+    const selector = `${node.tagName}${id ? `#${id}` : ''}${cls.map((c) => `.${c}`).join('')}`;
+
+    const src =
+      `// GENERATED FILE — do not edit by hand.\n` +
+      `// Source: ${cfg.targetUrl} — ${selector.slice(0, 120)}\n` +
+      `// Regenerate with \`npm run codegen\`.\n\n` +
+      `export default function ${name}() {\n` +
+      `  return (\n` +
+      lines.join('\n') +
+      `\n  );\n}\n`;
+
+    await writeFile(path.join(paths.appGenerated, `${name}.tsx`), src);
+    const elements = countElements(node);
+    manifestSections.push({
+      name,
+      file: `${name}.tsx`,
+      tag: node.tagName,
+      selector,
+      elements,
+      // `nodes` is the name the test suite asserts on; kept alongside
+      // `elements` so the console report and the tests can share one entry.
+      nodes: elements,
+    });
+  }
+
+  // --- emit PageBody ----------------------------------------------------
+  const importNames = components.map((c) => c.name);
+  const pbLines = [
+    '// GENERATED FILE — do not edit by hand.',
+    '// Composes every block in exact source document order.',
+    '// Regenerate with `npm run codegen`.',
+    '',
+    ...importNames.map((n) => `import ${n} from './${n}';`),
+    '',
+    'export default function PageBody() {',
+    '  return (',
+    '    <>',
+  ];
+  for (const entry of composition) {
+    if (entry.kind === 'component') {
+      pbLines.push(`      <${entry.name} />`);
+    } else {
+      const attrs = serializeAttrs(entry.node);
+      const attrsInline = attrs.length ? ' ' + attrs.join(' ') : '';
+      pbLines.push(`      <${entry.node.tagName}${attrsInline}>`);
+      for (const cn of entry.childNames) pbLines.push(`        <${cn} />`);
+      pbLines.push(`      </${entry.node.tagName}>`);
+    }
+  }
+  pbLines.push('    </>', '  );', '}');
+  await writeFile(path.join(paths.appGenerated, 'PageBody.tsx'), pbLines.join('\n') + '\n');
+
+  // --- barrel -----------------------------------------------------------
+  await writeFile(
+    path.join(paths.appGenerated, 'index.ts'),
+    `// GENERATED FILE — do not edit by hand.\n\n` +
+      importNames.map((n) => `export { default as ${n} } from './${n}';`).join('\n') +
+      `\nexport { default as PageBody } from './PageBody';\n`,
+  );
+
+  // --- styles + metadata ------------------------------------------------
+  const styleResults = await emitStyles(headInfo);
+  const metadata = await emitMetadata(headInfo);
+
+  stats.strippedInlineStyleProps = strippedInlineStyleProps;
+
+  // --- manifest ---------------------------------------------------------
+  const manifest = {
+    generatedAt: new Date().toISOString(),
+    targetUrl: cfg.targetUrl,
+    source: sourceFile,
+    captureMode: cfg.captureMode,
+    markupSource,
+    htmlLang: headInfo.lang ?? 'en',
+    bodyClasses: (headInfo.bodyClass ?? '').split(/\s+/).filter(Boolean),
+    title: headInfo.title,
+    hasDescription: Boolean(metadata.description),
+    sections: manifestSections,
+    composition: composition.map((e) =>
+      e.kind === 'component'
+        ? { kind: 'component', name: e.name }
+        : {
+            kind: 'wrapper',
+            tag: e.node.tagName,
+            classes: classesOf(e.node),
+            children: e.childNames,
+          },
+    ),
+    // Plain filename list in EXACT cascade order. This must equal the
+    // @import order in index.css — tests/generated.test.ts asserts the two
+    // are identical, which is what keeps specificity faithful over time.
+    // Failed sheets (status MISSING/UNREADABLE) have no file and are not
+    // imported, so they are deliberately excluded here and reported below.
+    stylesheets: styleResults.filter((s) => s.file).map((s) => s.file),
+    stylesheetDetails: styleResults,
+    assetCount: Object.keys(assetMap).length,
+    assets: {
+      total: Object.keys(assetMap).length,
+      // Derived from the local path shape written by scrape.mjs:
+      // remoteUrl -> /assets/<kind>/<name>
+      byKind: Object.values(assetMap).reduce((acc, local) => {
+        const kind = String(local).split('/')[2] ?? 'other';
+        acc[kind] = (acc[kind] ?? 0) + 1;
+        return acc;
+      }, {}),
+    },
+    sanitizer: {
+      strippedClasses: stats.strippedClasses,
+      strippedStyleProps: stats.strippedInlineStyleProps,
+      droppedNodes:
+        stats.dropped.thirdParty +
+        stats.dropped.script +
+        stats.dropped.style +
+        stats.dropped.comment +
+        stats.dropped.noscript,
+    },
+    detectedFeatures: features.counts ?? {},
+    detectedLibraries: Object.entries(features.globals ?? {})
+      .filter(([, v]) => v)
+      .map(([k]) => k),
+    stats,
+  };
+  await writeFile(path.join(paths.appGenerated, 'manifest.json'), JSON.stringify(manifest, null, 2));
+
+  // --- report -----------------------------------------------------------
+  console.log(`sections emitted   : ${manifestSections.length}`);
+  for (const s of manifestSections) {
+    console.log(`  ${s.name.padEnd(28)} ${String(s.elements).padStart(5)} els  ${s.selector.slice(0, 56)}`);
+  }
+  console.log(`\nstylesheets        : ${styleResults.length} (in original cascade order)`);
+  for (const s of styleResults) {
+    console.log(`  [${String(s.order).padStart(2, '0')}] ${s.kind.padEnd(11)} ${(s.file ?? s.status ?? '').padEnd(46)} ${s.bytes ?? 0}b`);
+  }
+  console.log('\nsanitization       :');
+  console.log(`  runtime classes stripped     : ${stats.strippedClasses}`);
+  console.log(`  inline anim props stripped   : ${stats.strippedInlineStyleProps}`);
+  console.log(`  third-party nodes dropped    : ${stats.dropped.thirdParty}`);
+  console.log(`  <script>/<style> dropped     : ${stats.dropped.script}/${stats.dropped.style}`);
+  console.log('\nrewrites           :');
+  console.log(`  asset urls localised : ${stats.rewritten.asset}`);
+  console.log(`  hrefs normalised     : ${stats.rewritten.href}`);
+  console.log(`  css url() localised  : ${cssUrlsRewritten}`);
+  console.log('\ncontent            :', JSON.stringify(
+    {
+      images: stats.images, links: stats.links, svgs: stats.svgs, videos: stats.videos,
+      canvases: stats.canvases, riveTargets: stats.riveTargets, forms: stats.forms,
+      iframes: stats.iframes, fadeIn: stats.fadeIn, swiperRoots: stats.swiperRoots,
+      swiperSlides: stats.swiperSlides, tabPanes: stats.tabPanes, dropdowns: stats.dropdowns,
+    },
+  ));
+
+  if (cssUrlMisses.length) {
+    const unique = [...new Set(cssUrlMisses)];
+    console.log(
+      `\nWARNING: ${unique.length} css url() ref(s) could not be mapped to a local\n` +
+        'asset and will 404 at runtime (webfonts/backgrounds are the usual case).\n' +
+        'Re-run `npm run scrape` so they get downloaded, then `npm run codegen`:',
+    );
+    for (const ref of unique.slice(0, 12)) console.log(`  ! ${ref}`);
+    if (unique.length > 12) console.log(`  ... and ${unique.length - 12} more`);
+  }
+
+  const missing = styleResults.filter((s) => s.status);
+  if (missing.length) {
+    console.log(
+      `\nWARNING: ${missing.length} stylesheet(s) could not be localised. The page\n` +
+        'will render unstyled or partially styled until these are resolved —\n' +
+        'check scrape/asset-map.json errors and re-run `npm run scrape -- --force`.',
+    );
+  }
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

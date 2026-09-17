@@ -1,0 +1,31 @@
+/* Inline <style> block 3 from <body>; cascades after all head styles. */
+
+div[class*="Footer_footerItems__"][class*="Footer_footerFw_Normal__"] a[class*=Link_link] {
+color: #393a3d !important;
+}
+
+div[class*="FooterMenuSection_menuItem__"] a[class*="Link_link"] {
+color: #393a3d !important;
+}
+
+
+/***
+div[class*="Footer_bottomContainer__"][class*="FooterBottom_bottom__"][class*="link_white"][class*="link_visited"][class*="link_white"]: :visited {
+color: #393a3d !important;
+}
+
+div[class*="FooterMenuSection_menuItem"][class*="Link_white"][class*="Link_Hover"][class*="link_white"] ::hover {
+text-decoration: underline;
+color: #393a3d !important;
+}
+
+
+Link_white__829fb056, .Link_white__829fb056.Link_visited__829fb056, .Link_white__829fb056:visited {
+    color: #393a3d;
+}
+
+.Link_white__829fb056.Link_hover__829fb056, .Link_white__829fb056:hover {
+    text-decoration: underline;
+    color: #393a3d;
+}
+***/

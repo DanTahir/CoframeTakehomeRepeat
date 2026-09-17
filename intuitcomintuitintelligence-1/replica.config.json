@@ -1,0 +1,44 @@
+{
+  "_comment": [
+    "Replica of https://www.intuit.com/intuit-intelligence/ — the ONLY place",
+    "site-specific knowledge lives. scripts/** stay URL-agnostic.",
+    "Ports 3306/3307 are taken by the dropbox replicas in this workspace."
+  ],
+
+  "targetUrl": "https://www.intuit.com/intuit-intelligence/",
+  "slug": "intuitcomintuitintelligence",
+  "port": 3308,
+
+  "settleMs": 3500,
+  "scrollSettleMs": 90,
+
+  "links": "absolute",
+
+  "_captureMode": [
+    "Pinned to 'static' deliberately. The page is server-rendered, confirmed two ways:",
+    "(1) a jsdom probe of scrape/raw/index.static.html vs index.html found every piece of",
+    "real content already in the pre-JS response (video 9/9, .intro__point 3/3,",
+    ".features__card 9/9, .video-player 8/8); the rendered DOM adds only runtime nodes.",
+    "(2) codegen's own ratios: elements 1085/1384 = 0.78 (threshold 0.70) and asset nodes",
+    "61/63 = 0.97 (threshold 0.90), so 'auto' already selected static.",
+    "Pinning it changes no output today -- it stops a future re-capture from silently",
+    "flipping to 'rendered' if those ratios drift, which would bake this page's runtime",
+    "nodes (per-word hero spans from LetterTrail/Hero, Flickity's cloned cells and",
+    "page-dots) into the markup as permanent duplicates that the ported JS then",
+    "regenerates on top of."
+  ],
+  "captureMode": "static",
+
+  "codegen": {
+    "keepClasses": [],
+    "stripClasses": null,
+    "dropSelectors": null,
+    "splitMinChildren": 5,
+    "splitMinSections": 3,
+    "skipStylesheets": []
+  },
+
+  "viewports": null,
+
+  "extraAssets": []
+}

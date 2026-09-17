@@ -1,0 +1,254 @@
+/* Vendored from https://www.intuit.com/qbmds-components/releases/7592/styles/icom/fonts.css
+ * url() references rewritten to local /assets paths by scripts/codegen.mjs.
+ * Cascade position 21, linked from <body> in the original document.
+ * Do not edit — `npm run codegen`.
+ */
+/* AvenirNext forINTUIT — existing Intuit brand font */
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Avenir Next Regular'),
+    local('AvenirNext-Regular'),
+    url('/assets/fonts/avenir-400.4efd0db8.woff2') format('woff2'),
+    url('/assets/fonts/avenir-400.67e96ffd.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src:
+    local('Avenir Next Regular Italic'),
+    local('AvenirNext-Regular-Italic'),
+    url('/assets/fonts/avenir-400-it.6666c754.woff2') format('woff2'),
+    url('/assets/fonts/avenir-400-it.1958154e.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Avenir Next Medium'),
+    local('AvenirNext-Medium'),
+    url('/assets/fonts/avenir-500.dbef78ed.woff2') format('woff2'),
+    url('/assets/fonts/avenir-500.7b355112.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+  src:
+    local('Avenir Next Medium Italic'),
+    local('AvenirNext-Medium-Italic'),
+    url('/assets/fonts/avenir-500-it.92ade66d.woff2') format('woff2'),
+    url('/assets/fonts/avenir-500-it.d6be7559.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Avenir Next Demi Bold'),
+    local('AvenirNext-DemiBold'),
+    url('/assets/fonts/avenir-600.7659079e.woff2') format('woff2'),
+    url('/assets/fonts/avenir-600.8e624d63.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+  src:
+    local('Avenir Next Demi Bold Italic'),
+    local('AvenirNext-DemiBold-Italic'),
+    url('/assets/fonts/avenir-600-it.0a6018d8.woff2') format('woff2'),
+    url('/assets/fonts/avenir-600-it.65aced26.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Avenir Next Bold'),
+    local('AvenirNext-Bold'),
+    url('/assets/fonts/avenir-700.a4ccd614.woff2') format('woff2'),
+    url('/assets/fonts/avenir-700.e1dc6f97.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src:
+    local('Avenir Next Bold Italic'),
+    local('AvenirNext-Bold-Italic'),
+    url('/assets/fonts/avenir-700-it.debc324e.woff2') format('woff2'),
+    url('/assets/fonts/avenir-700-it.f3f73402.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AvenirNext forINTUIT';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Avenir Next Heavy'),
+    local('AvenirNext-Heavy'),
+    url('/assets/fonts/avenir-800.65ea91e6.woff2') format('woff2'),
+    url('/assets/fonts/avenir-800.e6a8a67a.woff') format('woff');
+}
+
+/* Tally — body text font for IBCC pages */
+
+@font-face {
+  font-family: 'Tally';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Tally Regular'),
+    local('Tally-Regular'),
+    url('/assets/fonts/Tally-Regular.7f2fe37c.woff2') format('woff2'),
+    url('/assets/fonts/Tally-Regular.77bf3e9a.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Tally';
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src:
+    local('Tally Regular Italic'),
+    local('Tally-RegularItalic'),
+    url('/assets/fonts/Tally-RegularItalic.90b3687e.woff2') format('woff2'),
+    url('/assets/fonts/Tally-RegularItalic.549472ef.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Tally';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Tally Medium'),
+    local('Tally-Medium'),
+    url('/assets/fonts/Tally-Medium.778a5953.woff2') format('woff2'),
+    url('/assets/fonts/Tally-Medium.5ee7bfb3.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Tally';
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+  src:
+    local('Tally Medium Italic'),
+    local('Tally-MediumItalic'),
+    url('/assets/fonts/Tally-MediumItalic.65e350e7.woff2') format('woff2'),
+    url('/assets/fonts/Tally-MediumItalic.0a8c4eac.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Tally';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Tally Bold'),
+    local('Tally-Bold'),
+    url('/assets/fonts/Tally-Bold.aa49aa13.woff2') format('woff2'),
+    url('/assets/fonts/Tally-Bold.db0297d9.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Tally';
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src:
+    local('Tally Bold Italic'),
+    local('Tally-BoldItalic'),
+    url('/assets/fonts/Tally-BoldItalic.345b3c93.woff2') format('woff2'),
+    url('/assets/fonts/Tally-BoldItalic.f42a5031.woff') format('woff');
+}
+
+/* Tally Display — headings/display font for IBCC pages */
+
+@font-face {
+  font-family: 'Tally Display';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('TallyDisplay Light'),
+    local('TallyDisplay-Light'),
+    url('/assets/fonts/TallyDisplay-Light.7c04d49f.woff2') format('woff2'),
+    url('/assets/fonts/TallyDisplay-Light.26868dcf.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Tally Display';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('TallyDisplay Regular'),
+    local('TallyDisplay-Regular'),
+    url('/assets/fonts/TallyDisplay-Regular.1177631f.woff2') format('woff2'),
+    url('/assets/fonts/TallyDisplay-Regular.5923ef22.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Tally Display';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('TallyDisplay Medium'),
+    local('TallyDisplay-Medium'),
+    url('/assets/fonts/TallyDisplay-Medium.7fe5b75a.woff2') format('woff2'),
+    url('/assets/fonts/TallyDisplay-Medium.3ba65792.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Tally Display';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('TallyDisplay Bold'),
+    local('TallyDisplay-Bold'),
+    url('/assets/fonts/TallyDisplay-Bold.8985e82e.woff2') format('woff2'),
+    url('/assets/fonts/TallyDisplay-Bold.ce785c95.woff') format('woff');
+}
+
+/* Global resets */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: 'AvenirNext forINTUIT', Helvetica, Arial, sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  font-size: 100%;
+}

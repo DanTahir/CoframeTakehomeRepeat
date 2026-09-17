@@ -1,0 +1,40 @@
+/* Inline <style> block 5 from <body>; cascades after all head styles. */
+
+/* Footer product logo swap - Tally DAM assets */
+
+a[data-ui-object-detail="intuit"] img {
+  visibility: hidden;
+}
+a[data-ui-object-detail="intuit"] span {
+  display: inline-block;
+  width: 164px;
+  height: 37px;
+  background-image: url("/assets/img/intuit-standalone-superblue-tally-logo-icom.71c602fd.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+}
+
+a[data-ui-object-detail="turbotax"] img {
+  content: url("/assets/img/turbotax-signature-light-tally-logo-icom.3d0c276a.svg");
+  object-fit: contain;
+  object-position: left center;
+}
+
+a[data-ui-object-detail="quickbooks"] img {
+  content: url("/assets/img/quickbooks-signature-light-tally-logo-icom.40139121.svg");
+  object-fit: contain;
+  object-position: left center;
+}
+
+a[data-ui-object-detail="creditKarma"] img {
+  content: url("/assets/img/creditkarma-signature-light-tally-logo-icom.ef8180f1.svg");
+  object-fit: contain;
+  object-position: left center;
+}
+
+a[data-ui-object-detail="mailchimp"] img {
+  content: url("/assets/img/mailchimp-signature-light-tally-logo-icom.89b65630.svg");
+  object-fit: contain;
+  object-position: left center;
+}

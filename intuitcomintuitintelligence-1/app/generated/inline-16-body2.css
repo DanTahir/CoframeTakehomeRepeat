@@ -1,0 +1,29 @@
+/* Inline <style> block 2 from <body>; cascades after all head styles. */
+
+      html:not(.is-ready) body {
+        visibility: hidden;
+        animation: page-failsafe 0s linear 2s forwards;
+      }
+      html.is-ready body {
+        visibility: visible;
+        animation: page-in 240ms ease both;
+      }
+      @keyframes page-failsafe {
+        to {
+          visibility: visible;
+        }
+      }
+      @keyframes page-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html.is-ready body {
+          animation: none;
+        }
+      }
+    

@@ -1,0 +1,8 @@
+/* Inline <style> block 4 from <body>; cascades after all head styles. */
+
+  @media (max-width: 767px) {
+    div[data-testid="products"] [class*="Products_list"] {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+  }
