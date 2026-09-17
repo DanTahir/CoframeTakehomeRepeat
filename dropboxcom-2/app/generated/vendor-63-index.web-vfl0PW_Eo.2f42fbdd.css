@@ -1,0 +1,17 @@
+/* Vendored from https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-components/index.web-vfl0PW_Eo.css
+ * url() references rewritten to local /assets paths by scripts/codegen.mjs.
+ * Cascade position 63 of the original <head>. Do not edit — `npm run codegen`.
+ */
+@import url('/assets/css/components-vflLTp4NB.5b655844.css');
+/* This loads **after** `components.css` because it contains all the legacy color tokens */
+@import url('/assets/css/legacy-token-migration-vfl1sMmEL.e3c06ae1.css');
+@import url('/assets/css/logos-vfl1VlwqW.887cbdd5.css');
+@import url('/assets/css/icons-vflblcD3A.63dbe04d.css');
+@import url('/assets/css/foundations-tokens-vflGR-o4-.250f41fd.css');
+@import url('/assets/css/foundations-components-vflgZ3b67.8c8f9118.css');
+@import url('/assets/css/content-icons-vflEYkRKM.b4b95db3.css');
+/* For any images that are circle cropped, scale them up a bit so that they're still cropped as a squircle */
+.dig-Avatar-image--modern[src*='circle_crop=1'],
+.dig-Avatar-image--modern[srcset*='circle_crop=1'] {
+    transform: scale(1.075);
+}

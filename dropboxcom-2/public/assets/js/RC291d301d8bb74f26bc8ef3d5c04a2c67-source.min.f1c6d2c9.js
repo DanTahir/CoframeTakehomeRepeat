@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC291d301d8bb74f26bc8ef3d5c04a2c67-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC291d301d8bb74f26bc8ef3d5c04a2c67-source.min.js', "if(_satellite.getVar(\"stackAdaptCID\")){var saqTag=document.createElement(\"script\");saqTag.src=\"https://tags.srv.stackadapt.com/conv?cid=\"+_satellite.getVar(\"stackAdaptCID\"),saqTag.async=!0,document.head.appendChild(saqTag)}");

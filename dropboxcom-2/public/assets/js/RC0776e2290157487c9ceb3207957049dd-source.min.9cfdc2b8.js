@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC0776e2290157487c9ceb3207957049dd-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC0776e2290157487c9ceb3207957049dd-source.min.js', "var scriptElement=document.createElement(\"script\");scriptElement.async=!0,scriptElement.src=\"https://bttrack.com/Pixel/Retarget/2452\";var firstScriptElement=document.getElementsByTagName(\"script\")[0];firstScriptElement.parentNode.insertBefore(scriptElement,firstScriptElement);");

@@ -1,0 +1,15 @@
+/** @generated -- This file is automatically synced from @dropbox/dig-icons@9.6.0. DO NOT MODIFY! **/
+
+/**
+  This file should not be imported into your CSS or SASS files - the CSS variables will be available on the page for you to use.
+  (SEE #design-systems ON SLACK if you have questions)
+**/
+
+.dig-wzbv8f0_9-6-0:dir(rtl){
+  transform:scaleX(-1);
+}
+@supports not selector(:dir(rtl)){
+  [dir=rtl] .dig-wzbv8f0_9-6-0{
+    transform:scaleX(-1);
+  }
+}

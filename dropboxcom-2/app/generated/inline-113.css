@@ -1,0 +1,45 @@
+/* Inline <style> block at head position 113 of the original document. */
+._input-field-styles_1acaf_1 {
+    box-sizing: border-box;
+    padding: var(--dwg-spacing__unit--1);
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    font-family: var(--__dwgAtlasGroteskStack);
+    border: 1px solid #736c64;
+    border-radius: 0;
+    height: var(--dwg-spacing__unit--6);
+}
+
+._input-field-styles_1acaf_1::placeholder {
+    color: #bbb5ae;
+}
+
+._input-field-styles_1acaf_1:focus-visible {
+    outline: none;
+    box-shadow: var(--dwg-boxshadow__focusring);
+}
+
+._input-field-styles--error_1acaf_24 {
+    border-color: var(--dwg-theme__color__alert__border);
+    margin-bottom: var(--dwg-spacing__unit--0_5);
+}
+
+._form-styles_1acaf_29 {
+    width: 100%;
+}
+
+._signup-cta-styles--v2_1acaf_33 {
+    height: var(--dwg-spacing__unit--6);
+}
+
+@media (min-width: 768px) {
+    ._form-styles_1acaf_29 {
+        width: auto;
+    }
+    ._input-field-styles--breakpoint_1acaf_41 {
+        width: 300px;
+    }
+}

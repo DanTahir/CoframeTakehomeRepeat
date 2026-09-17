@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC1765b77163bb4989890dc0d5aaf13818-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC1765b77163bb4989890dc0d5aaf13818-source.min.js', "var gdc_value=\"DC-10906599/homep0/homep0+standard\";gtag(\"event\",\"conversion\",{allow_custom_scripts:!0,auto_fire_purchase_event:!0,send_to:gdc_value});");

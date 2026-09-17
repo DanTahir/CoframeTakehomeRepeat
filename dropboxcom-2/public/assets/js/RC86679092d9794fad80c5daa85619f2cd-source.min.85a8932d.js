@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC86679092d9794fad80c5daa85619f2cd-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC86679092d9794fad80c5daa85619f2cd-source.min.js', "var img=document.createElement(\"img\");img.src=\"https://www.emjcd.com/u?TYPE=425882&CID=1562974&METHOD=IMG\",document.head.appendChild(img);");

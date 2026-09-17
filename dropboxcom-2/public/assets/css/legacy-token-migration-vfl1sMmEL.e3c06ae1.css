@@ -1,0 +1,67 @@
+/* .In-Theme-Provider is the generic class we use to say we're inside of DIG's theme provider.
+we use it here as a way to ensure that the specificity of this selector can beat `0 1 0` assuming
+it is loaded **after** the other dig tokens.
+*/
+.In-Theme-Provider {
+  --color__standard__background: var(--dig-color__background__base);
+  --color__faint__background: var(--dig-color__background__subtle);
+  --color__elevated__background: var(--dig-color__background__raised);
+  --color__standard__text: var(--dig-color__text__base);
+  --color__faint__text: var(--dig-color__text__subtle);
+  --color__standard__border: var(--dig-color__border__base);
+  --color__faint__border: var(--dig-color__border__subtle);
+  --color__disabled__text: var(--dig-color__disabled__base);
+  --color__disabled__border: var(--dig-color__disabled__base);
+  --color__disabled__background: var(--dig-color__disabled__base);
+  --color__core__accent: var(--dig-color__primary__base);
+  --color__attention__text: var(--dig-color__primary__base);
+  --color__attention__border: var(--dig-color__primary__base);
+  --color__button__primary__hover: var(--dig-color__primary__base--state-1);
+  --color__button__primary__active: var(--dig-color__primary__base--state-2);
+  --color__attention__background--faint: var(--dig-color__primary__on-base);
+  --color__attention__background: var(--dig-color__primary__surface);
+  --color__attention__border--faint: var(--dig-color__primary__surface--state-1);
+  --color__core__primary: var(--dig-color__secondary__base);
+  --color__core__secondary: var(--dig-color__secondary__surface);
+  --color__warning__text: var(--dig-color__warning__base);
+  --color__warning__border: var(--dig-color__warning__base);
+  --color__warning__background: var(--dig-color__warning__surface);
+  --color__warning__border--faint: var(--dig-color__warning__surface--state-1);
+  --color__success__text: var(--dig-color__success__base);
+  --color__success__border: var(--dig-color__success__base);
+  --color__success__background: var(--dig-color__success__surface);
+  --color__success__border--faint: var(--dig-color__success__surface--state-1);
+  --color__alert__text: var(--dig-color__alert__base);
+  --color__alert__border: var(--dig-color__alert__base);
+  --color__alert__background: var(--dig-color__alert__surface);
+  --color__alert__border--faint: var(--dig-color__alert__surface--state-2);
+  --color__opacity--1: var(--dig-color__opacity__surface);
+  --color__opacity--2: var(--dig-color__opacity__surface--state-1);
+  --color__opacity--3: var(--dig-color__opacity__surface--state-2);
+  --color__utility__focusring: var(--dig-color__utility__focus-ring);
+  --color__utility__overlay: var(--dig-color__utility__overlay);
+  --color__accent__ocean: var(--dig-color__accent__cyan);
+  --color__accent__crimson: var(--dig-color__accent__red);
+  --color__accent__rust: var(--dig-color__accent__orange);
+  --color__accent__canopy: var(--dig-color__accent__green);
+  --color__accent__navy: var(--dig-color__accent__blue);
+  --color__accent__plum: var(--dig-color__accent__purple);
+  --color__accent__azalea: var(--dig-color__accent__magenta);
+  --color__accent__gold: var(--dig-color__accent__yellow);
+  --color__highlight__temporary: var(--dig-color__highlight__blue);
+  --color__highlight__permanent: var(--dig-color__highlight__blue--bold);
+  --color__highlight__mixed: var(--dig-color__highlight__blue--bolder);
+  --color__highlight__purple__temporary: var(--dig-color__highlight__purple);
+  --color__highlight__purple__permanent: var(--dig-color__highlight__purple--bold);
+  --color__highlight__purple__mixed: var(--dig-color__highlight__purple--bolder);
+  --color__highlight__yellow__temporary: var(--dig-color__highlight__yellow);
+  --color__highlight__yellow__permanent: var(--dig-color__highlight__yellow--bold);
+  --color__highlight__yellow__mixed: var(--dig-color__highlight__yellow--bolder);
+  --color__highlight__red__temporary: var(--dig-color__highlight__red);
+  --color__highlight__red__permanent: var(--dig-color__highlight__red--bold);
+  --color__highlight__red__mixed: var(--dig-color__highlight__red--bolder);
+  --color__highlight__green__temporary: var(--dig-color__highlight__green);
+  --color__highlight__green__permanent: var(--dig-color__highlight__green--bold);
+  --color__highlight__green__mixed: var(--dig-color__highlight__green--bolder);
+  --boxshadow__focusring: var(--dig-utilities__boxshadow__focus-ring);
+}

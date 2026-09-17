@@ -1,0 +1,91 @@
+{
+  "_comment": [
+    "Site-specific configuration for the dropbox.com homepage replica.",
+    "The pipeline scripts are URL-agnostic; all site knowledge lives here."
+  ],
+
+  "targetUrl": "https://dropbox.com",
+  "slug": "dropboxcom",
+  "port": 3307,
+
+  "_captureMode": [
+    "Decided on a DOM-level probe, not the 'auto' element-count ratio.",
+    "Measured this run (scrape/probe-capture-source.mjs), static vs rendered:",
+    "elements 1519/1673 (0.908 - would have PASSED the 0.7 element test),",
+    "but video 0/4, iframe 0/3, svg 27/39, source 20/31, and the security",
+    "quote-cards grid div._quoteCardsGrid_thadj_158 ships 0 children vs 3.",
+    "A static build therefore silently loses all 4 product videos and the",
+    "entire quote-cards row."
+  ],
+  "captureMode": "rendered",
+
+  "settleMs": 3500,
+  "scrollSettleMs": 90,
+  "links": "absolute",
+
+  "codegen": {
+    "_skipStylesheets": [
+      "Dropbox links an UNCOMPILED SCSS source from <head> (// comments,",
+      "$font_weight_book: 400). Browsers CSS-error-recover; webpack postcss",
+      "hard-fails with 'Unknown word'. Safe to skip only because the compiled",
+      "twin sheet redefines the same 15 @font-face rules / 75 url()s.",
+      "Filename hash is capture-bound - re-confirm it after each capture."
+    ],
+    "skipStylesheets": ["font_sharp_grotesk-vflwgPRUu.scss"],
+
+    "_dropSelectors": [
+      "This key REPLACES the template defaults rather than merging, so the",
+      "defaults are repeated verbatim below, then 5 site-specific entries:",
+      "the CCPA consent banner, two marketing/blank iframes, the",
+      ".mov/hvc1 <source> siblings (the hero .mov alone is 134MB and no",
+      "harness browser ever selects it - the .webm siblings are what play),",
+      "and the empty mp4 fallback <source src=\"\"> each of the 4 videos",
+      "carries. That last one is INERT in a browser (an empty src is never",
+      "selected) but React warns 'An empty string was passed to the src",
+      "attribute' once per video, which the viewport audit counts as 4",
+      "console errors - and console-errors has NO baseline path, so it has",
+      "to be removed rather than accepted. Dropping it changes no pixels;",
+      "the .webm sibling above it is what every browser actually plays."
+    ],
+    "dropSelectors": [
+      "script",
+      "noscript",
+      "iframe[src*=\"googletagmanager\"]",
+      "iframe[src*=\"doubleclick\"]",
+      "iframe[src*=\"facebook\"]",
+      "iframe[src*=\"hubspot\"]",
+      "#onetrust-consent-sdk",
+      "#CybotCookiebotDialog",
+      "#cookiescript_injected",
+      ".ot-sdk-container",
+      "#usercentrics-root",
+      "#hs-web-interactives-top-anchor",
+      "#intercom-frame",
+      ".intercom-lightweight-app",
+      "#drift-frame-controller",
+      "#crisp-chatbox",
+      "#tawkchat-container",
+      ".grecaptcha-badge",
+      "next-route-announcer",
+      "[data-replica-drop]",
+      "#ccpa-iframe",
+      "iframe[src*=\"marketing.dropbox.com\"]",
+      "iframe[src=\"about:blank\"]",
+      "source[type*=\"quicktime\"]",
+      "source[src=\"\"]"
+    ]
+  },
+
+  "viewports": null,
+
+  "_extraAssets": [
+    "dropbox.com declares its favicon with the legacy two-token form",
+    "rel=\"shortcut icon\". The template's ref matcher now handles that, so this",
+    "is belt-and-braces: pinned, explicit, and costs nothing. Without a local",
+    "copy the browser probes /favicon.ico at the origin root and logs a 404",
+    "that the viewport audit counts as a console error (no baseline path)."
+  ],
+  "extraAssets": [
+    "https://cfl.dropboxstatic.com/static/metaserver/static/images/favicon.ico"
+  ]
+}

@@ -1,0 +1,179 @@
+/* Inline <style> block at head position 100 of the original document. */
+/* stylelint-disable custom-media-pattern */
+/*
+Re-defining custom-media for DWG Breakpoints here
+Should have parity with values from typescript/component_libraries/dwg-components/src/tokens/custom-media.css
+Currently CSS Modules does not support @import, so unable to import the custom media into CSS Module
+ */
+/* stylelint-enable custom-media-pattern */
+
+._top_thadj_12 {
+    max-width: 776px;
+}
+
+._iconContainer_thadj_16 {
+    margin: 0 auto;
+}
+
+._headlineText_thadj_20 {
+    line-height: 130%;
+    font-size: 26px;
+}
+
+._secondaryText_thadj_25 {
+    line-height: 150%;
+}
+
+._mediaContainer_thadj_29 {
+    --perspective: 20;
+}
+
+@media (min-width: 1024px) {
+    ._mediaContainer_thadj_29 {
+        height: 550px;
+    }
+}
+
+._leftMediaFirst_thadj_39,
+._leftMediaSecond_thadj_40,
+._leftMediaThird_thadj_41,
+._shareUiMedia_thadj_42 {
+    transition: transform 750ms cubic-bezier(0.4, -0.01, 0.4, 1.01);
+}
+
+._leftMediaFirst_thadj_39,
+._leftMediaSecond_thadj_40,
+._leftMediaThird_thadj_41 {
+    position: absolute;
+}
+
+/* we only use the animation if the browser can utilize aspect-ratio */
+@supports (aspect-ratio: 1 / 1) {
+    ._leftMediaFirst_thadj_39,
+    ._leftMediaSecond_thadj_40,
+    ._leftMediaThird_thadj_41 {
+        transform: scale(0.2);
+        will-change: transform;
+    }
+}
+
+._mediaContainerVisible_thadj_62 :is(._leftMediaFirst_thadj_39, ._leftMediaSecond_thadj_40, ._leftMediaThird_thadj_41) {
+    transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :is(._mediaContainer_thadj_29, ._mediaContainerVisible_thadj_62)
+        :is(._leftMediaFirst_thadj_39, ._leftMediaSecond_thadj_40, ._leftMediaThird_thadj_41) {
+        transform: none;
+    }
+}
+
+._leftMediaFirst_thadj_39 {
+    width: 206px;
+    right: calc(50% + 250px);
+    top: 244px;
+    transition-delay: 100ms;
+    transform-origin: right top;
+}
+
+._leftMediaSecond_thadj_40 {
+    width: 162px;
+    right: calc(50% + 280px);
+    top: 124px;
+    transition-delay: 50ms;
+    transform-origin: right bottom;
+}
+
+._leftMediaThird_thadj_41 {
+    width: 374px;
+    right: calc(50% - 70px);
+    top: 24px;
+    transform-origin: left;
+}
+
+._rightMedia_thadj_96 {
+    left: 0;
+    right: 0;
+    max-width: 100%;
+}
+
+@media (min-width: 1024px) {
+    ._rightMedia_thadj_96 {
+        left: calc(50% - 93px);
+    }
+}
+
+/* we do not use the drop-shadow if the browser cannot utilize aspect-ratio, as our aspect-ratio hack using overflow: hidden*/
+@supports (aspect-ratio: 1 / 1) {
+    ._shareUiMedia_thadj_42 {
+        filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.3));
+    }
+}
+
+._shareUiMedia_thadj_42 {
+    width: 595px;
+    max-width: 100%;
+    transform: translateY(300px);
+}
+
+._mediaContainerVisible_thadj_62 ._shareUiMedia_thadj_42 {
+    transform: translateY(0);
+}
+
+@keyframes _button-slide-in_thadj_1 {
+    to {
+        transform: translateY(0);
+    }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    @supports (aspect-ratio: 1 / 1) {
+        ._leftMedia_thadj_39,
+        ._rightMedia_thadj_96 {
+            --translate-ratio: calc(
+                var(--perspective) / (var(--perspective) - var(--translate-z)) - 1
+            );
+
+            transform: translateY(
+                calc(
+                    (50% + 50vh) * var(--translate-ratio) - (100% + 100vh) *
+                        var(--translate-ratio) * var(--element-scroll-progress, 0.5)
+                )
+            );
+            will-change: transform;
+        }
+
+        ._leftMedia_thadj_39 {
+            --translate-z: 2;
+        }
+
+        ._rightMedia_thadj_96 {
+            --translate-z: 4;
+        }
+    }
+}
+
+._quoteCardsGrid_thadj_158 {
+    grid-auto-flow: column;
+    grid-auto-columns: 300px;
+}
+
+@media (min-width: 768px) {
+    ._quoteCardsGrid_thadj_158 {
+        grid-auto-columns: 720px;
+    }
+}
+
+@media (min-width: 1280px) {
+    ._quoteCardsGrid_thadj_158 {
+        /* we want to align the left edge of the cards with the sections below which are 1100px wide */
+        padding: 0 max(var(--dwg-spacing__unit--6), calc((100% - 1100px) / 2));
+    }
+}
+
+@media (prefers-reduced-motion) {
+    :is(._mediaContainer_thadj_29, ._mediaContainerVisible_thadj_62) ._shareUiMedia_thadj_42 {
+        transform: none;
+        animation: none;
+    }
+}

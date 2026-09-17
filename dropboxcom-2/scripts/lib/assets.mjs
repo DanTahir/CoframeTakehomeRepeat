@@ -1,0 +1,225 @@
+/**
+ * Shared asset-naming / classification helpers.
+ */
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+
+export const EXT_KIND = {
+  '.css': 'css',
+  '.js': 'js',
+  '.mjs': 'js',
+  '.woff': 'fonts',
+  '.woff2': 'fonts',
+  '.ttf': 'fonts',
+  '.otf': 'fonts',
+  '.eot': 'fonts',
+  '.png': 'img',
+  '.jpg': 'img',
+  '.jpeg': 'img',
+  '.gif': 'img',
+  '.webp': 'img',
+  '.avif': 'img',
+  '.svg': 'img',
+  '.ico': 'img',
+  '.bmp': 'img',
+  '.mp4': 'video',
+  '.webm': 'video',
+  '.mov': 'video',
+  '.m4v': 'video',
+  '.ogv': 'video',
+  '.mp3': 'audio',
+  '.wav': 'audio',
+  '.m4a': 'audio',
+  '.riv': 'rive',
+  '.wasm': 'rive',
+  '.lottie': 'data',
+  '.json': 'data',
+  '.txt': 'data',
+  '.xml': 'data',
+  '.glb': 'data',
+  '.gltf': 'data',
+  '.hdr': 'data',
+  '.ktx2': 'data',
+};
+
+const CT_KIND = [
+  [/^text\/css/, 'css'],
+  [/javascript|ecmascript/, 'js'],
+  [/^font\/|application\/font|application\/x-font/, 'fonts'],
+  [/^image\//, 'img'],
+  [/^video\//, 'video'],
+  [/^audio\//, 'audio'],
+  [/application\/wasm/, 'rive'],
+  [/application\/json/, 'data'],
+];
+
+/** Classify by extension, falling back to a Content-Type hint. */
+export function kindOf(url, contentType) {
+  const clean = url.split('?')[0].split('#')[0];
+  const byExt = EXT_KIND[path.extname(clean).toLowerCase()];
+  if (byExt) return byExt;
+  if (contentType) {
+    for (const [re, kind] of CT_KIND) if (re.test(contentType)) return kind;
+  }
+  return 'other';
+}
+
+/** Extension to give a file whose URL has none (e.g. /css2?family=Inter). */
+function extForKind(kind, contentType = '') {
+  if (/woff2/.test(contentType)) return '.woff2';
+  if (/svg/.test(contentType)) return '.svg';
+  switch (kind) {
+    case 'css': return '.css';
+    case 'js': return '.js';
+    case 'fonts': return '.woff2';
+    case 'img': return /png/.test(contentType) ? '.png' : /webp/.test(contentType) ? '.webp' : '.jpg';
+    case 'data': return '.json';
+    default: return '';
+  }
+}
+
+/** Stable, collision-free, human-readable local filename for a URL. */
+export function localName(url, contentType) {
+  const clean = url.split('?')[0].split('#')[0];
+  let base = 'index';
+  try {
+    base = decodeURIComponent(path.basename(clean)) || 'index';
+  } catch {
+    base = path.basename(clean) || 'index';
+  }
+  base = base.replace(/[^A-Za-z0-9._-]/g, '-').replace(/-+/g, '-');
+
+  const hash = createHash('sha1').update(url).digest('hex').slice(0, 8);
+  let ext = path.extname(base);
+  let stem = ext ? base.slice(0, -ext.length) : base;
+
+  if (!ext) {
+    ext = extForKind(kindOf(url, contentType), contentType);
+    if (!stem) stem = 'asset';
+  }
+  return `${stem.slice(0, 60)}.${hash}${ext}`;
+}
+
+export function absolutize(ref, baseUrl) {
+  try {
+    return new URL(ref, baseUrl).href;
+  } catch {
+    return null;
+  }
+}
+
+export function makeHostBlocker(blockHosts) {
+  const lowered = blockHosts.map((h) => h.toLowerCase());
+  // Entries like 'facebook.com/tr' or 'gstatic.com/recaptcha' target a specific
+  // PATH on an otherwise-legitimate host, so those must still be matched
+  // against host+path. Bare entries ('optimizely', 'amplitude', ...) are host
+  // names and must be matched against the HOSTNAME ONLY.
+  //
+  // Matching a bare entry against the whole URL blocks first-party assets whose
+  // filename merely mentions a vendor -- a logo wall naming the tools a product
+  // integrates with (`.../68227d34_optimizely.svg`) is exactly that, and it got
+  // silently dropped from the asset map, leaving live CDN <img> URLs in the
+  // generated markup and breaking the no-remote-requests guarantee.
+  const hostOnly = lowered.filter((h) => !h.includes('/'));
+  const withPath = lowered.filter((h) => h.includes('/'));
+  return (url) => {
+    const u = url.toLowerCase();
+    let hostname;
+    try {
+      hostname = new URL(u).hostname;
+    } catch {
+      // Not an absolute URL — fall back to the old whole-string behaviour so a
+      // relative ref can never sneak past the blocker.
+      return lowered.some((h) => u.includes(h));
+    }
+    return hostOnly.some((h) => hostname.includes(h)) || withPath.some((h) => u.includes(h));
+  };
+}
+
+/** Pull url()/quoted asset references out of CSS or JS text. */
+export function refsFromText(text, baseUrl, isBlocked) {
+  const out = new Set();
+  const add = (ref) => {
+    if (!ref) return;
+    const trimmed = ref.trim().replace(/^['"]|['"]$/g, '');
+    if (!trimmed || trimmed.startsWith('data:') || trimmed.startsWith('#')) return;
+    const abs = absolutize(trimmed, baseUrl);
+    if (!abs || !/^https?:/i.test(abs)) return;
+    if (isBlocked(abs)) return;
+    out.add(abs);
+  };
+
+  for (const m of text.matchAll(/url\((['"]?)([^'")]+)\1\)/gi)) add(m[2]);
+  for (const m of text.matchAll(
+    /['"](https?:\/\/[^'"\s]+\.(?:riv|wasm|woff2?|ttf|otf|eot|mp4|webm|mp3|png|jpe?g|webp|avif|svg|gif|ico|json|glb|gltf))['"]/gi,
+  )) add(m[1]);
+  return [...out];
+}
+
+/**
+ * Decode the HTML entities a browser would decode before issuing a request.
+ *
+ * These refs are regex-harvested from raw HTML source, where an attribute is
+ * still entity-ENCODED: `srcset="...?id=x&amp;width=1280"`. Left encoded, the
+ * query string parses as `amp;width`, so the real `width` is silently absent —
+ * on an image-resizing CDN that means asking for the full-resolution original,
+ * which such services routinely refuse (Dropbox's returns 429). The asset then
+ * never lands on disk, and codegen — which reads the same attribute back
+ * through a real HTML parser, where entities ARE decoded — looks it up by the
+ * decoded URL, misses, and leaves the remote CDN URL in the generated markup.
+ *
+ * A browser decodes entities before requesting, so decoding here is simply
+ * matching what the page itself does.
+ */
+function decodeEntities(value) {
+  return value
+    .replace(/&(?:amp|AMP);/g, '&')
+    .replace(/&(?:quot|QUOT);/g, '"')
+    .replace(/&(?:apos|#39);/g, "'")
+    .replace(/&(?:lt|LT);/g, '<')
+    .replace(/&(?:gt|GT);/g, '>')
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+    .replace(/&#[xX]([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)));
+}
+
+/** Pull asset references out of an HTML document. */
+export function refsFromHtml(html, baseUrl, isBlocked) {
+  const out = new Set();
+  const add = (ref) => {
+    if (!ref) return;
+    const trimmed = decodeEntities(ref.trim().replace(/^['"]|['"]$/g, ''));
+    if (!trimmed || trimmed.startsWith('data:') || trimmed.startsWith('#')) return;
+    const abs = absolutize(trimmed, baseUrl);
+    if (!abs || !/^https?:/i.test(abs)) return;
+    if (isBlocked(abs)) return;
+    out.add(abs);
+  };
+
+  // `rel` is a space-separated TOKEN LIST, so testing it as a prefix silently
+  // drops the legacy two-token form `rel="shortcut icon"` — still emitted by
+  // real sites (dropbox.com). The icon then never enters the asset map, codegen
+  // drops it from metadata for having no local copy, and the browser falls back
+  // to probing /favicon.ico at the origin root. That probe comes from the
+  // BROWSER process, so Playwright's request events never see it and it
+  // surfaces only as an unattributable console 404 — which fails the
+  // viewport-check console-error gate, the one check with no baseline escape.
+  // Allow any leading tokens before the one we care about.
+  const LINK_REL_WANTED =
+    /rel=["']?(?:[\w-]+\s+)*(?:stylesheet|icon|apple-touch-icon|preload|mask-icon|manifest)\b/i;
+  for (const m of html.matchAll(/<link[^>]+href=["']([^"']+)["'][^>]*>/gi)) {
+    if (LINK_REL_WANTED.test(m[0])) add(m[1]);
+  }
+  for (const m of html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)) add(m[1]);
+  for (const m of html.matchAll(
+    /<(?:img|source|video|audio|embed|track|object)[^>]+(?:src|poster|data)=["']([^"']+)["']/gi,
+  )) add(m[1]);
+  for (const m of html.matchAll(/srcset=["']([^"']+)["']/gi)) {
+    for (const part of m[1].split(',')) add(part.trim().split(/\s+/)[0]);
+  }
+  for (const m of html.matchAll(/data-(?:src|rive-url|poster|bg|background|video)=["']([^"']+)["']/gi)) add(m[1]);
+  for (const m of html.matchAll(/url\((['"]?)([^'")]+)\1\)/gi)) add(m[2]);
+  for (const m of html.matchAll(
+    /['"](https?:\/\/[^'"\s]+\.(?:riv|wasm|woff2?|mp4|webm|json|glb|gltf))['"]/gi,
+  )) add(m[1]);
+  return [...out];
+}

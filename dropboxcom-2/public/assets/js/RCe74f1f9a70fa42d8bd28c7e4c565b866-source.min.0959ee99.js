@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RCe74f1f9a70fa42d8bd28c7e4c565b866-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RCe74f1f9a70fa42d8bd28c7e4c565b866-source.min.js', "var gdc_value=\"DC-10906599/universe/con-d000+unique\";gtag(\"event\",\"conversion\",{allow_custom_scripts:!0,send_to:gdc_value});");

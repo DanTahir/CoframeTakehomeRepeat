@@ -1,0 +1,72 @@
+/* Inline <style> block at head position 109 of the original document. */
+/* stylelint-disable custom-media-pattern */
+
+/*
+Re-defining custom-media for DWG Breakpoints here
+Should have parity with values from typescript/component_libraries/dwg-components/src/tokens/custom-media.css
+Currently CSS Modules does not support @import, so unable to import the custom media into CSS Module
+ */
+
+._mediaContainer_1r6qn_11 {
+    max-width: 50%;
+}
+
+._mediaContainer_1r6qn_11._isSquareMedia_1r6qn_15 {
+    max-width: 35%;
+}
+
+@media (min-width: 768px) {
+    ._mediaContainer_1r6qn_11 {
+        max-width: 25%;
+    }
+
+    ._mediaContainer_1r6qn_11._isSquareMedia_1r6qn_15 {
+        max-width: 20%;
+    }
+}
+
+@media (min-width: 1024px) {
+    ._mediaContainer_1r6qn_11 {
+        max-width: 15%;
+    }
+
+    ._mediaContainer_1r6qn_11._isSquareMedia_1r6qn_15 {
+        max-width: 10%;
+    }
+}
+
+._bannerContainer_1r6qn_39 {
+    outline: 1px solid rgba(0, 0, 0, 0.14);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-image: var(--promo-banner-mobile-background-image);
+}
+
+@media (min-width: 1024px) {
+    ._bannerContainer_1r6qn_39 {
+        background-position: center left;
+        background-image: var(--promo-banner-background-image);
+    }
+}
+
+._expandClickTarget_1r6qn_54::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+}
+
+._roundedCorners_1r6qn_60 {
+    border-radius: 12px;
+}
+
+._headlineText_1r6qn_64 {
+    font-size: 28px;
+    line-height: 36px;
+}
+
+._wordmark_1r6qn_69 {
+    color: var(--dig-color__text__base);
+    display: inline-flex;
+    align-items: center;
+}

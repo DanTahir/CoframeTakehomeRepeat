@@ -1,0 +1,85 @@
+/* Inline <style> block at head position 72 of the original document. */
+._toolkit-link_r05y9_1 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    line-height: 30px;
+    margin: 2px 8px 0 8px;
+
+    --link-color: var(--dig-color__primary__base);
+}
+
+._warning_r05y9_12 {
+    --link-color: var(--dig-color__accent__yellow);
+}
+
+._with-tooltip_r05y9_16 {
+    align-items: center;
+    margin-top: 0;
+}
+
+._with-tooltip_r05y9_16 > ._nav-link-icon_r05y9_21 {
+    margin-top: 0;
+    height: 24px;
+}
+
+._with-tooltip_r05y9_16 > ._nav-link-container_r05y9_26 {
+    display: contents;
+}
+
+._nav-link_r05y9_21,
+._info-icon_r05y9_31 {
+    color: var(--link-color);
+}
+
+._small_r05y9_35 {
+    font-size: var(--type__body__small--fontsize);
+}
+
+._nav-link-icon_r05y9_21 {
+    margin-right: 4px;
+    margin-top: 1px;
+}
+
+._tooltip-content_r05y9_44 {
+    margin-bottom: var(--spacing__unit--2);
+}
+
+._tooltip-title_r05y9_48 {
+    margin-bottom: var(--spacing__unit--1);
+}
+
+._gold-button_r05y9_52 {
+    cursor: pointer;
+    outline: none;
+    /* stylelint-disable */
+    border: 1px solid #bf7d25;
+    background: linear-gradient(180deg, #fbd495 0%, #bf7d25 100%);
+    /* stylelint-enable */
+    color: var(--dig-color__text__base);
+    padding: var(--dig-spacing__micro__xsmall) var(--dig-spacing__micro__medium);
+    min-width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+._gold-button-text_r05y9_66 {
+    font-family: var(--dig-type__family__action);
+    font-weight: var(--dig-type__weight__strong);
+    font-size: var(--dig-type__size__action__medium);
+    letter-spacing: var(--dig-type__letterspacing__action);
+}
+._gold-button_r05y9_52:active {
+    /* stylelint-disable */
+    background: linear-gradient(180deg, #bf7d25 0%, #fbd495 100%);
+    /* stylelint-enable */
+}
+._gold-button-icon_r05y9_77 {
+    display: flex;
+    padding-right: var(--dig-spacing__micro__xsmall);
+}
+
+._link-text_r05y9_82 {
+    font-family: var(--dig-type__family__action, var(--dig-type__family__text));
+}

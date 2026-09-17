@@ -1,0 +1,1144 @@
+{
+  "generatedAt": "2026-09-17T00:17:17.597Z",
+  "targetUrl": "https://dropbox.com/",
+  "source": "scrape/raw/index.html (rendered, pre-scroll)",
+  "captureMode": "rendered",
+  "markupSource": "rendered",
+  "htmlLang": "en",
+  "bodyClasses": [],
+  "title": "Dropbox: Secure cloud storage, file sharing, and more",
+  "hasDescription": true,
+  "sections": [
+    {
+      "name": "RootSection",
+      "file": "RootSection.tsx",
+      "tag": "div",
+      "selector": "div#root",
+      "elements": 1446,
+      "nodes": 1446
+    },
+    {
+      "name": "OneTapFpjsContainerSection",
+      "file": "OneTapFpjsContainerSection.tsx",
+      "tag": "div",
+      "selector": "div#one-tap-fpjs-container",
+      "elements": 2,
+      "nodes": 2
+    },
+    {
+      "name": "DwgModalPortalSection",
+      "file": "DwgModalPortalSection.tsx",
+      "tag": "div",
+      "selector": "div.dwg-modal__portal",
+      "elements": 1,
+      "nodes": 1
+    },
+    {
+      "name": "DwgModalPortalSection2",
+      "file": "DwgModalPortalSection2.tsx",
+      "tag": "div",
+      "selector": "div.dwg-modal__portal",
+      "elements": 1,
+      "nodes": 1
+    },
+    {
+      "name": "DwgModalPortalSection3",
+      "file": "DwgModalPortalSection3.tsx",
+      "tag": "div",
+      "selector": "div.dwg-modal__portal",
+      "elements": 1,
+      "nodes": 1
+    }
+  ],
+  "composition": [
+    {
+      "kind": "component",
+      "name": "RootSection"
+    },
+    {
+      "kind": "component",
+      "name": "OneTapFpjsContainerSection"
+    },
+    {
+      "kind": "component",
+      "name": "DwgModalPortalSection"
+    },
+    {
+      "kind": "component",
+      "name": "DwgModalPortalSection2"
+    },
+    {
+      "kind": "component",
+      "name": "DwgModalPortalSection3"
+    }
+  ],
+  "stylesheets": [
+    "vendor-00-accessibility-vfliGZNRm.25247550.css",
+    "vendor-01-tokens-vfllDOk8-.9d0d8191.css",
+    "vendor-02-index.metaserver-vflDxH9Tk.f0f32b74.css",
+    "vendor-03-sharp_grotesk_23.metaserver-vflPUtg1U.71.css",
+    "vendor-05-notify-vfl1v0oiv.c4afb6bc.css",
+    "vendor-06-skip_to_main_content-vflss8Czk.bdeeee17.css",
+    "vendor-07-index.web-vflQ_7qG7.75689235.css",
+    "vendor-08-accessibility-vfliGZNRm.25247550.css",
+    "vendor-09-index.metaserver-vflDxH9Tk.f0f32b74.css",
+    "vendor-10-sharp_grotesk_23.metaserver-vflPUtg1U.71.css",
+    "vendor-11-tokens-vfllDOk8-.9d0d8191.css",
+    "vendor-12-index.web-vflQ_7qG7.75689235.css",
+    "vendor-13-skip_to_main_content-vflss8Czk.bdeeee17.css",
+    "vendor-14-font_paper_atlas_grotesk-vflDoDLsu.31f0d.css",
+    "vendor-15-font_sharp_grotesk-vflRd2mZl.3019a4c4.css",
+    "vendor-16-skip_to_main_content-vflss8Czk.bdeeee17.css",
+    "vendor-17-flip-icon-in-rtl.module.out-vfl2XiPX4.df.css",
+    "vendor-18-index.module.out-vflTQwisN.3a488a7c.css",
+    "vendor-19-navattic.module.out-vflxR5Weo.ac86854e.css",
+    "vendor-20-index.module.out-vfl-8BdRi.952b82cb.css",
+    "vendor-21-index.module.out-vflsd7bHw.10fb22fc.css",
+    "vendor-22-styles.module.out-vflUOujg-.7453841e.css",
+    "vendor-23-warp_context.module.out-vflfpzy2P.eddb8b.css",
+    "vendor-24-anchor-target.module.out-vfl5062-n.e54f9.css",
+    "vendor-25-index.module.out-vflIjQqwz.fe2f998a.css",
+    "vendor-26-index.module.out-vflU2b9UF.ef1a9c18.css",
+    "vendor-27-index.module.out-vfl_R2k_R.a57adafe.css",
+    "vendor-28-index.module.out-vflYWM5Av.96b8bfa5.css",
+    "vendor-29-index.module.out-vfl819U8-.0b569766.css",
+    "vendor-30-index.module.out-vflida7Ix.01c79a68.css",
+    "vendor-31-index.module.out-vflCPdZap.40d45dac.css",
+    "vendor-32-index.module.out-vflQPowvS.45e9e9a4.css",
+    "vendor-33-index.module.out-vflN9-yU7.45e6d41b.css",
+    "vendor-34-index.module.out-vflbfYWhp.7470fa71.css",
+    "vendor-35-index.module.out-vflFnJgUs.906a1c8e.css",
+    "vendor-36-horizontal-scroll.module.out-vflTMZ-.8dc.css",
+    "vendor-37-lightbox.module.out-vflLL9t7N.2ba588d3.css",
+    "vendor-38-index.module.out-vfle48VS7.684de82a.css",
+    "vendor-39-list-ticker.module.out-vfldAgzJk.7a70e0d.css",
+    "vendor-40-logos-ticker.module.out-vflPxNVcp.31efe7.css",
+    "vendor-41-loop-ticker.module.out-vflODv4n8.f02e506.css",
+    "vendor-42-index.module.out-vflEc78vQ.7abfd8f3.css",
+    "vendor-43-index.module.out-vfl5XO-vE.d1ed408d.css",
+    "vendor-44-index.module.out-vflLY2ckr.153f55e4.css",
+    "vendor-45-index.module.out-vflUMr4dh.1e2ff1df.css",
+    "vendor-46-index.module.out-vflrmfYdJ.290e4e7a.css",
+    "vendor-47-index.module.out-vflL1H6-m.658a27bc.css",
+    "vendor-48-index.module.out-vfl94KYc_.82e784f8.css",
+    "vendor-49-index.module.out-vflY2AtLS.2addfba5.css",
+    "vendor-50-index.module.out-vflKv7C7p.084ea94b.css",
+    "vendor-51-index.module.out-vfliNlL3_.ce07fae6.css",
+    "vendor-52-index.module.out-vfl5hFePp.479375b0.css",
+    "vendor-53-index.module.out-vflJ7ev82.0525553a.css",
+    "vendor-54-index.module.out-vfl5ZfBNs.f3b58ff6.css",
+    "vendor-55-index.module.out-vfljPEVxV.05189520.css",
+    "vendor-56-index.module.out-vflsFxOJ9.872075b1.css",
+    "vendor-57-index.module.out-vfl5f-5aZ.7ddccd3c.css",
+    "vendor-58-index.module.out-vfl4j_Qca.5dae0c48.css",
+    "vendor-59-flip-icon-in-rtl.module.out-vflC1Eepl.01.css",
+    "vendor-60-scrollbar.module.out-vflADTmP_.a7e73137.css",
+    "vendor-61-google_one_tap-vflG7mDtj.eca6a442.css",
+    "vendor-62-fingerprintjs_component-vflGut5BB.115bd2.css",
+    "vendor-63-index.web-vfl0PW_Eo.2f42fbdd.css",
+    "inline-64.css",
+    "inline-65.css",
+    "inline-66.css",
+    "inline-67.css",
+    "inline-68.css",
+    "inline-69.css",
+    "inline-70.css",
+    "inline-71.css",
+    "inline-72.css",
+    "inline-73.css",
+    "inline-74.css",
+    "inline-75.css",
+    "inline-76.css",
+    "inline-77.css",
+    "inline-78.css",
+    "inline-79.css",
+    "inline-80.css",
+    "inline-81.css",
+    "inline-82.css",
+    "inline-83.css",
+    "inline-84.css",
+    "inline-85.css",
+    "inline-86.css",
+    "inline-87.css",
+    "inline-88.css",
+    "inline-89.css",
+    "inline-90.css",
+    "inline-91.css",
+    "inline-92.css",
+    "inline-93.css",
+    "inline-94.css",
+    "inline-95.css",
+    "inline-96.css",
+    "inline-97.css",
+    "inline-98.css",
+    "inline-99.css",
+    "inline-100.css",
+    "inline-101.css",
+    "inline-102.css",
+    "inline-103.css",
+    "inline-104.css",
+    "inline-105.css",
+    "inline-106.css",
+    "inline-107.css",
+    "inline-108.css",
+    "inline-109.css",
+    "inline-110.css",
+    "inline-111.css",
+    "inline-112.css",
+    "inline-113.css",
+    "inline-114.css",
+    "inline-115.css",
+    "inline-116.css",
+    "inline-117.css",
+    "inline-118.css",
+    "vendor-119-style.91b9ee16.css",
+    "inline-120.css",
+    "inline-121.css",
+    "inline-122.css"
+  ],
+  "stylesheetDetails": [
+    {
+      "order": 0,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/accessibility-vfliGZNRm.css",
+      "file": "vendor-00-accessibility-vfliGZNRm.25247550.css",
+      "bytes": 512,
+      "remainingRemote": 0
+    },
+    {
+      "order": 1,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-components/tokens-vfllDOk8-.css",
+      "file": "vendor-01-tokens-vfllDOk8-.9d0d8191.css",
+      "bytes": 56805,
+      "remainingRemote": 0
+    },
+    {
+      "order": 2,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-fonts/index.metaserver-vflDxH9Tk.css",
+      "file": "vendor-02-index.metaserver-vflDxH9Tk.f0f32b74.css",
+      "bytes": 5506,
+      "remainingRemote": 1
+    },
+    {
+      "order": 3,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-fonts/sharp_grotesk_23.metaserver-vflPUtg1U.css",
+      "file": "vendor-03-sharp_grotesk_23.metaserver-vflPUtg1U.71.css",
+      "bytes": 2577,
+      "remainingRemote": 0
+    },
+    {
+      "order": 4,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/font_sharp_grotesk-vflwgPRUu.scss",
+      "status": "SKIPPED",
+      "skipRule": "font_sharp_grotesk-vflwgPRUu.scss"
+    },
+    {
+      "order": 5,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/notify-vfl1v0oiv.css",
+      "file": "vendor-05-notify-vfl1v0oiv.c4afb6bc.css",
+      "bytes": 843,
+      "remainingRemote": 0
+    },
+    {
+      "order": 6,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/warp/skip_to_main_content-vflss8Czk.css",
+      "file": "vendor-06-skip_to_main_content-vflss8Czk.bdeeee17.css",
+      "bytes": 786,
+      "remainingRemote": 0
+    },
+    {
+      "order": 7,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/index.web-vflQ_7qG7.css",
+      "file": "vendor-07-index.web-vflQ_7qG7.75689235.css",
+      "bytes": 432822,
+      "remainingRemote": 0
+    },
+    {
+      "order": 8,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/accessibility-vfliGZNRm.css",
+      "file": "vendor-08-accessibility-vfliGZNRm.25247550.css",
+      "bytes": 512,
+      "remainingRemote": 0
+    },
+    {
+      "order": 9,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-fonts/index.metaserver-vflDxH9Tk.css",
+      "file": "vendor-09-index.metaserver-vflDxH9Tk.f0f32b74.css",
+      "bytes": 5506,
+      "remainingRemote": 1
+    },
+    {
+      "order": 10,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-fonts/sharp_grotesk_23.metaserver-vflPUtg1U.css",
+      "file": "vendor-10-sharp_grotesk_23.metaserver-vflPUtg1U.71.css",
+      "bytes": 2577,
+      "remainingRemote": 0
+    },
+    {
+      "order": 11,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-components/tokens-vfllDOk8-.css",
+      "file": "vendor-11-tokens-vfllDOk8-.9d0d8191.css",
+      "bytes": 56805,
+      "remainingRemote": 0
+    },
+    {
+      "order": 12,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/index.web-vflQ_7qG7.css",
+      "file": "vendor-12-index.web-vflQ_7qG7.75689235.css",
+      "bytes": 432822,
+      "remainingRemote": 0
+    },
+    {
+      "order": 13,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/warp/skip_to_main_content-vflss8Czk.css",
+      "file": "vendor-13-skip_to_main_content-vflss8Czk.bdeeee17.css",
+      "bytes": 786,
+      "remainingRemote": 0
+    },
+    {
+      "order": 14,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/font_paper_atlas_grotesk-vflDoDLsu.css",
+      "file": "vendor-14-font_paper_atlas_grotesk-vflDoDLsu.31f0d.css",
+      "bytes": 4075,
+      "remainingRemote": 0
+    },
+    {
+      "order": 15,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/font_sharp_grotesk-vflRd2mZl.css",
+      "file": "vendor-15-font_sharp_grotesk-vflRd2mZl.3019a4c4.css",
+      "bytes": 7832,
+      "remainingRemote": 0
+    },
+    {
+      "order": 16,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/warp/skip_to_main_content-vflss8Czk.css",
+      "file": "vendor-16-skip_to_main_content-vflss8Czk.bdeeee17.css",
+      "bytes": 786,
+      "remainingRemote": 0
+    },
+    {
+      "order": 17,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/js/styles/flip-icon-in-rtl.module.out-vfl2XiPX4.css",
+      "file": "vendor-17-flip-icon-in-rtl.module.out-vfl2XiPX4.df.css",
+      "bytes": 305,
+      "remainingRemote": 0
+    },
+    {
+      "order": 18,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/js/ungated-file-app/src/components/file-input/index.module.out-vflTQwisN.css",
+      "file": "vendor-18-index.module.out-vflTQwisN.3a488a7c.css",
+      "bytes": 116,
+      "remainingRemote": 0
+    },
+    {
+      "order": 19,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/js/warp/components/common/warp_navattic_tour_plank/navattic.module.out-vflxR5Weo.css",
+      "file": "vendor-19-navattic.module.out-vflxR5Weo.ac86854e.css",
+      "bytes": 829,
+      "remainingRemote": 0
+    },
+    {
+      "order": 20,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/js/warp/components/dwg/dwg_marketo_form_plank/index.module.out-vfl-8BdRi.css",
+      "file": "vendor-20-index.module.out-vfl-8BdRi.952b82cb.css",
+      "bytes": 271,
+      "remainingRemote": 0
+    },
+    {
+      "order": 21,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/js/warp/components/dwg/dwg_pdf_conversion_plank/index.module.out-vflsd7bHw.css",
+      "file": "vendor-21-index.module.out-vflsd7bHw.10fb22fc.css",
+      "bytes": 314,
+      "remainingRemote": 0
+    },
+    {
+      "order": 22,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/js/warp/components/dwg/dwg_release_notes_plank/styles.module.out-vflUOujg-.css",
+      "file": "vendor-22-styles.module.out-vflUOujg-.7453841e.css",
+      "bytes": 766,
+      "remainingRemote": 0
+    },
+    {
+      "order": 23,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/js/warp/context/warp_context.module.out-vflfpzy2P.css",
+      "file": "vendor-23-warp_context.module.out-vflfpzy2P.eddb8b.css",
+      "bytes": 839,
+      "remainingRemote": 0
+    },
+    {
+      "order": 24,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-anchor-target/anchor-target.module.out-vfl5062-n.css",
+      "file": "vendor-24-anchor-target.module.out-vfl5062-n.e54f9.css",
+      "bytes": 193,
+      "remainingRemote": 0
+    },
+    {
+      "order": 25,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-animated-ai-sparkle-icon/index.module.out-vflIjQqwz.css",
+      "file": "vendor-25-index.module.out-vflIjQqwz.fe2f998a.css",
+      "bytes": 534,
+      "remainingRemote": 0
+    },
+    {
+      "order": 26,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-animated-paragraph/index.module.out-vflU2b9UF.css",
+      "file": "vendor-26-index.module.out-vflU2b9UF.ef1a9c18.css",
+      "bytes": 451,
+      "remainingRemote": 0
+    },
+    {
+      "order": 27,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-card/index.module.out-vfl_R2k_R.css",
+      "file": "vendor-27-index.module.out-vfl_R2k_R.a57adafe.css",
+      "bytes": 5812,
+      "remainingRemote": 0
+    },
+    {
+      "order": 28,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-cta-block/index.module.out-vflYWM5Av.css",
+      "file": "vendor-28-index.module.out-vflYWM5Av.96b8bfa5.css",
+      "bytes": 395,
+      "remainingRemote": 0
+    },
+    {
+      "order": 29,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-cta-select/index.module.out-vfl819U8-.css",
+      "file": "vendor-29-index.module.out-vfl819U8-.0b569766.css",
+      "bytes": 148,
+      "remainingRemote": 0
+    },
+    {
+      "order": 30,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-label/index.module.out-vflida7Ix.css",
+      "file": "vendor-30-index.module.out-vflida7Ix.01c79a68.css",
+      "bytes": 322,
+      "remainingRemote": 0
+    },
+    {
+      "order": 31,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-pill/index.module.out-vflCPdZap.css",
+      "file": "vendor-31-index.module.out-vflCPdZap.40d45dac.css",
+      "bytes": 4456,
+      "remainingRemote": 0
+    },
+    {
+      "order": 32,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-recommendation-pill/index.module.out-vflQPowvS.css",
+      "file": "vendor-32-index.module.out-vflQPowvS.45e9e9a4.css",
+      "bytes": 1159,
+      "remainingRemote": 0
+    },
+    {
+      "order": 33,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-rive/index.module.out-vflN9-yU7.css",
+      "file": "vendor-33-index.module.out-vflN9-yU7.45e6d41b.css",
+      "bytes": 271,
+      "remainingRemote": 0
+    },
+    {
+      "order": 34,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/components/dwg-strikethrough-text/index.module.out-vflbfYWhp.css",
+      "file": "vendor-34-index.module.out-vflbfYWhp.7470fa71.css",
+      "bytes": 584,
+      "remainingRemote": 0
+    },
+    {
+      "order": 35,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/components/clickable-card/index.module.out-vflFnJgUs.css",
+      "file": "vendor-35-index.module.out-vflFnJgUs.906a1c8e.css",
+      "bytes": 590,
+      "remainingRemote": 0
+    },
+    {
+      "order": 36,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/components/horizontal-scroll/horizontal-scroll.module.out-vflTMZ---.css",
+      "file": "vendor-36-horizontal-scroll.module.out-vflTMZ-.8dc.css",
+      "bytes": 334,
+      "remainingRemote": 0
+    },
+    {
+      "order": 37,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/components/lightbox/lightbox.module.out-vflLL9t7N.css",
+      "file": "vendor-37-lightbox.module.out-vflLL9t7N.2ba588d3.css",
+      "bytes": 1837,
+      "remainingRemote": 0
+    },
+    {
+      "order": 38,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/components/quote-card/index.module.out-vfle48VS7.css",
+      "file": "vendor-38-index.module.out-vfle48VS7.684de82a.css",
+      "bytes": 902,
+      "remainingRemote": 0
+    },
+    {
+      "order": 39,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/components/ticker/list-ticker/list-ticker.module.out-vfldAgzJk.css",
+      "file": "vendor-39-list-ticker.module.out-vfldAgzJk.7a70e0d.css",
+      "bytes": 86,
+      "remainingRemote": 0
+    },
+    {
+      "order": 40,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/components/ticker/logos-ticker/logos-ticker.module.out-vflPxNVcp.css",
+      "file": "vendor-40-logos-ticker.module.out-vflPxNVcp.31efe7.css",
+      "bytes": 83,
+      "remainingRemote": 0
+    },
+    {
+      "order": 41,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/components/ticker/loop-ticker/loop-ticker.module.out-vflODv4n8.css",
+      "file": "vendor-41-loop-ticker.module.out-vflODv4n8.f02e506.css",
+      "bytes": 891,
+      "remainingRemote": 0
+    },
+    {
+      "order": 42,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/planks/section-wrapper-plank/index.module.out-vflEc78vQ.css",
+      "file": "vendor-42-index.module.out-vflEc78vQ.7abfd8f3.css",
+      "bytes": 1183,
+      "remainingRemote": 0
+    },
+    {
+      "order": 43,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/planks/security-plank/index.module.out-vfl5XO-vE.css",
+      "file": "vendor-43-index.module.out-vfl5XO-vE.d1ed408d.css",
+      "bytes": 2741,
+      "remainingRemote": 0
+    },
+    {
+      "order": 44,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-article-hero-plank/index.module.out-vflLY2ckr.css",
+      "file": "vendor-44-index.module.out-vflLY2ckr.153f55e4.css",
+      "bytes": 1069,
+      "remainingRemote": 0
+    },
+    {
+      "order": 45,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-banner-plank/index.module.out-vflUMr4dh.css",
+      "file": "vendor-45-index.module.out-vflUMr4dh.1e2ff1df.css",
+      "bytes": 828,
+      "remainingRemote": 0
+    },
+    {
+      "order": 46,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-feature-highlight-plank/index.module.out-vflrmfYdJ.css",
+      "file": "vendor-46-index.module.out-vflrmfYdJ.290e4e7a.css",
+      "bytes": 4391,
+      "remainingRemote": 0
+    },
+    {
+      "order": 47,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-headline-plank/index.module.out-vflL1H6-m.css",
+      "file": "vendor-47-index.module.out-vflL1H6-m.658a27bc.css",
+      "bytes": 312,
+      "remainingRemote": 0
+    },
+    {
+      "order": 48,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-hero-l3-plank/index.module.out-vfl94KYc_.css",
+      "file": "vendor-48-index.module.out-vfl94KYc_.82e784f8.css",
+      "bytes": 579,
+      "remainingRemote": 0
+    },
+    {
+      "order": 49,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-media-text-plank/index.module.out-vflY2AtLS.css",
+      "file": "vendor-49-index.module.out-vflY2AtLS.2addfba5.css",
+      "bytes": 226,
+      "remainingRemote": 0
+    },
+    {
+      "order": 50,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-multi-column-plank/index.module.out-vflKv7C7p.css",
+      "file": "vendor-50-index.module.out-vflKv7C7p.084ea94b.css",
+      "bytes": 163,
+      "remainingRemote": 0
+    },
+    {
+      "order": 51,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-plan-cards-v2-plank/index.module.out-vfliNlL3_.css",
+      "file": "vendor-51-index.module.out-vfliNlL3_.ce07fae6.css",
+      "bytes": 5351,
+      "remainingRemote": 0
+    },
+    {
+      "order": 52,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-promo-banner-plank/index.module.out-vfl5hFePp.css",
+      "file": "vendor-52-index.module.out-vfl5hFePp.479375b0.css",
+      "bytes": 1007,
+      "remainingRemote": 0
+    },
+    {
+      "order": 53,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-rich-text-plank/index.module.out-vflJ7ev82.css",
+      "file": "vendor-53-index.module.out-vflJ7ev82.0525553a.css",
+      "bytes": 695,
+      "remainingRemote": 0
+    },
+    {
+      "order": 54,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-rive-plank/index.module.out-vfl5ZfBNs.css",
+      "file": "vendor-54-index.module.out-vfl5ZfBNs.f3b58ff6.css",
+      "bytes": 158,
+      "remainingRemote": 0
+    },
+    {
+      "order": 55,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-segmentation-plank/index.module.out-vfljPEVxV.css",
+      "file": "vendor-55-index.module.out-vfljPEVxV.05189520.css",
+      "bytes": 170,
+      "remainingRemote": 0
+    },
+    {
+      "order": 56,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-susi-headline-plank/index.module.out-vflsFxOJ9.css",
+      "file": "vendor-56-index.module.out-vflsFxOJ9.872075b1.css",
+      "bytes": 846,
+      "remainingRemote": 0
+    },
+    {
+      "order": 57,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-table-of-contents-plank/index.module.out-vfl5f-5aZ.css",
+      "file": "vendor-57-index.module.out-vfl5f-5aZ.7ddccd3c.css",
+      "bytes": 1025,
+      "remainingRemote": 0
+    },
+    {
+      "order": 58,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/planks/dwg-table-plank/index.module.out-vfl4j_Qca.css",
+      "file": "vendor-58-index.module.out-vfl4j_Qca.5dae0c48.css",
+      "bytes": 4144,
+      "remainingRemote": 0
+    },
+    {
+      "order": 59,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/utilities/flip-icon-in-rtl.module.out-vflC1Eepl.css",
+      "file": "vendor-59-flip-icon-in-rtl.module.out-vflC1Eepl.01.css",
+      "bytes": 305,
+      "remainingRemote": 0
+    },
+    {
+      "order": 60,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/utilities/scrollbar.module.out-vflADTmP_.css",
+      "file": "vendor-60-scrollbar.module.out-vflADTmP_.a7e73137.css",
+      "bytes": 190,
+      "remainingRemote": 0
+    },
+    {
+      "order": 61,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/google_one_tap-vflG7mDtj.css",
+      "file": "vendor-61-google_one_tap-vflG7mDtj.eca6a442.css",
+      "bytes": 8651,
+      "remainingRemote": 0
+    },
+    {
+      "order": 62,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/abuse/fingerprintjs_component-vflGut5BB.css",
+      "file": "vendor-62-fingerprintjs_component-vflGut5BB.115bd2.css",
+      "bytes": 384,
+      "remainingRemote": 0
+    },
+    {
+      "order": 63,
+      "kind": "link",
+      "href": "https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-components/index.web-vfl0PW_Eo.css",
+      "file": "vendor-63-index.web-vfl0PW_Eo.2f42fbdd.css",
+      "bytes": 794,
+      "remainingRemote": 0
+    },
+    {
+      "order": 64,
+      "kind": "style",
+      "file": "inline-64.css",
+      "bytes": 484
+    },
+    {
+      "order": 65,
+      "kind": "style",
+      "file": "inline-65.css",
+      "bytes": 674
+    },
+    {
+      "order": 66,
+      "kind": "style",
+      "file": "inline-66.css",
+      "bytes": 2958
+    },
+    {
+      "order": 67,
+      "kind": "style",
+      "file": "inline-67.css",
+      "bytes": 150
+    },
+    {
+      "order": 68,
+      "kind": "style",
+      "file": "inline-68.css",
+      "bytes": 4522
+    },
+    {
+      "order": 69,
+      "kind": "style",
+      "file": "inline-69.css",
+      "bytes": 8061
+    },
+    {
+      "order": 70,
+      "kind": "style",
+      "file": "inline-70.css",
+      "bytes": 295
+    },
+    {
+      "order": 71,
+      "kind": "style",
+      "file": "inline-71.css",
+      "bytes": 95
+    },
+    {
+      "order": 72,
+      "kind": "style",
+      "file": "inline-72.css",
+      "bytes": 1980
+    },
+    {
+      "order": 73,
+      "kind": "style",
+      "file": "inline-73.css",
+      "bytes": 1252
+    },
+    {
+      "order": 74,
+      "kind": "style",
+      "file": "inline-74.css",
+      "bytes": 58
+    },
+    {
+      "order": 75,
+      "kind": "style",
+      "file": "inline-75.css",
+      "bytes": 1682
+    },
+    {
+      "order": 76,
+      "kind": "style",
+      "file": "inline-76.css",
+      "bytes": 1187
+    },
+    {
+      "order": 77,
+      "kind": "style",
+      "file": "inline-77.css",
+      "bytes": 409
+    },
+    {
+      "order": 78,
+      "kind": "style",
+      "file": "inline-78.css",
+      "bytes": 311
+    },
+    {
+      "order": 79,
+      "kind": "style",
+      "file": "inline-79.css",
+      "bytes": 855
+    },
+    {
+      "order": 80,
+      "kind": "style",
+      "file": "inline-80.css",
+      "bytes": 1050
+    },
+    {
+      "order": 81,
+      "kind": "style",
+      "file": "inline-81.css",
+      "bytes": 259
+    },
+    {
+      "order": 82,
+      "kind": "style",
+      "file": "inline-82.css",
+      "bytes": 579
+    },
+    {
+      "order": 83,
+      "kind": "style",
+      "file": "inline-83.css",
+      "bytes": 494
+    },
+    {
+      "order": 84,
+      "kind": "style",
+      "file": "inline-84.css",
+      "bytes": 8450
+    },
+    {
+      "order": 85,
+      "kind": "style",
+      "file": "inline-85.css",
+      "bytes": 447
+    },
+    {
+      "order": 86,
+      "kind": "style",
+      "file": "inline-86.css",
+      "bytes": 232
+    },
+    {
+      "order": 87,
+      "kind": "style",
+      "file": "inline-87.css",
+      "bytes": 323
+    },
+    {
+      "order": 88,
+      "kind": "style",
+      "file": "inline-88.css",
+      "bytes": 5817
+    },
+    {
+      "order": 89,
+      "kind": "style",
+      "file": "inline-89.css",
+      "bytes": 1514
+    },
+    {
+      "order": 90,
+      "kind": "style",
+      "file": "inline-90.css",
+      "bytes": 313
+    },
+    {
+      "order": 91,
+      "kind": "style",
+      "file": "inline-91.css",
+      "bytes": 889
+    },
+    {
+      "order": 92,
+      "kind": "style",
+      "file": "inline-92.css",
+      "bytes": 770
+    },
+    {
+      "order": 93,
+      "kind": "style",
+      "file": "inline-93.css",
+      "bytes": 829
+    },
+    {
+      "order": 94,
+      "kind": "style",
+      "file": "inline-94.css",
+      "bytes": 2264
+    },
+    {
+      "order": 95,
+      "kind": "style",
+      "file": "inline-95.css",
+      "bytes": 1400
+    },
+    {
+      "order": 96,
+      "kind": "style",
+      "file": "inline-96.css",
+      "bytes": 41
+    },
+    {
+      "order": 97,
+      "kind": "style",
+      "file": "inline-97.css",
+      "bytes": 37
+    },
+    {
+      "order": 98,
+      "kind": "style",
+      "file": "inline-98.css",
+      "bytes": 1056
+    },
+    {
+      "order": 99,
+      "kind": "style",
+      "file": "inline-99.css",
+      "bytes": 2045
+    },
+    {
+      "order": 100,
+      "kind": "style",
+      "file": "inline-100.css",
+      "bytes": 4229
+    },
+    {
+      "order": 101,
+      "kind": "style",
+      "file": "inline-101.css",
+      "bytes": 1192
+    },
+    {
+      "order": 102,
+      "kind": "style",
+      "file": "inline-102.css",
+      "bytes": 892
+    },
+    {
+      "order": 103,
+      "kind": "style",
+      "file": "inline-103.css",
+      "bytes": 6526
+    },
+    {
+      "order": 104,
+      "kind": "style",
+      "file": "inline-104.css",
+      "bytes": 303
+    },
+    {
+      "order": 105,
+      "kind": "style",
+      "file": "inline-105.css",
+      "bytes": 1133
+    },
+    {
+      "order": 106,
+      "kind": "style",
+      "file": "inline-106.css",
+      "bytes": 204
+    },
+    {
+      "order": 107,
+      "kind": "style",
+      "file": "inline-107.css",
+      "bytes": 189
+    },
+    {
+      "order": 108,
+      "kind": "style",
+      "file": "inline-108.css",
+      "bytes": 6591
+    },
+    {
+      "order": 109,
+      "kind": "style",
+      "file": "inline-109.css",
+      "bytes": 1560
+    },
+    {
+      "order": 110,
+      "kind": "style",
+      "file": "inline-110.css",
+      "bytes": 1070
+    },
+    {
+      "order": 111,
+      "kind": "style",
+      "file": "inline-111.css",
+      "bytes": 504
+    },
+    {
+      "order": 112,
+      "kind": "style",
+      "file": "inline-112.css",
+      "bytes": 142
+    },
+    {
+      "order": 113,
+      "kind": "style",
+      "file": "inline-113.css",
+      "bytes": 984
+    },
+    {
+      "order": 114,
+      "kind": "style",
+      "file": "inline-114.css",
+      "bytes": 2117
+    },
+    {
+      "order": 115,
+      "kind": "style",
+      "file": "inline-115.css",
+      "bytes": 4699
+    },
+    {
+      "order": 116,
+      "kind": "style",
+      "file": "inline-116.css",
+      "bytes": 295
+    },
+    {
+      "order": 117,
+      "kind": "style",
+      "file": "inline-117.css",
+      "bytes": 164
+    },
+    {
+      "order": 118,
+      "kind": "style",
+      "file": "inline-118.css",
+      "bytes": 9892
+    },
+    {
+      "order": 119,
+      "kind": "link",
+      "href": "https://accounts.google.com/gsi/style",
+      "file": "vendor-119-style.91b9ee16.css",
+      "bytes": 696,
+      "remainingRemote": 0
+    },
+    {
+      "order": 120,
+      "kind": "style",
+      "file": "inline-120.css",
+      "bytes": 109
+    },
+    {
+      "order": 121,
+      "kind": "style",
+      "file": "inline-121.css",
+      "bytes": 150
+    },
+    {
+      "order": 122,
+      "kind": "style",
+      "file": "inline-122.css",
+      "bytes": 1059
+    }
+  ],
+  "assetCount": 608,
+  "assets": {
+    "total": 608,
+    "byKind": {
+      "css": 68,
+      "js": 102,
+      "fonts": 146,
+      "data": 5,
+      "img": 275,
+      "video": 8,
+      "other": 4
+    }
+  },
+  "sanitizer": {
+    "strippedClasses": 0,
+    "strippedStyleProps": 0,
+    "droppedNodes": 14
+  },
+  "detectedFeatures": {
+    "canvas": 0,
+    "video": 4,
+    "svg": 39,
+    "images": 77,
+    "links": 139,
+    "forms": 0,
+    "iframes": 3,
+    "riveTargets": 0,
+    "swiperRoots": 0,
+    "swiperSlides": 0,
+    "splideRoots": 0,
+    "glideRoots": 0,
+    "fadeIn": 0,
+    "marquee": 1,
+    "tabs": 0,
+    "accordions": 0,
+    "dropdowns": 6,
+    "navBurger": 1,
+    "lazyImages": 77,
+    "typewriter": 0,
+    "counters": 0,
+    "parallax": 0
+  },
+  "detectedLibraries": [
+    "React"
+  ],
+  "stats": {
+    "dropped": {
+      "script": 3,
+      "style": 0,
+      "comment": 0,
+      "noscript": 0,
+      "thirdParty": 11
+    },
+    "rewritten": {
+      "asset": 118,
+      "href": 139
+    },
+    "strippedClasses": 0,
+    "strippedInlineStyleProps": 0,
+    "emptiedRuntimeHosts": 0,
+    "emptiedRuntimeNodes": 0,
+    "unwrappedRuntimeWrappers": 0,
+    "fadeIn": 0,
+    "swiperRoots": 0,
+    "swiperSlides": 0,
+    "tabPanes": 0,
+    "dropdowns": 6,
+    "canvases": 0,
+    "riveTargets": 0,
+    "videos": 4,
+    "iframes": 0,
+    "forms": 0,
+    "images": 77,
+    "links": 139,
+    "svgs": 39
+  }
+}

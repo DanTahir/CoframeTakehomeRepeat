@@ -1,0 +1,34 @@
+/* Inline <style> block at head position 92 of the original document. */
+._card_1b963_1._cardEntryAnimation_1b963_1 {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: blur(20px);
+    transition: all 500ms calc(150ms + var(--dwg-iteration-index, 0) * 50ms) ease-in-out;
+}
+
+._card_1b963_1._cardEntryAnimation_1b963_1._cardShow_1b963_8 {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+}
+
+._mainCtaElement_1b963_14::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+}
+
+._alternativeCtaElement_1b963_20 {
+    /* Concept for how to handle more than one CTA in a clickable card */
+    position: relative;
+    z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ._card_1b963_1._cardEntryAnimation_1b963_1 {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+    }
+}

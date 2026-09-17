@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC388cd7fa3bf94c2a9f27ea5aa15bb460-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RC388cd7fa3bf94c2a9f27ea5aa15bb460-source.min.js', "var Product=_satellite.getVar(\"Product\"),event=_satellite.getVar(\"event\"),Type=_satellite.getVar(\"Type\");\"plus\"===Product&&\"conversionDataReady\"===event&&\"purchase\"===Type&&_satellite.setVar(\"event_name\",\"direct_purchase_plus\");");

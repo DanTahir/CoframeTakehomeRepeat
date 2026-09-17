@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RCf1861c8a51694e408a6ab9e543308a49-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RCf1861c8a51694e408a6ab9e543308a49-source.min.js', "gtag(\"event\",\"conversion\",{allow_custom_scripts:!0,send_to:\"DC-15932550/invmedia/globa0+standard\"});");

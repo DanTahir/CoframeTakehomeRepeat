@@ -1,0 +1,2 @@
+// For license information, see `https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RCc7484909b76f41fcb5f92f2fcd87293a-source.js`.
+_satellite.__registerScript('https://assets.adobedtm.com/7c31e7b46b8e/5feae65e0b10/2921ba2175af/RCc7484909b76f41fcb5f92f2fcd87293a-source.min.js', "<script async src=\"https://s.yimg.jp/images/listing/tool/cv/ytag.js\"></script>\n<script>\nwindow.yjDataLayer = window.yjDataLayer || [];\nfunction ytag() { yjDataLayer.push(arguments); }\nytag({\"type\":\"ycl_cookie\", \"config\":{\"ycl_use_non_cookie_storage\":true}});\n</script>");

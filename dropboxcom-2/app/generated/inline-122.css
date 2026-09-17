@@ -1,0 +1,32 @@
+/* Inline <style> block at head position 122 of the original document. */
+/* This stylesheet is created by 6sense */
+            .mktoForm .mktoFormRow:has(._6si_sff_filled) {
+                display: none;
+            }
+            .mktoForm .mktoFormRow ._6si_sff_filled {
+                display: none;
+            }
+            .hs-form .hs-form-field:has(._6si_sff_filled) {
+                display: none;
+            }
+            .hs-form .hs-form-field ._6si_sff_filled {
+                display: none;
+            }
+            form .form-field:not(.error):has(._6si_sff_filled) {
+                display: none;
+            }
+            form .form-field:not(.error) ._6si_sff_filled {
+                display: none;
+            }
+            .elq-form .row:has(._6si_sff_filled) {
+                display: none;
+            }
+            .elq-form .row ._6si_sff_filled {
+                display: none;
+            }
+            .elq-form .field-wrapper:has(._6si_sff_filled) {
+                display: none;
+            }
+            .elq-form .field-wrapper ._6si_sff_filled {
+                display: none;
+            }

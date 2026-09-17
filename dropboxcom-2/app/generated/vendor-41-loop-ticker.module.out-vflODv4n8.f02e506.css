@@ -1,0 +1,6 @@
+/* Vendored from https://cfl.dropboxstatic.com/static/typescript/component_libraries/dwg-components/src/experimental/components/ticker/loop-ticker/loop-ticker.module.out-vflODv4n8.css
+ * url() references rewritten to local /assets paths by scripts/codegen.mjs.
+ * Cascade position 41 of the original <head>. Do not edit — `npm run codegen`.
+ */
+:root{--dwg-animation__ticker__duration-ms:40000ms}@keyframes _keyframes-standard_90hav_1{0%{transform:translateX(calc(-30%*var(--dwg-direction--inline, 1)))}to{transform:translateX(calc(-50%*var(--dwg-direction--inline, 1)))}}@keyframes _keyframes-small_90hav_1{0%{transform:translateX(calc(-33.33333%*var(--dwg-direction--inline, 1)))}to{transform:translateX(calc(-66.66667%*var(--dwg-direction--inline, 1)))}}._ticker_90hav_23{overflow:hidden}._animationStandard_90hav_27{animation:_keyframes-standard_90hav_1 var(--dwg-animation__ticker__duration-ms) linear infinite}._animationSmall_90hav_31{animation:_keyframes-small_90hav_1 var(--dwg-animation__ticker__duration-ms) linear infinite}._animationRunning_90hav_35{animation-play-state:running}._animationPaused_90hav_43,._animationRunning_90hav_35:hover{animation-play-state:paused}
+/*# sourceMappingURL=loop-ticker.module.out.css.map */

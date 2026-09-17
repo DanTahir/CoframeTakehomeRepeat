@@ -1,0 +1,237 @@
+/** @generated -- This file is automatically synced from @dropbox/dig-content-icons@6.3.0. DO NOT MODIFY! **/
+
+/**
+  This file should not be imported into your CSS or SASS files - the CSS variables will be available on the page for you to use.
+  (SEE #design-systems ON SLACK if you have questions)
+**/
+
+.dig-1nqhrso7_6-3-0{
+  box-sizing:border-box;
+  display:inline-block;
+  max-block-size:100%;
+  max-inline-size:100%;
+}
+.dig-1nqhrso9_6-3-0{
+  --dig-1nqhrso0_6-3-0:40px;
+}
+.dig-1nqhrsoa_6-3-0{
+  --dig-1nqhrso0_6-3-0:160px;
+}
+:where(.dig-1nqhrso7_6-3-0){
+  block-size:var(--dig-1nqhrso0_6-3-0);
+  inline-size:var(--dig-1nqhrso0_6-3-0);
+}
+.dig-1nqhrsob_6-3-0{
+  block-size:100%;
+  box-sizing:border-box;
+  display:inline-grid;
+  inline-size:100%;
+  overflow:hidden;
+  overflow:clip;
+  place-items:center;
+}
+:where(.dig-1nqhrsob_6-3-0 *){
+  box-sizing:border-box;
+  display:block;
+}
+.dig-1nqhrsod_6-3-0{
+  aspect-ratio:1 / 1;
+  border-color:var(--dig-color__border__subtle);
+  border-radius:var(--dig-radius__small);
+  border-style:solid;
+  border-width:1px;
+  box-sizing:border-box;
+  display:inline-grid;
+  inline-size:var(--dig-1nqhrso2_6-3-0);
+  place-items:center;
+}
+.dig-1nqhrsof_6-3-0{
+  background-color:var(--dig-color__fileicon__container);
+}
+.dig-1nqhrsog_6-3-0{
+  background-color:var(--dig-color__background__base);
+}
+.dig-1nqhrsoh_6-3-0{
+  background-color:transparent;
+  border-width:0;
+}
+.dig-1nqhrsom_6-3-0{
+  aspect-ratio:1 / 1;
+  block-size:auto;
+  inline-size:var(--dig-1nqhrso1_6-3-0);
+}
+@supports not (container-type:size){
+  .dig-1nqhrsod_6-3-0{
+    --dig-1nqhrso2_6-3-0:100%;
+  }
+  .dig-1nqhrsoi_6-3-0{
+    border-radius:var(--dig-radius__xsmall);
+  }
+}
+@supports (container-type:size){
+  .dig-1nqhrsob_6-3-0{
+    container-name:dig-1nqhrso6_6-3-0;
+    container-type:size;
+  }
+  .dig-1nqhrsod_6-3-0{
+    --dig-1nqhrso2_6-3-0:100cqmin;
+    container-name:dig-1nqhrsoc_6-3-0;
+    container-type:size;
+  }
+  @container dig-1nqhrso6_6-3-0 (width <= 40px){
+    .dig-1nqhrsod_6-3-0{
+      border-radius:var(--dig-radius__xsmall);
+    }
+  }
+}
+@supports (container-type:size){
+  .dig-1nqhrsok_6-3-0{
+    --dig-1nqhrso2_6-3-0:55cqmin;
+  }
+  .dig-1nqhrsom_6-3-0{
+    --dig-1nqhrso3_6-3-0:0px;
+    --dig-1nqhrso5_6-3-0:60cqmin;
+    --dig-1nqhrso4_6-3-0:85px;
+    --dig-1nqhrso1_6-3-0:clamp(var(--dig-1nqhrso3_6-3-0), var(--dig-1nqhrso5_6-3-0), var(--dig-1nqhrso4_6-3-0));
+  }
+  @container dig-1nqhrso6_6-3-0 (width <= 40px){
+    .dig-1nqhrsok_6-3-0{
+      --dig-1nqhrso2_6-3-0:60cqmin;
+    }
+    .dig-1nqhrsom_6-3-0{
+      --dig-1nqhrso5_6-3-0:70cqmin;
+    }
+  }
+  @container dig-1nqhrsoc_6-3-0 (width <= 28px){
+    .dig-1nqhrsom_6-3-0{
+      --dig-1nqhrso5_6-3-0:85cqmin;
+    }
+  }
+}
+@supports not (container-type:size){
+  .dig-1nqhrsok_6-3-0{
+    --dig-1nqhrso2_6-3-0:55%;
+  }
+  .dig-1nqhrsom_6-3-0{
+    --dig-1nqhrso3_6-3-0:0px;
+    --dig-1nqhrso5_6-3-0:55%;
+    --dig-1nqhrso4_6-3-0:85px;
+    --dig-1nqhrso1_6-3-0:clamp(var(--dig-1nqhrso3_6-3-0), var(--dig-1nqhrso5_6-3-0), var(--dig-1nqhrso4_6-3-0));
+  }
+}.dig-1t71aik3_6-3-0{
+  box-sizing:border-box;
+  display:inline-block;
+  max-block-size:100%;
+  max-inline-size:100%;
+}
+.dig-1t71aik5_6-3-0{
+  --dig-1t71aik0_6-3-0:40px;
+}
+.dig-1t71aik6_6-3-0{
+  --dig-1t71aik0_6-3-0:160px;
+}
+:where(.dig-1t71aik3_6-3-0){
+  block-size:var(--dig-1t71aik0_6-3-0);
+  inline-size:var(--dig-1t71aik0_6-3-0);
+}
+.dig-1t71aik7_6-3-0{
+  block-size:100%;
+  box-sizing:border-box;
+  display:inline-grid;
+  inline-size:100%;
+  overflow:hidden;
+  overflow:clip;
+  place-items:center;
+}
+:where(.dig-1t71aik7_6-3-0 *){
+  box-sizing:border-box;
+  display:block;
+}
+.dig-1t71aik8_6-3-0{
+  box-sizing:border-box;
+  display:inline-grid;
+  inline-size:var(--dig-1t71aik1_6-3-0);
+  place-items:center;
+}
+.dig-1t71aikc_6-3-0{
+  block-size:auto;
+  inline-size:100%;
+}
+@supports not (container-type:size){
+  .dig-1t71aik8_6-3-0{
+    --dig-1t71aik1_6-3-0:100%;
+  }
+}
+@supports (container-type:size){
+  .dig-1t71aik7_6-3-0{
+    container-name:dig-1t71aik2_6-3-0;
+    container-type:size;
+  }
+  .dig-1t71aik8_6-3-0{
+    --dig-1t71aik1_6-3-0:100cqmin;
+  }
+  .dig-1t71aika_6-3-0{
+    --dig-1t71aik1_6-3-0:70cqmin;
+  }
+}
+@supports (container-type:size){
+  @container dig-1t71aik2_6-3-0 (width <= 40px){
+    .dig-1t71aika_6-3-0{
+      --dig-1t71aik1_6-3-0:75cqmin;
+    }
+  }
+}
+@supports not (container-type:size){
+  .dig-1t71aika_6-3-0{
+    --dig-1t71aik1_6-3-0:70%;
+  }
+}.dig-by16w01_6-3-0{
+  box-shadow:inset 0 0 0 1px var(--dig-color__border__subtle);
+}
+.dig-by16w00_6-3-0 .dig-by16w01_6-3-0{
+  block-size:auto;
+  box-shadow:none;
+  inline-size:auto;
+  place-self:center;
+  transform:none;
+}
+:where(.dig-by16w00_6-3-0 .dig-by16w01_6-3-0 img,.dig-by16w00_6-3-0 .dig-by16w01_6-3-0 svg){
+  aspect-ratio:auto;
+  block-size:auto;
+  display:block;
+  inline-size:auto;
+  object-fit:contain;
+}.dig-86akn92_6-3-0{
+  --dig-86akn90_6-3-0:var(--dig-radius__small);
+  --dig-86akn91_6-3-0:var(--dig-color__border__subtle);
+  border-radius:var(--dig-86akn90_6-3-0);
+}
+.dig-86akn94_6-3-0{
+  --dig-86akn90_6-3-0:var(--dig-radius__circular);
+}
+.dig-86akn95_6-3-0{
+  --dig-86akn90_6-3-0:var(--dig-radius__small);
+}
+.dig-86akn9b_6-3-0,.dig-86akn9c_6-3-0{
+  --dig-86akn90_6-3-0:var(--dig-radius__xsmall);
+}
+.dig-86akn9d_6-3-0{
+  box-shadow:inset 0 0 0 1px var(--dig-86akn91_6-3-0);
+}
+.dig-86akn9e_6-3-0{
+  block-size:100%;
+  border-radius:var(--dig-86akn90_6-3-0);
+  grid-area:1 / 1 / -1 / -1;
+  inline-size:100%;
+}.dig-ctz1wx2_6-3-0{
+  --dig-ctz1wx0_6-3-0:var(--dig-color__fileicon__container);
+  --dig-ctz1wx1_6-3-0:var(--dig-color__fileicon__shadow);
+  box-sizing:border-box;
+}
+.dig-ctz1wx3_6-3-0{
+  --dig-ctz1wx0_6-3-0:var(--dig-color__background__base);
+}
+.dig-ctz1wx5_6-3-0{
+  --dig-ctz1wx0_6-3-0:transparent;
+  --dig-ctz1wx1_6-3-0:transparent;
+}

@@ -1,0 +1,27 @@
+/* Inline <style> block at head position 64 of the original document. */
+._dev-warning_1w9i4_1 {
+    position: fixed;
+    bottom: 64px;
+    right: 12px;
+    z-index: 1000;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 1);
+    width: 400px;
+    border-radius: 6px;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+._dev-warning_1w9i4_1:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+._hidden_1w9i4_20 {
+    display: none;
+}
+
+._dev-warning_1w9i4_1 ._dev-warning-text_1w9i4_24 {
+    color: #fff;
+}

@@ -1,0 +1,11 @@
+/* Inline <style> block at head position 81 of the original document. */
+._anchorTarget_qsqf0_1 {
+    scroll-margin-top: var(
+        --dwg-scroll-margin-top,
+        0
+    ); /* account for Navbar when scrolling to anchor */
+}
+
+._anchorTarget_qsqf0_1:focus-visible {
+    outline: none; /* override default user-agent behavior */
+}

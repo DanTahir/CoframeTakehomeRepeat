@@ -1,0 +1,53 @@
+/* Inline <style> block at head position 114 of the original document. */
+._dwg-table-of-contents-plank__link-list_jlzta_1 {
+    list-style: none;
+}
+
+/* override :visited color change  */
+._dwg-table-of-contents-plank__link-list-text-link_jlzta_6 {
+    color: inherit !important;
+}
+/* stylelint-disable custom-media-pattern */
+/*
+Re-defining custom-media for DWG Breakpoints here
+Should have parity with values from typescript/component_libraries/dwg-components/src/tokens/custom-media.css
+Currently CSS Modules does not support @import, so unable to import the custom media into CSS Module
+*/
+/* stylelint-enable custom-media-pattern */
+
+/* For keeping the TOC plank sticky on dekstop viewpoints and above */
+@media (min-width: 1920px) {
+    ._dwg-table-of-contents--sticky_desktop_jlzta_21 {
+        min-width: 30%;
+    }
+}
+
+@media (min-width: 1280px) {
+    ._dwg-table-of-contents--sticky_desktop_jlzta_21 {
+        position: sticky !important;
+        top: 48px;
+        /* for positioning the TOC plank next to rich text */
+        float: left;
+        margin-left: -100%;
+        left: 0;
+        width: 27%;
+        z-index: 5;
+        padding-bottom: 48px;
+        /* override margin bottom to ensure plank is only visible until end of rich text content */
+        margin-bottom: calc(var(--dwg-spacing__unit--1) * 135) !important;
+    }
+    /* override margin bottom and add extra margin if author bio section exists */
+    ._dwg-table-of-contents--sticky_desktop_jlzta_21:has(~ .dwg-rich-text-plank__author-bio) {
+        margin-bottom: calc(var(--dwg-spacing__unit--1) * 185) !important;
+    }
+    /* override margin bottom add extra margin if FAQ plank exists */
+    ._dwg-table-of-contents--sticky_desktop_jlzta_21:has(~ [data-testid='warp-dwg-faq-plank']) {
+        margin-bottom: calc(var(--dwg-spacing__unit--1) * 220) !important;
+    }
+    /* override margin bottom add extra margin if both author bio section & FAQ plank exist  */
+    ._dwg-table-of-contents--sticky_desktop_jlzta_21:has(~ .dwg-rich-text-plank__author-bio):has(
+            ~ [data-testid='warp-dwg-faq-plank']
+        ) {
+        margin-bottom: calc(var(--dwg-spacing__unit--1) * 260) !important;
+    }
+}

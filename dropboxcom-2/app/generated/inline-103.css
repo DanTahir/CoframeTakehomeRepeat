@@ -1,0 +1,238 @@
+/* Inline <style> block at head position 103 of the original document. */
+/* stylelint-disable custom-media-pattern */
+
+/*
+Re-defining custom-media for DWG Breakpoints here
+Should have parity with values from typescript/component_libraries/dwg-components/src/tokens/custom-media.css
+Currently CSS Modules does not support @import, so unable to import the custom media into CSS Module
+ */
+/* stylelint-enable custom-media-pattern */
+
+._plankFrameFirst_aez5p_13:before {
+    content: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    ._plankFrameFirst_aez5p_13 {
+        margin-top: -24vh;
+    }
+}
+
+._top_aez5p_23 {
+    width: 900px;
+    max-width: 100%;
+
+    /* animate between 0 and 0.4 of --section-progress */
+    --top-animation-progress: min(
+        max(0, calc((var(--element-scroll-progress, 1) - 0.15) / 0.12)),
+        1
+    );
+
+    /* cubic-bezier(0.66, 0, 0, 1) */
+    --p0: 0;
+    --p1: 0;
+    --p2: 0.66;
+    --p3: 1;
+    --top-animation-progress-ease: calc(
+        var(--p0) * (1 - var(--top-animation-progress)) * (1 - var(--top-animation-progress)) *
+            (1 - var(--top-animation-progress)) + var(--p1) * 3 * var(--top-animation-progress) *
+            (1 - var(--top-animation-progress)) * (1 - var(--top-animation-progress)) + var(--p2) *
+            3 * var(--top-animation-progress) * var(--top-animation-progress) *
+            (1 - var(--top-animation-progress)) + var(--p3) * var(--top-animation-progress) *
+            var(--top-animation-progress) * var(--top-animation-progress)
+    );
+    transform: translateZ(0);
+}
+
+._pill_aez5p_49 {
+    padding-block: var(--dwg-spacing__unit--0_5);
+    padding-inline: 10px 15px;
+    border-radius: 100px;
+}
+
+._headlineText_aez5p_55 {
+    line-height: 130%;
+    font-size: 26px;
+}
+
+._secondaryText_aez5p_60 {
+    line-height: 150%;
+    max-width: 780px;
+}
+
+._pill_aez5p_49,
+._headlineText_aez5p_55,
+._secondaryText_aez5p_60,
+._buttons_aez5p_68 {
+    opacity: var(--top-animation-progress-ease);
+    will-change: opacity, transform;
+}
+
+._textEntryAnimationDisabled_aez5p_73 ._pill_aez5p_49,
+._textEntryAnimationDisabled_aez5p_73 ._headlineText_aez5p_55,
+._textEntryAnimationDisabled_aez5p_73 ._secondaryText_aez5p_60,
+._textEntryAnimationDisabled_aez5p_73 ._buttons_aez5p_68 {
+    transform: none;
+    opacity: 1;
+}
+
+._secondaryText_aez5p_60 {
+    transform: translateY(calc(40px * (1 - var(--top-animation-progress-ease))));
+}
+
+._buttons_aez5p_68 {
+    transform: translateY(calc(80px * (1 - var(--top-animation-progress-ease))));
+    grid-auto-flow: row;
+}
+
+@media (min-width: 1024px) {
+    ._buttons_aez5p_68 {
+        grid-auto-flow: column;
+    }
+}
+
+._mediaContainer_aez5p_96 {
+    position: relative;
+}
+
+._mediaContainerCell_aez5p_100 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    ._media_aez5p_96:nth-child(2) {
+        max-width: 100%;
+    }
+}
+
+._media_aez5p_96 {
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    overflow: hidden;
+
+    /* EaseInOutSine: -(Math.cos(Math.PI * x) - 1) / 2; */
+    --pi: 3.141593;
+
+    /* animate in full range with easing applied */
+    --animation-progress: calc(-1 * (cos(var(--pi) * var(--element-scroll-progress, 0.5)) - 1) / 2);
+}
+
+/* we do not use dropshow if the browser does not support aspect-ratio, as the aspect-ratio has needs overflow:hidden */
+@supports (aspect-ratio: 1 / 1) {
+    ._mediaDropShadow_aez5p_127 {
+        filter: drop-shadow(0px 16px 32px rgba(0, 0, 0, 0.1));
+    }
+}
+
+._media_aez5p_96:nth-child(1) {
+    display: none;
+}
+
+._media_aez5p_96:nth-child(2) {
+    position: relative;
+    width: var(--dwg-feature-highlight-media-width);
+    height: auto;
+    border-radius: var(--dwg-feature-highlight-media-border-radius);
+    overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+    ._mediaContainer_aez5p_96 {
+        max-width: 1440px;
+        height: 600px;
+    }
+
+    ._media_aez5p_96:nth-child(1),
+    ._media_aez5p_96:nth-child(2) {
+        width: var(--dwg-feature-highlight-media-width);
+        height: auto;
+        inset-inline-start: var(--dwg-feature-highlight-media-offset-left);
+        inset-inline-end: var(--dwg-feature-highlight-media-offset-right);
+        position: absolute;
+    }
+
+    ._media_aez5p_96:nth-child(1) {
+        display: block;
+    }
+
+    /* we do not animate if the browser does not support aspect-ratio, as the heights get messed up */
+    @supports (aspect-ratio: 1 / 1) {
+        ._plankFrame_aez5p_13 {
+            /* translateY between -10vh and 10vh */
+            transform: translateY(calc(-10vh + 20vh * var(--element-scroll-progress, 0.5)));
+            will-change: transform;
+        }
+
+        ._plankOverlapDisabled_aez5p_171 {
+            transform: none;
+        }
+
+        ._plankOverlapDisabled_aez5p_171 ._plankContentWrapper_aez5p_175 {
+            /* animate between 0.5 and 1 of --element-scroll-progress */
+            --progress: min(max(0, calc((var(--element-scroll-progress, 0) - 0.5) / 0.5)), 1);
+            transform: translateY(calc(10vh * var(--progress, 0.5)));
+            will-change: transform;
+        }
+
+        ._media_aez5p_96:nth-child(1) {
+            transform: translateY(calc(-50% + 25vh - 50vh * var(--animation-progress)));
+            will-change: transform;
+        }
+
+        ._media_aez5p_96:nth-child(2) {
+            transform: translateY(calc(-50% + 50vh - 100vh * var(--animation-progress)));
+            will-change: transform;
+        }
+
+        ._textEntryAnimationDisabled_aez5p_73 ._pill_aez5p_49,
+        ._textEntryAnimationDisabled_aez5p_73 ._headlineText_aez5p_55,
+        ._textEntryAnimationDisabled_aez5p_73 ._secondaryText_aez5p_60,
+        ._textEntryAnimationDisabled_aez5p_73 ._buttons_aez5p_68 {
+            transform: none;
+            opacity: 1;
+        }
+    }
+}
+
+@media (prefers-reduced-motion) {
+    ._media_aez5p_96:nth-child(1),
+    ._media_aez5p_96:nth-child(2),
+    ._plankFrame_aez5p_13 {
+        --animation-progress: 0.5;
+    }
+
+    ._plankFrame_aez5p_13 {
+        transform: translateY(0);
+    }
+
+    ._pill_aez5p_49,
+    ._headlineText_aez5p_55,
+    ._secondaryText_aez5p_60,
+    ._buttons_aez5p_68 {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+html:not(.lenis) {
+    ._media_aez5p_96:nth-child(1),
+    ._media_aez5p_96:nth-child(2),
+    ._plankFrame_aez5p_13 {
+        --animation-progress: 0.5;
+    }
+
+    ._plankFrame_aez5p_13 {
+        transform: translateY(0);
+    }
+
+    ._pill_aez5p_49,
+    ._headlineText_aez5p_55,
+    ._secondaryText_aez5p_60,
+    ._buttons_aez5p_68 {
+        transform: none;
+        opacity: 1;
+    }
+}

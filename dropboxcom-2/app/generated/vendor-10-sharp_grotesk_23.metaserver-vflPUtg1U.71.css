@@ -1,0 +1,85 @@
+/* Vendored from https://cfl.dropboxstatic.com/static/metaserver/static/css/dig-fonts/sharp_grotesk_23.metaserver-vflPUtg1U.css
+ * url() references rewritten to local /assets paths by scripts/codegen.mjs.
+ * Cascade position 10 of the original <head>. Do not edit — `npm run codegen`.
+ */
+/** @generated -- This file is automatically synced from @dropbox/dig-fonts@3.0.0. DO NOT MODIFY! **/
+
+/**
+  This file should not be imported into your CSS or SASS files - the CSS variables will be available on the page for you to use.
+  (SEE #design-systems ON SLACK if you have questions)
+**/
+
+/**
+ * Sharp Grotesk 23 is not a sanctioned DIG font. Usage is solely approved for logged out web. If you find
+ * yourself needing Sharp Grotesk 23 for any other purpose, please consult #design-systems.
+ */
+
+/**
+ * Font: Sharp Grotesk 23 (Cyrillic supported)
+ */
+@font-face {
+  font-family: 'Sharp Grotesk 23';
+  src:
+    url('/assets/fonts/SharpGroteskDBCyrBook23-vflX-NIwB.1fee56d1.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBCyrBook23-vflhLOtUe.cc278705.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBCyrBook23-vflZqb0CY.f1837e8e.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Sharp Grotesk 23';
+  src:
+    url('/assets/fonts/SharpGroteskDBCyrBookItalic23-vfl0CYa6P.f869802f.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBCyrBookItalic23-vflA942ch.0e52702a.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBCyrBookItalic23-vflJyUTTA.3d46dd20.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Medium font face - no italics or Cyrillic support */
+@font-face {
+  font-family: 'Sharp Grotesk 23';
+  src:
+    url('/assets/fonts/SharpGroteskDBMedium23-vflEgLgz1.2ff159cc.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBMedium23-vfl9T1lIq.4f1ee42e.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBMedium23-vfl6qyjZF.2a192ff2.ttf')
+      format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Korean Support - Does not support italics */
+@font-face {
+  font-family: 'Sharp Grotesk 23 KR';
+  src:
+    url('/assets/fonts/SharpGroteskDBKO-Book23-vfluMID1E.94069eaf.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBKO-Book23-vfltpPVtF.f18e1e20.woff')
+      format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/**
+  * Thai language support
+  */
+@font-face {
+  font-family: 'Sharp Grotesk 23 Thai';
+  src:
+    url('/assets/fonts/SharpGroteskDBThaiBook-23-vflI6JzwN.03e1728f.woff2')
+      format('woff2'),
+    url('/assets/fonts/SharpGroteskDBThaiBook-23-vflR8oDZe.01c510ac.woff')
+      format('woff'),
+    url('/assets/fonts/SharpGroteskDBThaiBook-23-vfl_zl2Gi.fab73e1d.ttf')
+      format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}

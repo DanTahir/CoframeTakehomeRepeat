@@ -1,0 +1,46 @@
+/* Inline <style> block at head position 98 of the original document. */
+:root {
+    --dwg-animation__ticker__duration-ms: 40000ms;
+}
+
+@keyframes _keyframes-standard_90hav_1 {
+    0% {
+        transform: translateX(calc(-150% / 5 * var(--dwg-direction--inline, 1)));
+    }
+    100% {
+        transform: translateX(calc(-250% / 5 * var(--dwg-direction--inline, 1)));
+    }
+}
+
+@keyframes _keyframes-small_90hav_1 {
+    0% {
+        transform: translateX(calc(-100% / 3 * var(--dwg-direction--inline, 1)));
+    }
+    100% {
+        transform: translateX(calc(-200% / 3 * var(--dwg-direction--inline, 1)));
+    }
+}
+
+._ticker_90hav_23 {
+    overflow: hidden;
+}
+
+._animationStandard_90hav_27 {
+    animation: _keyframes-standard_90hav_1 var(--dwg-animation__ticker__duration-ms) linear infinite;
+}
+
+._animationSmall_90hav_31 {
+    animation: _keyframes-small_90hav_1 var(--dwg-animation__ticker__duration-ms) linear infinite;
+}
+
+._animationRunning_90hav_35 {
+    animation-play-state: running;
+}
+
+._animationRunning_90hav_35:hover {
+    animation-play-state: paused;
+}
+
+._animationPaused_90hav_43 {
+    animation-play-state: paused;
+}
