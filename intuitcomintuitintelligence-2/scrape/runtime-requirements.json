@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-09-18T20:53:12.982Z",
+  "targetUrl": "https://www.intuit.com/intuit-intelligence/",
+  "wasm": [],
+  "favicon": {
+    "error": "HTTP 400 for https://www.intuit.com/favicon.ico",
+    "fallbackFrom": "apple-touch-icon-152x152.40e2bd54.png"
+  },
+  "packages": [],
+  "detectedGlobals": [
+    "React"
+  ],
+  "featureCounts": {
+    "canvas": 0,
+    "video": 9,
+    "svg": 31,
+    "images": 36,
+    "links": 128,
+    "forms": 0,
+    "iframes": 1,
+    "riveTargets": 0,
+    "swiperRoots": 0,
+    "swiperSlides": 0,
+    "splideRoots": 0,
+    "glideRoots": 0,
+    "fadeIn": 0,
+    "marquee": 0,
+    "tabs": 1,
+    "accordions": 0,
+    "dropdowns": 0,
+    "navBurger": 0,
+    "lazyImages": 7,
+    "typewriter": 0,
+    "counters": 0,
+    "parallax": 0
+  }
+}

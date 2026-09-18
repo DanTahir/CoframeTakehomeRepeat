@@ -1,0 +1,327 @@
+{
+  "generatedAt": "2026-09-18T20:53:15.073Z",
+  "targetUrl": "https://www.intuit.com/intuit-intelligence/",
+  "source": "scrape/raw/index.static.html (pre-JS server response)",
+  "captureMode": "static",
+  "markupSource": "static",
+  "htmlLang": "en",
+  "bodyClasses": [
+    "load-complete"
+  ],
+  "title": "Intuit Intelligence: AI and Human Experts Working Together",
+  "hasDescription": true,
+  "sections": [
+    {
+      "name": "NextSection",
+      "file": "NextSection.tsx",
+      "tag": "div",
+      "selector": "div#__next",
+      "elements": 996,
+      "nodes": 996
+    }
+  ],
+  "composition": [
+    {
+      "kind": "component",
+      "name": "NextSection"
+    }
+  ],
+  "stylesheets": [
+    "vendor-00-fonts.419cf62c.css",
+    "vendor-01-blocks.icom.dc4ff77a.css",
+    "vendor-02-stylesheet.atoms_molecules_globals.1ff32.css",
+    "vendor-03-m-global-navigation-brands.7e28ed7c.css",
+    "vendor-04-a-logotype.70c45d23.css",
+    "vendor-05-s01-mega-nav.12fd3eea.css",
+    "vendor-06-m-navigation-links.8ac2ba77.css",
+    "vendor-07-m-navigation-link-group.5084ad16.css",
+    "vendor-08-a-navigation-link.5888af6c.css",
+    "vendor-09-footer.8d6da6a0.css",
+    "vendor-10-intuit.31680c5c.css",
+    "vendor-11-a73789043e8ac1e7cf65.08cb19c7.css",
+    "vendor-12-351a21372e308aeab1bd.6475b7c2.css",
+    "inline-13.css",
+    "vendor-14-fonts.617a6641.css",
+    "inline-15-body0.css",
+    "inline-16-body1.css",
+    "vendor-17-disclaimer.55f6369e.css",
+    "vendor-18-intelligence.e5b1965a.css",
+    "inline-19-body2.css",
+    "inline-20-body3.css",
+    "inline-21-body4.css",
+    "inline-22-body5.css",
+    "inline-23-body6.css"
+  ],
+  "stylesheetDetails": [
+    {
+      "order": 0,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/qbmds-components/styles/icom/fonts.css",
+      "file": "vendor-00-fonts.419cf62c.css",
+      "bytes": 6265,
+      "remainingRemote": 0
+    },
+    {
+      "order": 1,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/gwp-components/releases/2287/styles/icom/blocks.icom.css",
+      "file": "vendor-01-blocks.icom.dc4ff77a.css",
+      "bytes": 234914,
+      "remainingRemote": 2
+    },
+    {
+      "order": 2,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/qbmds-components/releases/7939/styles/icom/stylesheet.atoms_molecules_globals.css",
+      "file": "vendor-02-stylesheet.atoms_molecules_globals.1ff32.css",
+      "bytes": 1766254,
+      "remainingRemote": 10
+    },
+    {
+      "order": 3,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/icom-components/release/1255/blocks/icom-components/m-global-navigation-brands.css",
+      "file": "vendor-03-m-global-navigation-brands.7e28ed7c.css",
+      "bytes": 3191,
+      "remainingRemote": 0
+    },
+    {
+      "order": 4,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/icom-components/release/1255/blocks/icom-components/a-logotype.css",
+      "file": "vendor-04-a-logotype.70c45d23.css",
+      "bytes": 4405,
+      "remainingRemote": 0
+    },
+    {
+      "order": 5,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/icom-components/release/1255/blocks/icom-components/s01-mega-nav.css",
+      "file": "vendor-05-s01-mega-nav.12fd3eea.css",
+      "bytes": 30506,
+      "remainingRemote": 0
+    },
+    {
+      "order": 6,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/icom-components/release/1255/blocks/icom-components/m-navigation-links.css",
+      "file": "vendor-06-m-navigation-links.8ac2ba77.css",
+      "bytes": 93,
+      "remainingRemote": 0
+    },
+    {
+      "order": 7,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/icom-components/release/1255/blocks/icom-components/m-navigation-link-group.css",
+      "file": "vendor-07-m-navigation-link-group.5084ad16.css",
+      "bytes": 5300,
+      "remainingRemote": 0
+    },
+    {
+      "order": 8,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/icom-components/release/1255/blocks/icom-components/a-navigation-link.css",
+      "file": "vendor-08-a-navigation-link.5888af6c.css",
+      "bytes": 3237,
+      "remainingRemote": 0
+    },
+    {
+      "order": 9,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/qbmds-components/releases/7939/styles/icom/qbmds/footer.css",
+      "file": "vendor-09-footer.8d6da6a0.css",
+      "bytes": 9043,
+      "remainingRemote": 0
+    },
+    {
+      "order": 10,
+      "kind": "link",
+      "where": "head",
+      "href": "https://uxfabric.intuitcdn.net/components/design-systems/tokens/ddms3.0/prod/25.66.9/css/intuit.css",
+      "file": "vendor-10-intuit.31680c5c.css",
+      "bytes": 34253,
+      "remainingRemote": 0
+    },
+    {
+      "order": 11,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/_next/static/css/a73789043e8ac1e7cf65.css",
+      "file": "vendor-11-a73789043e8ac1e7cf65.08cb19c7.css",
+      "bytes": 66067,
+      "remainingRemote": 0
+    },
+    {
+      "order": 12,
+      "kind": "link",
+      "where": "head",
+      "href": "https://www.intuit.com/_next/static/css/351a21372e308aeab1bd.css",
+      "file": "vendor-12-351a21372e308aeab1bd.6475b7c2.css",
+      "bytes": 746907,
+      "remainingRemote": 0
+    },
+    {
+      "order": 13,
+      "kind": "style",
+      "file": "inline-13.css",
+      "bytes": 108037
+    },
+    {
+      "order": 14,
+      "kind": "link",
+      "where": "body",
+      "href": "https://www.intuit.com/qbmds-components/releases/7592/styles/icom/fonts.css",
+      "file": "vendor-14-fonts.617a6641.css",
+      "bytes": 6681,
+      "remainingRemote": 0
+    },
+    {
+      "order": 15,
+      "kind": "body-style",
+      "file": "inline-15-body0.css",
+      "bytes": 1058
+    },
+    {
+      "order": 16,
+      "kind": "body-style",
+      "file": "inline-16-body1.css",
+      "bytes": 1153
+    },
+    {
+      "order": 17,
+      "kind": "link",
+      "where": "body",
+      "href": "https://digitalasset.intuit.com/render/content/dam/intuit/ic/en_us/images/ic_2026/assets/disclaimer.css",
+      "file": "vendor-17-disclaimer.55f6369e.css",
+      "bytes": 449,
+      "remainingRemote": 0
+    },
+    {
+      "order": 18,
+      "kind": "link",
+      "where": "body",
+      "href": "https://digitalasset.intuit.com/render/content/dam/intuit/ic/en_us/images/ic_2026/assets/intelligence.css",
+      "file": "vendor-18-intelligence.e5b1965a.css",
+      "bytes": 39957,
+      "remainingRemote": 3
+    },
+    {
+      "order": 19,
+      "kind": "body-style",
+      "file": "inline-19-body2.css",
+      "bytes": 582
+    },
+    {
+      "order": 20,
+      "kind": "body-style",
+      "file": "inline-20-body3.css",
+      "bytes": 833
+    },
+    {
+      "order": 21,
+      "kind": "body-style",
+      "file": "inline-21-body4.css",
+      "bytes": 173
+    },
+    {
+      "order": 22,
+      "kind": "body-style",
+      "file": "inline-22-body5.css",
+      "bytes": 1161
+    },
+    {
+      "order": 23,
+      "kind": "body-style",
+      "file": "inline-23-body6.css",
+      "bytes": 1689
+    }
+  ],
+  "assetCount": 243,
+  "assets": {
+    "total": 243,
+    "byKind": {
+      "css": 17,
+      "fonts": 45,
+      "js": 60,
+      "img": 92,
+      "video": 18,
+      "data": 11
+    }
+  },
+  "sanitizer": {
+    "strippedClasses": 0,
+    "strippedStyleProps": 5,
+    "droppedNodes": 11
+  },
+  "detectedFeatures": {
+    "canvas": 0,
+    "video": 9,
+    "svg": 31,
+    "images": 36,
+    "links": 128,
+    "forms": 0,
+    "iframes": 1,
+    "riveTargets": 0,
+    "swiperRoots": 0,
+    "swiperSlides": 0,
+    "splideRoots": 0,
+    "glideRoots": 0,
+    "fadeIn": 0,
+    "marquee": 0,
+    "tabs": 1,
+    "accordions": 0,
+    "dropdowns": 0,
+    "navBurger": 0,
+    "lazyImages": 7,
+    "typewriter": 0,
+    "counters": 0,
+    "parallax": 0
+  },
+  "detectedLibraries": [
+    "React"
+  ],
+  "stats": {
+    "dropped": {
+      "script": 3,
+      "style": 7,
+      "comment": 0,
+      "noscript": 1,
+      "thirdParty": 0,
+      "stylesheetLink": 4,
+      "eventHandlerAttr": 1,
+      "tagScopedAttr": 4
+    },
+    "rewritten": {
+      "asset": 61,
+      "href": 126
+    },
+    "strippedClasses": 0,
+    "strippedInlineStyleProps": 5,
+    "emptiedRuntimeHosts": 0,
+    "emptiedRuntimeNodes": 0,
+    "unwrappedRuntimeWrappers": 0,
+    "fadeIn": 0,
+    "swiperRoots": 0,
+    "swiperSlides": 0,
+    "tabPanes": 4,
+    "dropdowns": 1,
+    "canvases": 0,
+    "riveTargets": 0,
+    "videos": 9,
+    "iframes": 0,
+    "forms": 0,
+    "images": 34,
+    "links": 131,
+    "svgs": 27
+  }
+}

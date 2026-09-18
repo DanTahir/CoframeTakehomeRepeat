@@ -1,0 +1,27 @@
+/* Inline <style> block 0 from <body>; cascades after all head styles. */
+
+  /* Base: regular Tally everywhere, with a real fallback stack. */
+  :root, body {
+    font-family: Tally, 'AvenirNext forINTUIT', AvenirNext, Avenir, Helvetica, Arial, sans-serif;
+  }
+
+  /* Display face only on display + headline type. */
+  .display01,.display02,.display03,.display04,
+  .headline01,.headline02,.headline03,.headline04,.headline05,.headline06 {
+    font-family: 'Tally Display', Tally, 'AvenirNext forINTUIT', AvenirNext, Avenir, Helvetica, Arial, sans-serif;
+  }
+
+  /* Body ramp stays on regular Tally. */
+  .body01,.body02,.body03,.body04,.eyebrow01,.eyebrow02,.label01,.label02 {
+    font-family: Tally, 'AvenirNext forINTUIT', AvenirNext, Avenir, Helvetica, Arial, sans-serif;
+  }
+
+  /* Don't touch form controls or monospace. */
+  input, textarea, select, button, code, pre, kbd, samp {
+    font-family: inherit;
+  }
+  code, pre, kbd, samp { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  body.wp-admin, .wp-admin * {
+    font-family: 'AvenirNext forINTUIT', Helvetica, Arial, sans-serif !important;
+  }

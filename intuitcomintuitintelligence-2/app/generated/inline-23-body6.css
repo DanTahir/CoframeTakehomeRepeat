@@ -1,0 +1,62 @@
+/* Inline <style> block 6 from <body>; cascades after all head styles. */
+
+[class*="Search_searchInput"] {
+    padding: 1rem 1rem 1rem 0.625rem !important; /* Adjusted padding-left */
+    width: 100%; /* Ensure input takes full width */
+    box-sizing: border-box; /* Include padding in width calculation */
+    position: relative; /* For pseudo-element positioning */
+}
+
+/* Create an empty pseudo-element to create the space */
+[class*="Search_searchInput"]::before {
+    position: absolute;
+    left: 2.5rem; /* Adjust this value for the space */
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    width: 0;
+    pointer-events: none; /* Prevent interaction with this element */
+}
+
+/* Placeholder styles */
+[class*="Search_searchInput"] {
+    padding-left: 0.625rem !important; /* Create space for the icon */
+    width: calc(100% - 35rem); /* Compensate for padding */
+    box-sizing: border-box !important; /* Include padding in width */
+    position: relative; /* For pseudo-element positioning */
+}
+
+/* Pseudo-element to create visual space */
+[class*="Search_searchInput"]::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3rem; /* Match padding-left */
+    height: 100%;
+    pointer-events: none; /* Prevent interaction */
+}
+
+/* Placeholder styles */
+[class*="Search_searchInput"]::placeholder {
+    text-align: left !important;
+}
+
+[class*="Search_searchInput"]::before {
+    width: 1rem !improtant; /* Adjust value */
+    display: inline-block;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    [class*="Search_searchInput__"] {
+        width: 14.75rem !important;
+}
+    }
+
+    [class*="Search_searchSubmit"] {
+        top: -2.2rem !important;
+    }
+
+[class*="Search_searchSubmit"] {
+display: none !important;
+}
